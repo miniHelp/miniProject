@@ -5,18 +5,14 @@
 <!DOCTYPE HTML>
 <!--
 /*
- * MyPay 在线支付 demo
+ * 值班小帮手
  *
- * Copyright 2018, Sebastian Tschan
- *
- * auth：Caster Hsu
- * Date：2018/08/01
  */
 -->
 <html>
 
 <head>
-<title>MyPay 支付 Demo</title>
+<title>值班小帮手</title>
 <meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono"
 	rel="stylesheet">
