@@ -83,7 +83,7 @@ var changeDiv = function() {
 }
 
 var home = function() {
-	window.location.href = '/MypayOnline1/index.jsp';
+	window.location.href = '/miniProject/index.jsp';
 }
 
 // 新增mypay平台

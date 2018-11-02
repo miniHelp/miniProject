@@ -451,9 +451,8 @@ table.merchantReDiv {
 
 			</table>
 		</c:forEach>
-		<input type="button" name="back" value="上一頁"
-			onclick="javascript:history.back(-1);" /> <input type="button"
-			id="home" value="回首頁" />
+        <input type="button" name="back" value="上一頁" onclick="javascript:history.back(-1);"/>
+        <input type="button" id="home" value="回首頁"/>
 	</div>
 
 	<!-- 
