@@ -1,0 +1,126 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理系统</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="css/iconfont.css" />
+</head>
+<body  id="mydiv" class="loginBody">
+<form class="layui-form">
+        <div class="login_face"><img src="images/timg.jpg" class="userAvatar"></div>
+        <div class="layui-form-item input-item layui-input-focus">
+            <label for="userName">商家账号</label>
+            <input type="text" placeholder="请输入商家账号"  autocomplete="off" id="userName" class="layui-input  " lay-verify="required">
+        </div>
+        <div class="layui-form-item input-item layui-input-focus">
+            <label for="password">密码</label>
+            <input type="password" placeholder="请输入密码" autocomplete="off" id="password" class="layui-input " lay-verify="required">
+        </div>
+        <div class="checked_box">
+            <input type="checkbox" lay-skin="primary" id="ck_rmbUser"/> 记住用户名和密码 
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn layui-block" lay-filter="login" lay-submit>登录</button>
+        </div>
+        <div class="layui-form-item">
+            <!-- <a href="register.html" class="layui-btn layui-block" >注册</a> -->
+        </div>
+        <div class="layui-form-item layui-row">
+            <a href="javascript:;" class="seraph icon-qq layui-col-xs4 layui-col-sm4 layui-col-md4 layui-col-lg4"></a>
+            <a href="javascript:;" class="seraph icon-wechat layui-col-xs4 layui-col-sm4 layui-col-md4 layui-col-lg4"></a>
+            <a href="javascript:;" class="seraph icon-sina layui-col-xs4 layui-col-sm4 layui-col-md4 layui-col-lg4"></a>
+        </div>
+    </form>
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/canvas-particle.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="js/systemUrl.js"></script>
+	<script type="text/javascript">
+        $(function(){
+               //配置
+            var config = {
+                vx: 4,  //小球x轴速度,正为右，负为左
+                vy: 4,  //小球y轴速度
+                height: 2,  //小球高宽，其实为正方形，所以不宜太大
+                width: 2,
+                count: 300,     //点个数
+                color: "121, 162, 185",     //点颜色
+                stroke: "130,255,255",      //线条颜色
+                dist: 5000,     //点吸附距离
+                e_dist: 30000,  //鼠标吸附加速距离
+                max_conn: 10    //点到点最大连接数
+            }
+            CanvasParticle(config);
+            if ($.cookie("rmbUser") == "true") { 
+                $("#ck_rmbUser").attr("checked", true); 
+                $("#userName").val($.cookie("userName")); 
+                $("#password").val($.cookie("passWord")); 
+            } 
+    layui.use(['form','layer','jquery'],function(){
+             var form = layui.form,
+        layer = parent.layer === undefined ? layui.layer : top.layer 
+        $ = layui.jquery;
+            //登录按钮
+            form.on("submit(login)",function(data){
+                // $(this).text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
+                setTimeout(function(){
+                    console.log($("#ck_rmbUser").is(":checked"))
+                      $.ajax({
+                            type:"POST",
+                            url:zLogin,
+                            dataType:"json",
+                            data:{
+                                login_id: $("#userName").val(),
+                                login_pass: $("#password").val(),
+                            },
+                            success:function(res){
+                                console.log(res)
+                                console.log(res.resp_code)  
+                                if(res.resp_code=="000000"){
+                                       if ($("#ck_rmbUser").is(":checked")== true) { 
+                                            var userName = $("#userName").val(); 
+                                            var passWord = $("#password").val(); 
+                                            console.log(userName)
+                                            console.log(passWord)
+                                            $.cookie("rmbUser", "true", { expires: 3 }); // 存储一个带7天期限的 cookie 
+                                            $.cookie("userName", userName, { expires:3 }); // 存储一个带7天期限的 cookie 
+                                            $.cookie("passWord", passWord, { expires:3 }); // 存储一个带7天期限的 cookie 
+                                        } 
+                                        else { 
+                                            $.cookie("rmbUser", "false", { expires: -1 }); 
+                                            $.cookie("userName", '', { expires: -1 }); 
+                                            $.cookie("passWord", '', { expires: -1 }); 
+                                        } 
+                                        layer.msg(res.resp_message)
+                                        sessionStorage.setItem("identity",res.result.identity)
+                                        sessionStorage.setItem("token",res.result.token)
+                                        sessionStorage.setItem("merchantId",res.result.merchantId)
+                                        sessionStorage.setItem("parent",res.result.parent)
+                                        sessionStorage.setItem("Name",res.result.merchantName)
+                                      window.location.href = "manage_Index_index.html";
+                                }else{
+                                     layer.msg(res.resp_message)
+                               $(this).attr("disabled",false); 
+                                }                  
+                               
+                            },
+                            error:function(err){
+                                console.log(err)
+                                  $(this).attr("disabled",false); 
+                                 layer.msg("网络错误，请稍后重试")
+                            }
+                        })
+                  
+                },1000);
+                return false; 
+            })
+         
+        })
+          
+        })
+	</script>
+	
+</body>
+</html>
