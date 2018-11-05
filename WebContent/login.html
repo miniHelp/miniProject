@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>后台管理系统</title>
+	<title>值班小帮手</title>
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="css/login.css" />
     <link rel="stylesheet" href="css/iconfont.css" />
@@ -10,11 +10,11 @@
 <form class="layui-form">
         <div class="login_face"><img src="images/timg.jpg" class="userAvatar"></div>
         <div class="layui-form-item input-item layui-input-focus">
-            <label for="userName">商家账号</label>
+            <label for="userName">后台账号</label>
             <input type="text" placeholder="请输入商家账号"  autocomplete="off" id="userName" class="layui-input  " lay-verify="required">
         </div>
         <div class="layui-form-item input-item layui-input-focus">
-            <label for="password">密码</label>
+            <label for="password">后台密码</label>
             <input type="password" placeholder="请输入密码" autocomplete="off" id="password" class="layui-input " lay-verify="required">
         </div>
         <div class="checked_box">
@@ -37,6 +37,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="js/systemUrl.js"></script>
+    <script src='js/md5.js'></script>
 	<script type="text/javascript">
         $(function(){
                //配置
@@ -66,14 +67,15 @@
             form.on("submit(login)",function(data){
                 // $(this).text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
                 setTimeout(function(){
-                    console.log($("#ck_rmbUser").is(":checked"))
+                    console.log(zLogin);
+                    var data = {'userName':$("#userName").val(),'passWord':$("#password").val()};
                       $.ajax({
                             type:"POST",
-                            url:zLogin,
+                            url:'http://localhost:8080/miniProject/ListServerlet?method=loginTest',
                             dataType:"json",
                             data:{
-                                login_id: $("#userName").val(),
-                                login_pass: $("#password").val(),
+                                userName: $("#userName").val(),
+                                password: md5($("#password").val())
                             },
                             success:function(res){
                                 console.log(res)

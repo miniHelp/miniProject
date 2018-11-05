@@ -1,7 +1,7 @@
 package serverlet;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +12,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import onLineDAO.UserImp;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import Util.method;
@@ -79,6 +83,9 @@ public class ListServerlet extends HttpServlet {
 			case "auth":
 				// auth(request, response);
 				break;
+			case "loginTest":
+                loginCheckUser(request, response);
+                break;
 			default:
 				break;
 			}
@@ -342,5 +349,35 @@ public class ListServerlet extends HttpServlet {
 		response.getWriter().write(new String("{'result':'靽格摰��'}".getBytes("utf-8"), "ISO-8859-1"));
 		;
 	}
+
+    protected void loginCheckUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+
+        String userName = request.getParameter("userName");
+        String password = request.getParameter("password");
+        System.out.println("userName:"+userName);
+        System.out.println("password:"+password);
+
+        UserImp userImp = new UserImp();
+        JsonNode json = userImp.selectUserByUserId(userName);
+        System.out.println("json:"+json);
+        JSONObject resJson = new JSONObject();
+        if(json.size() != 0){
+            if(!json.get(0).get("PWD").asText().equals(password)){
+                resJson.put("resCode","1001");
+                resJson.put("resMsg","pass word in wrong.");
+                response.getWriter().write(resJson.toString());
+            }else{
+                resJson.put("resCode","0000");
+                resJson.put("resMsg","success");
+            }
+        }else{
+            resJson.put("resCode", "1002");
+            resJson.put("resMsg", "not found.");
+        }
+
+        response.setContentType("application/json");
+        response.getWriter().write(new String(resJson.toString().getBytes("UTF-8"), "UTF-8"));
+    }
 
 }
