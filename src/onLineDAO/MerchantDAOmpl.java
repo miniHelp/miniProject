@@ -98,13 +98,13 @@ public class MerchantDAOmpl implements MerchentDAO {
 			pstmt.executeUpdate();
 			conn.commit();    
 			System.out.println(pstmt.toString());
-			meString += meString + "," + insertMerPayment(plant, type, list);
+			meString += meString + "," + insertMerPayment(id, type, list);
 			System.out.println("------------新增商戶支付方式完成------------");
 			meString += meString + "," + insertMerLog(ip, id, merchantName);
 			System.out.println("------------新增商戶log完成------------");
 			
 			
-			return meString = "商戶新增成功";
+			return meString  += meString + "商戶新增成功";
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return meString = e.getMessage();
@@ -211,6 +211,7 @@ public class MerchantDAOmpl implements MerchentDAO {
 		try {
 			for (int y = 1; y < 3; y++) {
 				for (int i = 0; i < payment.size(); i++) {
+					System.out.println(y+"   ===    "+ i);
 					System.out.println(sql);
 					int num = getPaymentSeq(conn);
 					pstmt.setInt(1, num);// 自增主鍵
@@ -220,7 +221,6 @@ public class MerchantDAOmpl implements MerchentDAO {
 															// 所以兩個都滾完
 					pstmt.executeUpdate();
 					System.out.println(pstmt.toString());
-					System.out.println("商戶 " + i + " 新增成功");
 				}
 
 			}
