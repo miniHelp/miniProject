@@ -241,7 +241,7 @@ var PlantDetal = function(obj) {
 																	+ v
 																	+ "' name='payList' checked='checked'	value="
 																	+ v
-																	+ "/>"+ name);
+																	+ ">"+ name);
 										});
 						$('#appendTable').append("</span></td></tr>");
 
