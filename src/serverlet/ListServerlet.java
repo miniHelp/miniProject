@@ -210,9 +210,12 @@ public class ListServerlet extends HttpServlet {
 			plantNo = request.getParameter("plantNo").trim();
 		// 支付方式
 		String[] payList = null;
-		if (request.getParameterValues("payList").length != 0)
+		if (request.getParameterValues("payList").length != 0){
 			payList = request.getParameterValues("payList");
-
+		for(String current:payList){
+			list.add(Integer.parseInt(current));
+			}
+		}
 		// //
 		String state = null;
 		if (!StringUtils.isEmpty(RSAPublic) && StringUtils.isEmpty(RSAPrivate)) {
@@ -226,7 +229,7 @@ public class ListServerlet extends HttpServlet {
 		try {
 
 			MerchantDAOmpl pl = new MerchantDAOmpl();
-			ListDAOImpl pa = new ListDAOImpl();
+ 			ListDAOImpl pa = new ListDAOImpl();
 			System.out.println("====開始 insertMerchant===");
 			System.out.println("====plantId ===   " + plantId);
 			System.out.println("====merchantName ===   " + merchantName);
@@ -238,6 +241,7 @@ public class ListServerlet extends HttpServlet {
 			System.out.println("====state ===   " + state);
 			System.out.println("====plantNo ===   " + plantNo);
 			System.out.println("====ip ===   " + ip);
+			System.out.println("====list ===   " + list);
 			msg +=  pl.insertMerchent(plantId, merchantName, Md5Key, merchentNo, pswName, RSAPrivate, RSAPublic,
 					state, plantNo, list, ip);
 			System.out.println("------------新增商戶完成---------");
