@@ -19,21 +19,34 @@
                 display: block;
             }
 
+            .dialogDiv{
+                left:84% !important;
+                opacity: 0.9;
+            }
+
             input.text {
                 margin: 0;
-                width: 200px;
+                width: 250px;
                 height: 25px;
             }
 
+            /*登入视窗*/
             fieldset {
                 padding: 0;
                 border: 0;
                 margin-top: 25px;
             }
-            .DialogCss{
-                height: 300px;
-                width: 500px;
-                left:84%;
+
+            /*登入视窗按钮*/
+            .dialogBtn{
+                margin:0px;
+                height: 30px;
+                width: 105px;
+            }
+
+            /*登入视窗按钮文字*/
+            .dialogBtn span{
+                font-size:15px;
             }
         </style>
 	</head>
@@ -218,6 +231,7 @@
 		<script type="text/javascript" src="<c:url value ="/js/util.js" />"></script>
 		<script type="text/javascript" src="<c:url value ="/js/main.js" />"></script>
 		<script type="text/javascript" src="<c:url value ="/js/jquery-ui.min.js" />"></script>
+        <script src='js/md5.js'></script>
 
         <script>
             function checkLength( o, n, min, max ) {
@@ -241,40 +255,102 @@
                 }
             }
 
+            function submitForm(){
+                setTimeout(function(){
+                    console.log('*********************');
+                    console.log('*********************');
+                    console.log($("#password").val());
+                    console.log('*********************');
+                    if($("#name").val() != '' && $("#password").val() != ''){
+                        $.ajax({
+                            type:"POST",
+                            url:'http://localhost:8081/miniProject/ListServerlet?method=loginTest',
+                            header:'Access-Control-Allow-Origin: *;',
+                            dataType:"json",
+                            data:{
+                                userName: $("#name").val(),
+                                password: md5($("#password").val())
+                            },
+                            success:function(res){
+                                console.log(res)
+                                console.log(res.resCode)
+                                if(res.resCode=="0000"){
+                                    if ($("#ck_rmbUser").is(":checked")== true) {
+                                        $.cookie("rmbUser", "true", { expires: 3 }); // 存储一个带7天期限的 cookie
+                                        $.cookie("userName", $("#userName").val(), { expires:3 }); // 存储一个带7天期限的 cookie
+                                        $.cookie("passWord", $("#password").val(), { expires:3 }); // 存储一个带7天期限的 cookie
+                                    }
+                                    else {
+                                        $.cookie("rmbUser", "false", { expires: -1 });
+                                        $.cookie("userName", '', { expires: -1 });
+                                        $.cookie("passWord", '', { expires: -1 });
+                                    }
+                                    alert(res.resMsg);
+                                    /*
+                                     sessionStorage.setItem("identity",res.result.identity)
+                                     sessionStorage.setItem("token",res.result.token)
+                                     sessionStorage.setItem("merchantId",res.result.merchantId)
+                                     sessionStorage.setItem("parent",res.result.parent)
+                                     sessionStorage.setItem("Name",res.result.merchantName)
+                                     */
+                                    window.location.href = "index.jsp";
+                                }else{
+                                    alert(res.resMsg);
+                                    $(this).attr("disabled",false);
+                                }
+                            },
+                            error:function(err){
+                                console.log(err);
+                                $(this).attr("disabled",false);
+                                alert("网络错误，请稍后重试")
+                            }
+                        });
+                    }
+                },1000);
+            }
+
+
             $(function() {
-                var name = $( "#name" ),
-                    password = $( "#password" ),
+                var name = $("#name").val(),
+                    password = $("#password").val(),
                     allFields = $([]).add( name ).add( password );
 
                 $("#loginBtn").bind('click',function(){
                     $( "#loginDiv" ).dialog( "open" );
                 });
                 $("#loginDiv").dialog({
-                    left:'84%',
+                    dialogClass:'dialogDiv',
                     autoOpen: false,
                     modal: true,
-                    opacity:0.9,
-                    buttons: {
-                        "login": function() {
+                    buttons: [
+                    {
+                        text:'login',
+                        'class':'dialogBtn',
+                        click: function(){
                             var bValid = true;
-                            allFields.removeClass( "ui-state-error" );
+//                            allFields.removeClass( "ui-state-error" );
 
-                            bValid = bValid && checkLength( name, "username", 3, 16 );
-                            bValid = bValid && checkLength( password, "password", 5, 16 );
-                            bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "用户名必须由 a-z、0-9、下划线组成，且必须以字母开头。" );
-                            bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "密码字段只允许： a-z 0-9" );
+//                            bValid = bValid && checkLength( name, "username", 3, 16 );
+//                            bValid = bValid && checkLength( password, "password", 5, 16 );
+//                            bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "用户名必须由 a-z、0-9、下划线组成，且必须以字母开头。" );
+//                            bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "密码字段只允许： a-z 0-9" );
 
-                            if ( bValid ) {
+//                            if ( bValid ) {
                                 $( this ).dialog( "close" );
+                                submitForm();
                                 console.log('success');
-                            }
+//                            }
                             console.log('faile');
-                        },
-                        Cancel: function() {
+                        }
+                    },
+                    {
+                        text:'Cancel',
+                        'class':'dialogBtn',
+                        click: function(){
                             console.log('cancel');
                             $( this ).dialog( "close" );
                         }
-                    },
+                    }],
                     close: function() {
                         console.log('close');
                         allFields.val( "" ).removeClass( "ui-state-error" );

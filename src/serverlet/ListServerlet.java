@@ -355,8 +355,6 @@ public class ListServerlet extends HttpServlet {
 	}
 
     protected void loginCheckUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         System.out.println("userName:"+userName);
@@ -380,6 +378,7 @@ public class ListServerlet extends HttpServlet {
             resJson.put("resMsg", "not found.");
         }
 
+        System.out.println("resJson:"+resJson.toString());
         response.setContentType("application/json");
         response.getWriter().write(new String(resJson.toString().getBytes("UTF-8"), "UTF-8"));
     }
