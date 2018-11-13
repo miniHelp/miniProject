@@ -13,23 +13,17 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/jquery-ui.min.css" />
 	</head>
 	<body>
 
 		<!-- Header -->
 			<header id="header" class="alt">
-				<div class="logo"><a href='<c:url value ="${request.contextPath}/newIndex.jsp" />'>mimiProject <span>by CoCo</span></a></div>
-				<a href="#menu">Menu</a>
+				<div class="logo"><a href='<c:url value ="${request.contextPath}/newIndex.jsp" />'>mimiProject</a></div>
+                <a href="<c:url value ="${request.contextPath}/login.html" />">Login</a>
 			</header>
 
 		<!-- Nav -->
-			<nav id="menu">
-				<ul class="links">
-					<li><a href='<c:url value ="${request.contextPath}/newIndex.jsp" />'>Home</a></li>
-					<li><a href='<c:url value ="${request.contextPath}/generic.html"/>'>Generic</a></li>
-					<li><a href='<c:url value ="${request.contextPath}/elements.html"/>'>Elements</a></li>
-				</ul>
-			</nav>
 
 		<!-- Banner -->
 			<section class="banner full">
@@ -48,7 +42,7 @@
 						<header>
 							<p>Help me check this ~~please~~~ Quckly Useing three types to shearch thich you want</p>
 							<h2>Find interface quickly</h2>
-						</header> 
+						</header>
 					</div>
 				</article>
 				<article>
@@ -128,7 +122,7 @@
 			</section>
 
 		<!-- Two -->
-			<section id="two" class="wrapper style3">
+			<section id="two" class="wrapper style2">
 				<div class="inner">
 					<header class="align-center">
 						<p>Nam vel ante sit amet libero scelerisque facilisis eleifend vitae urna</p>
@@ -191,6 +185,5 @@
 		<script type="text/javascript" src="<c:url value ="/js/skel.min.js" />"></script>
 		<script type="text/javascript" src="<c:url value ="/js/util.js" />"></script>
 		<script type="text/javascript" src="<c:url value ="/js/main.js" />"></script>
-	
 	</body>
 </html>
