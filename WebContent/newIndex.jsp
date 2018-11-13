@@ -14,13 +14,37 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="css/main.css" />
         <link rel="stylesheet" href="css/jquery-ui.min.css" />
+        <style>
+            input {
+                display: block;
+            }
+
+            input.text {
+                margin: 0;
+                width: 200px;
+                height: 25px;
+            }
+
+            fieldset {
+                padding: 0;
+                border: 0;
+                margin-top: 25px;
+            }
+            .DialogCss{
+                height: 300px;
+                width: 500px;
+                left:84%;
+            }
+        </style>
 	</head>
 	<body>
 
 		<!-- Header -->
 			<header id="header" class="alt">
 				<div class="logo"><a href='<c:url value ="${request.contextPath}/newIndex.jsp" />'>mimiProject</a></div>
-                <a href="<c:url value ="${request.contextPath}/login.html" />">Login</a>
+                <%--<a href="<c:url value ="${request.contextPath}/login.html" />">Login</a>--%>
+                <a id="loginBtn" >Login</a>
+                <%--<button id="loginBtn">创建新用户</button>--%>
 			</header>
 
 		<!-- Nav -->
@@ -122,14 +146,14 @@
 			</section>
 
 		<!-- Two -->
-			<section id="two" class="wrapper style2">
-				<div class="inner">
-					<header class="align-center">
-						<p>Nam vel ante sit amet libero scelerisque facilisis eleifend vitae urna</p>
-						<h2>Morbi maximus justo</h2>
-					</header>
-				</div>
-			</section>
+			<%--<section id="two" class="wrapper style2">--%>
+				<%--<div class="inner">--%>
+					<%--<header class="align-center">--%>
+						<%--<p>Nam vel ante sit amet libero scelerisque facilisis eleifend vitae urna</p>--%>
+						<%--<h2>Morbi maximus justo</h2>--%>
+					<%--</header>--%>
+				<%--</div>--%>
+			<%--</section>--%>
 
 		<!-- Three -->
 			<section id="three" class="wrapper style2">
@@ -163,21 +187,29 @@
 				</div>
 			</section>
 
-
 		<!-- Footer -->
 			<footer id="footer">
-				<div class="container">
-					<ul class="icons">
-						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
-					</ul>
-				</div>
+				<%--<div class="container">--%>
+					<%--<ul class="icons">--%>
+						<%--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>--%>
+						<%--<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>--%>
+						<%--<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>--%>
+						<%--<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>--%>
+					<%--</ul>--%>
+				<%--</div>--%>
 				<div class="copyright">
 					&copy; Untitled. All rights reserved.
 				</div>
 			</footer>
+
+        <div id="loginDiv" title="管理员登入" style="height:200px;">
+            <form>
+                <fieldset>
+                    <p style="margin: 0px;">名字:</p><input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+                    <p style="margin: 0px;">密码:</p><input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
+                </fieldset>
+            </form>
+        </div>
 
 		<!-- Scripts -->
 		<script type="text/javascript" src="<c:url value ="/js/jquery.min.js" />"></script>
@@ -185,5 +217,70 @@
 		<script type="text/javascript" src="<c:url value ="/js/skel.min.js" />"></script>
 		<script type="text/javascript" src="<c:url value ="/js/util.js" />"></script>
 		<script type="text/javascript" src="<c:url value ="/js/main.js" />"></script>
+		<script type="text/javascript" src="<c:url value ="/js/jquery-ui.min.js" />"></script>
+
+        <script>
+            function checkLength( o, n, min, max ) {
+                if ( o.val().length > max || o.val().length < min ) {
+                    o.addClass( "ui-state-error" );
+                    updateTips( "" + n + " 的长度必须在 " +
+                            min + " 和 " + max + " 之间。" );
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function checkRegexp( o, regexp, n ) {
+                if ( !( regexp.test( o.val() ) ) ) {
+                    o.addClass( "ui-state-error" );
+                    updateTips( n );
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            $(function() {
+                var name = $( "#name" ),
+                    password = $( "#password" ),
+                    allFields = $([]).add( name ).add( password );
+
+                $("#loginBtn").bind('click',function(){
+                    $( "#loginDiv" ).dialog( "open" );
+                });
+                $("#loginDiv").dialog({
+                    left:'84%',
+                    autoOpen: false,
+                    modal: true,
+                    opacity:0.9,
+                    buttons: {
+                        "login": function() {
+                            var bValid = true;
+                            allFields.removeClass( "ui-state-error" );
+
+                            bValid = bValid && checkLength( name, "username", 3, 16 );
+                            bValid = bValid && checkLength( password, "password", 5, 16 );
+                            bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "用户名必须由 a-z、0-9、下划线组成，且必须以字母开头。" );
+                            bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "密码字段只允许： a-z 0-9" );
+
+                            if ( bValid ) {
+                                $( this ).dialog( "close" );
+                                console.log('success');
+                            }
+                            console.log('faile');
+                        },
+                        Cancel: function() {
+                            console.log('cancel');
+                            $( this ).dialog( "close" );
+                        }
+                    },
+                    close: function() {
+                        console.log('close');
+                        allFields.val( "" ).removeClass( "ui-state-error" );
+                    }
+                });
+            });
+        </script>
 	</body>
 </html>
