@@ -275,6 +275,7 @@
                                 console.log(res)
                                 console.log(res.resCode)
                                 if(res.resCode=="0000"){
+                                    /*
                                     if ($("#ck_rmbUser").is(":checked")== true) {
                                         $.cookie("rmbUser", "true", { expires: 3 }); // 存储一个带7天期限的 cookie
                                         $.cookie("userName", $("#userName").val(), { expires:3 }); // 存储一个带7天期限的 cookie
@@ -285,14 +286,14 @@
                                         $.cookie("userName", '', { expires: -1 });
                                         $.cookie("passWord", '', { expires: -1 });
                                     }
-                                    alert(res.resMsg);
-                                    /*
+
                                      sessionStorage.setItem("identity",res.result.identity)
                                      sessionStorage.setItem("token",res.result.token)
                                      sessionStorage.setItem("merchantId",res.result.merchantId)
                                      sessionStorage.setItem("parent",res.result.parent)
                                      sessionStorage.setItem("Name",res.result.merchantName)
                                      */
+
                                     window.location.href = "index.jsp";
                                 }else{
                                     alert(res.resMsg);
