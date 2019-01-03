@@ -113,7 +113,7 @@ var PlantDetal = function(obj) {
 	
 	$('#merchantReDiv').hide();//避免已經有查詢過的商戶列表出來亂
 	$('#plantName').val(name);
-	$('#insertMypayMerchentFormName').val(name + '懶惰建立');
+	$('#insertMypayMerchentFormName').val('小帮手建立' + name);
 	$('#insertMypayMerchentTable').toggle()
 	$('#insertMypayMerchentFormId').val(id);
 	$('#PlantName').val(name);
