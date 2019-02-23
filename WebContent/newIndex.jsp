@@ -216,7 +216,7 @@
 			</footer>
 
         <div id="loginDiv" title="管理员登入" style="height:200px;">
-            <form>
+            <form action="login" method="post">
                 <fieldset>
                     <p style="margin: 0px;">名字:</p><input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
                     <p style="margin: 0px;">密码:</p><input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
@@ -255,60 +255,60 @@
                 }
             }
 
-            function submitForm(){
-                setTimeout(function(){
-                    console.log('*********************');
-                    console.log('*********************');
-                    console.log($("#password").val());
-                    console.log('*********************');
-                    if($("#name").val() != '' && $("#password").val() != ''){
-                        $.ajax({
-                            type:"POST",
-                            url:'http://localhost:8081/miniProject/ListServerlet?method=loginTest',
-                            header:'Access-Control-Allow-Origin: *;',
-                            dataType:"json",
-                            data:{
-                                userName: $("#name").val(),
-                                password: md5($("#password").val())
-                            },
-                            success:function(res){
-                                console.log(res)
-                                console.log(res.resCode)
-                                if(res.resCode=="0000"){
-                                    /*
-                                    if ($("#ck_rmbUser").is(":checked")== true) {
-                                        $.cookie("rmbUser", "true", { expires: 3 }); // 存储一个带7天期限的 cookie
-                                        $.cookie("userName", $("#userName").val(), { expires:3 }); // 存储一个带7天期限的 cookie
-                                        $.cookie("passWord", $("#password").val(), { expires:3 }); // 存储一个带7天期限的 cookie
-                                    }
-                                    else {
-                                        $.cookie("rmbUser", "false", { expires: -1 });
-                                        $.cookie("userName", '', { expires: -1 });
-                                        $.cookie("passWord", '', { expires: -1 });
-                                    }
-
-                                     sessionStorage.setItem("identity",res.result.identity)
-                                     sessionStorage.setItem("token",res.result.token)
-                                     sessionStorage.setItem("merchantId",res.result.merchantId)
-                                     sessionStorage.setItem("parent",res.result.parent)
-                                     sessionStorage.setItem("Name",res.result.merchantName)
-                                     */
-
-                                    window.location.href = "index.jsp";
-                                }else{
-                                    alert(res.resMsg);
-                                    $(this).attr("disabled",false);
-                                }
-                            },
-                            error:function(err){
-                                console.log(err);
-                                $(this).attr("disabled",false);
-                                alert("网络错误，请稍后重试")
-                            }
-                        });
-                    }
-                },1000);
-            }
+            // function submitForm(){
+            //     setTimeout(function(){
+            //         console.log('*********************');
+            //         console.log('*********************');
+            //         console.log($("#password").val());
+            //         console.log('*********************');
+            //         if($("#name").val() != '' && $("#password").val() != ''){
+            //             $.ajax({
+            //                 type:"POST",
+            //                 url:'http://localhost:8081/miniProject/ListServerlet?method=loginTest',
+            //                 header:'Access-Control-Allow-Origin: *;',
+            //                 dataType:"json",
+            //                 data:{
+            //                     userName: $("#name").val(),
+            //                     password: md5($("#password").val())
+            //                 },
+            //                 success:function(res){
+            //                     console.log(res)
+            //                     console.log(res.resCode)
+            //                     if(res.resCode=="0000"){
+            //                         /*
+            //                         if ($("#ck_rmbUser").is(":checked")== true) {
+            //                             $.cookie("rmbUser", "true", { expires: 3 }); // 存储一个带7天期限的 cookie
+            //                             $.cookie("userName", $("#userName").val(), { expires:3 }); // 存储一个带7天期限的 cookie
+            //                             $.cookie("passWord", $("#password").val(), { expires:3 }); // 存储一个带7天期限的 cookie
+            //                         }
+            //                         else {
+            //                             $.cookie("rmbUser", "false", { expires: -1 });
+            //                             $.cookie("userName", '', { expires: -1 });
+            //                             $.cookie("passWord", '', { expires: -1 });
+            //                         }
+			//
+            //                          sessionStorage.setItem("identity",res.result.identity)
+            //                          sessionStorage.setItem("token",res.result.token)
+            //                          sessionStorage.setItem("merchantId",res.result.merchantId)
+            //                          sessionStorage.setItem("parent",res.result.parent)
+            //                          sessionStorage.setItem("Name",res.result.merchantName)
+            //                          */
+			//
+            //                         window.location.href = "index.jsp";
+            //                     }else{
+            //                         alert(res.resMsg);
+            //                         $(this).attr("disabled",false);
+            //                     }
+            //                 },
+            //                 error:function(err){
+            //                     console.log(err);
+            //                     $(this).attr("disabled",false);
+            //                     alert("网络错误，请稍后重试")
+            //                 }
+            //             });
+            //         }
+            //     },1000);
+            // }
 
 
             $(function() {

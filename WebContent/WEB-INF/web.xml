@@ -3,24 +3,44 @@
   <display-name>miniProject</display-name>
   <welcome-file-list>
     <welcome-file>newIndex.jsp</welcome-file>
-  </welcome-file-list>
-  <servlet>
-    <servlet-name>querySeaechOrder</servlet-name>
-    <servlet-class>serverlet.ListServerlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>querySeaechOrder</servlet-name>
-    <url-pattern>/serverlet/*</url-pattern>
-  </servlet-mapping>
-  <servlet>
-        <servlet-name>oauth2callback</servlet-name>
-        <servlet-class>servlet.AuthorizationCodeCallbackServlet</servlet-class>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    </welcome-file-list>
+  <!--<servlet>-->
+    <!--<servlet-name>querySeaechOrder</servlet-name>-->
+    <!--<servlet-class>serverlet.ListServerlet</servlet-class>-->
+  <!--</servlet>-->
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>querySeaechOrder</servlet-name>-->
+    <!--<url-pattern>/serverlet/*</url-pattern>-->
+  <!--</servlet-mapping>-->
+  <!--<servlet>-->
+        <!--<servlet-name>oauth2callback</servlet-name>-->
+        <!--<servlet-class>servlet.AuthorizationCodeCallbackServlet</servlet-class>-->
+        <!--<load-on-startup>1</load-on-startup>-->
+   <!--</servlet>-->
+ <!---->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>oauth2callback</servlet-name>-->
+        <!--<url-pattern>/oauth2callback</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
-   </servlet>
- 
+    </servlet>
     <servlet-mapping>
-        <servlet-name>oauth2callback</servlet-name>
-        <url-pattern>/oauth2callback</url-pattern>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 <!--     <filter> -->
 <!-- 	<filter-name>encodingFilter</filter-name> -->

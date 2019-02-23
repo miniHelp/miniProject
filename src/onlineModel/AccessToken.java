@@ -1,6 +1,9 @@
 package onlineModel;
 
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class AccessToken {
 	String access_token = "";
 	String token_type = "";

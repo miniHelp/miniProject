@@ -66,8 +66,8 @@ table.tftable td {
 	border-color: #444444;
 }
 </style>
-<script src='js/jquery-2.1.1.min.js' charset="gbk">
-<script type="text/javascript" src="<c:url value ="js/indexFunction.js" />" ></script>
+<script src='js/jquery-2.1.1.min.js' charset="gbk"/>
+<script type="text/javascript" src="<c:url value ="/js/indexFunction.js">"/>
 
 </head>
 

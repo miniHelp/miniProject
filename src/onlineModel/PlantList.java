@@ -1,6 +1,9 @@
 package onlineModel;
 
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PlantList {
 	public String getName() {
 		return Name;

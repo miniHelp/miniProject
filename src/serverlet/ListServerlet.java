@@ -22,13 +22,26 @@ import Util.method;
 import onLineDAO.ListDAOImpl;
 import onLineDAO.MerchantDAOmpl;
 import onLineDAO.plantPayMent;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Servlet implementation class ListServerlet
  */
-@WebServlet("/ListServerlet")
+@Controller
 public class ListServerlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	@RequestMapping(value = "/login",method = RequestMethod.POST)
+	public String loginValidation(@RequestParam("name") String name,@RequestParam("password") String passwrod){
+		Map<String,String> loginMap = new HashMap<>();
+		loginMap.put("name",name);
+		loginMap.put("passwrod",passwrod);
+
+		return "loginCheckUser";
+	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -83,9 +96,9 @@ public class ListServerlet extends HttpServlet {
 			case "auth":
 				// auth(request, response);
 				break;
-			case "loginTest":
-                loginCheckUser(request, response);
-                break;
+//			case "loginTest":
+                //loginCheckUser(request, response);
+//                break;
 			default:
 				break;
 			}
@@ -354,6 +367,7 @@ public class ListServerlet extends HttpServlet {
 		;
 	}
 
+	@RequestMapping("/loginCheckUser")
     protected void loginCheckUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
