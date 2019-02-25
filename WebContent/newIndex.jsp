@@ -56,7 +56,7 @@
 			<header id="header" class="alt">
 				<div class="logo"><a href='<c:url value ="${request.contextPath}/newIndex.jsp" />'>mimiProject</a></div>
                 <%--<a href="<c:url value ="${request.contextPath}/login.html" />">Login</a>--%>
-                <a id="loginBtn" >Login</a>
+                <a id="loginBtn" href="<%=request.getContextPath()%>/login.jsp">Login</a>
                 <%--<button id="loginBtn">创建新用户</button>--%>
 			</header>
 
@@ -215,14 +215,14 @@
 				</div>
 			</footer>
 
-        <div id="loginDiv" title="管理员登入" style="height:200px;">
-            <form action="login" method="post">
-                <fieldset>
-                    <p style="margin: 0px;">名字:</p><input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
-                    <p style="margin: 0px;">密码:</p><input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">
-                </fieldset>
-            </form>
-        </div>
+        <%--<div id="loginDiv" title="管理员登入" style="height:200px;">--%>
+            <%--<form action="login" method="post">--%>
+                <%--<fieldset>--%>
+                    <%--<p style="margin: 0px;">名字:</p><input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">--%>
+                    <%--<p style="margin: 0px;">密码:</p><input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all">--%>
+                <%--</fieldset>--%>
+            <%--</form>--%>
+        <%--</div>--%>
 
 		<!-- Scripts -->
 		<script type="text/javascript" src="<c:url value ="/js/jquery.min.js" />"></script>

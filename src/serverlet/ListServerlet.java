@@ -9,39 +9,83 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import onLineDAO.UserImp;
+import onlineModel.PlantList;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.Header;
 import org.json.JSONObject;
 import Util.method;
 import onLineDAO.ListDAOImpl;
-import onLineDAO.MerchantDAOmpl;
+import onLineDAO.MerchantDAOImpl;
 import onLineDAO.plantPayMent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Servlet implementation class ListServerlet
  */
+@SessionAttributes(value={"attr1","attr2"})
 @Controller
 public class ListServerlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final int EXPIRY_TIME_A_DAY = 60 * 60 * 24;
 
-	@RequestMapping(value = "/login",method = RequestMethod.POST)
-	public String loginValidation(@RequestParam("name") String name,@RequestParam("password") String passwrod){
-		Map<String,String> loginMap = new HashMap<>();
-		loginMap.put("name",name);
-		loginMap.put("passwrod",passwrod);
+	@Autowired
+	private  UserImp userImp;
 
-		return "loginCheckUser";
-	}
+	@Autowired
+	private ListDAOImpl pa;
+
+
+
+//	@ModelAttribute
+//	public String loginValidation(@RequestParam(value = "method") String doWhat){	//要做什么动作
+//
+//		String nextPageOrAction = "";
+//		String params = doWhat;
+//		System.out.println("doWhat:" + doWhat);
+//		switch (params) {
+//			case "query":
+////					query(request, response);
+//				break;
+//			case "modify":
+////					modify(request, response);
+//				break;
+//			case "insertMypay":
+////					insertMypay(request, response);
+//				break;
+//			case "merchantList":
+////					merchantList(request, response);
+//				break;
+//			case "insertMerchant":// 新增一筆商戶
+////					insertMerchant(request, response);
+//				break;
+//			case "findPlant":// 找到平台資訊
+////					findPlant(request, response);
+//				break;
+//			case "merchantDetele":// 幹掉商戶
+////					merchantDetele(request, response);
+//				break;
+//			case "auth":
+//				// auth(request, response);
+//				break;
+//			case "loginTest":
+//				nextPageOrAction = "forward:/loginCheckUser";
+////                break;
+//			default:
+//				break;
+//		}
+//		return nextPageOrAction;
+//	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -72,9 +116,6 @@ public class ListServerlet extends HttpServlet {
 					: method.getString(request.getInputStream(), "utf-8", "method");
 			System.out.println("method:" + params);
 			switch (params) {
-			case "query":
-				query(request, response);
-				break;
 			case "modify":
 				modify(request, response);
 				break;
@@ -115,7 +156,7 @@ public class ListServerlet extends HttpServlet {
 		try {
 			if (StringUtils.isNotEmpty(request.getParameter("id"))) {
 				merchId = Integer.valueOf(request.getParameter("id"));
-				MerchantDAOmpl pa = new MerchantDAOmpl();
+				MerchantDAOImpl pa = new MerchantDAOImpl();
 				mString += pa.deleteMerchent(merchId);
 			} else {
 				System.out.println("沒有傳入商戶ID merchId is null");
@@ -241,7 +282,7 @@ public class ListServerlet extends HttpServlet {
 
 		try {
 
-			MerchantDAOmpl pl = new MerchantDAOmpl();
+			MerchantDAOImpl pl = new MerchantDAOImpl();
  			ListDAOImpl pa = new ListDAOImpl();
 			System.out.println("====開始 insertMerchant===");
 			System.out.println("====plantId ===   " + plantId);
@@ -333,29 +374,38 @@ public class ListServerlet extends HttpServlet {
 	//
 	// }
 
-	protected void query(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String id = request.getParameter("id");
-		String name = request.getParameter("name");
-		String url = request.getParameter("url");
+
+	@RequestMapping(value = "/query",method = RequestMethod.POST)
+	protected String query(@RequestParam("id") String platformId,@RequestParam("url") String platformUrl
+			,@RequestParam("name") String platformName,Map<String,Object> map) throws Exception {
 		String colum = "";
 		String str = "";
-		ListDAOImpl pa = new ListDAOImpl();
-		if (StringUtils.isNotBlank(id)) {
+		if (StringUtils.isNotBlank(platformId)) {
 			colum = "id";
-			str = id;
-		} else if (StringUtils.isNotBlank(name)) {
+			str = platformId;
+		} else if (StringUtils.isNotBlank(platformName)) {
 			colum = "name";
-			str = new String(name.getBytes("iso-8859-1"), "utf-8");
-		} else if (StringUtils.isNotBlank(url)) {
+			str = new String(platformName.getBytes("iso-8859-1"), "utf-8");
+		} else if (StringUtils.isNotBlank(platformUrl)) {
 			colum = "url";
-			str = url;
+			str = platformUrl;
 		}
 		pa.PlantNoList(colum, str);
 		List<Map<String, String>> list = pa.PlantNoList(colum, str);
-		request.setAttribute("list", list);
-		request.setAttribute("method", "query");
-		request.setAttribute("name", str);
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+
+		PlantList platformInfo = new PlantList();
+		//platformInfo.setId(list.get());
+
+
+		System.out.println("查詢到的接口資料為:");
+
+
+
+		map.put("list", list);
+		map.put("method", "query");
+		map.put("name", str);
+
+		return "index";
 	}
 
 	protected void modify(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -364,37 +414,45 @@ public class ListServerlet extends HttpServlet {
 		ListDAOImpl pa = new ListDAOImpl();
 		pa.updateUrl(id, url);
 		response.getWriter().write(new String("{'result':'靽格摰��'}".getBytes("utf-8"), "ISO-8859-1"));
-		;
+
 	}
 
-	@RequestMapping("/loginCheckUser")
-    protected void loginCheckUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
+	@RequestMapping(value = "/loginCheckUser",method = RequestMethod.POST)
+    protected String loginCheckUser(@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
+			,Map<String,Object> map) throws Exception {
         System.out.println("userName:"+userName);
-        System.out.println("password:"+password);
+        System.out.println("passWord:"+passWord);
 
-        UserImp userImp = new UserImp();
         JsonNode json = userImp.selectUserByUserId(userName);
         System.out.println("json:"+json);
         JSONObject resJson = new JSONObject();
+
+
         if(json.size() != 0){
-            if(!json.get(0).get("PWD").asText().equals(password)){
-                resJson.put("resCode","1001");
-                resJson.put("resMsg","pass word in wrong.");
-                response.getWriter().write(resJson.toString());
+            if(!json.get(0).get("PWD").asText().equals(passWord)){
+				map.put("resCode","1001");
+				map.put("resMsg","pass word in wrong.");
             }else{
-                resJson.put("resCode","0000");
-                resJson.put("resMsg","success");
+				map.put("resCode","0000");
+				map.put("resMsg","success");
             }
         }else{
-            resJson.put("resCode", "1002");
-            resJson.put("resMsg", "not found.");
+			map.put("resCode", "1002");
+			map.put("resMsg", "not found.");
         }
 
-        System.out.println("resJson:"+resJson.toString());
-        response.setContentType("application/json");
-        response.getWriter().write(new String(resJson.toString().getBytes("UTF-8"), "UTF-8"));
+        System.out.println("错误讯息为:"+map);
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type","application/json");
+
+		Cookie cookie = new Cookie(userName,passWord);
+		cookie.setMaxAge(EXPIRY_TIME_A_DAY*7); //存活时间七天
+		map.put("cookie",cookie);
+
+        return "index";
     }
+
+
 
 }

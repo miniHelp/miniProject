@@ -3,12 +3,15 @@ package onLineDAO;
 import Util.DBQueryRunner;
 import Util.GetConnection;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
  * Created by Caster on 2018/11/5.
  */
+@Component
 public class UserImp implements UserDAO{
     @Override
     public JsonNode selectUserByUserId(String userName) throws SQLException {

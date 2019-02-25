@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public interface ListDOA {
+public interface ListDAO {
 	public List<Map<String, String>> PlantNoList (String colum , String str) throws Exception;
 	public List<Map<String, String>> merChantList (int colum) throws SQLException;
 	public boolean isPlanNo(String oldUrl , String newUrl);

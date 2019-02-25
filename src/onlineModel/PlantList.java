@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PlantList {
+	private String Name;
+	private String Url;
+	private int id;
+
 	public String getName() {
 		return Name;
 	}
@@ -23,9 +27,13 @@ public class PlantList {
 	public void setId(int id) {
 		this.id = id;
 	}
-	private String Name ;
-	private String Url ;
-	private int id ;
-	
-	
+
+	@Override
+	public String toString() {
+		return "PlantList{" +
+				"Name='" + Name + '\'' +
+				", Url='" + Url + '\'' +
+				", id=" + id +
+				'}';
+	}
 }

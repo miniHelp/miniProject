@@ -12,8 +12,10 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import Util.GetConnection;
+import org.springframework.stereotype.Component;
 
-public class ListDAOImpl implements ListDOA {
+@Component
+public class ListDAOImpl implements ListDAO {
 
 	@Override
 	public String insertMypay(String name, int id) throws SQLException {

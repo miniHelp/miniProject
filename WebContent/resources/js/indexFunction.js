@@ -83,7 +83,7 @@ var changeDiv = function() {
 }
 
 var home = function() {
-	window.location.href = '../../index.jsp';
+	window.location.href = '../../WEB-INF/views/index.jsp';
 }
 
 // 新增mypay平台

@@ -210,9 +210,7 @@ table.merchantReDiv {
 		style='display: none; position: fixed; top: 38px'>
 		<h5>MyPay Query Order 查詢是哪個接口</h5>
 		<form id='SeaechOrderForm'
-			action='<c:url value ="${request.contextPath}/serverlet/ListServerlet" />'
-			method='post' name='SeaechOrderForm'>
-
+			action="<%=request.getContextPath()%>/query" method='post' name='SeaechOrderForm'>
 			<table class="tftable" border="1">
 				<tr>
 					<th style="width: 150px;">參數名稱</th>
@@ -231,12 +229,9 @@ table.merchantReDiv {
 					<td>接口名稱：</td>
 					<td><input type='text' name='name' value='${name}' id="name" /></td>
 				</tr>
-
 			</table>
-
-			<input type="submit" value='送出' id="searchSub" /> <input
-				type="button" class="reset" value='清空' /> <input type="hidden"
-				name="method" value="query" />
+			<input type="submit" value='送出' id="searchSub" />
+			<input type="button" class="reset" value='清空' />
 		</form>
 
 	</div>
@@ -310,13 +305,12 @@ table.merchantReDiv {
 
 
 	<!-- 
-		查詢接口的List
+		查詢接口的List，回傳的查詢訊息會顯示在這邊
 		 -->
 
 	<div id='resultDiv' class='formDiv'
 		style='display: none; position: relative; left: 700px'>
 		<h5>查詢接口:${param.url}${name}</h5>
-
 
 		<table class="merchantReDiv" border="1" width='850px'>
 			<tr>

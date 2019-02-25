@@ -11,7 +11,7 @@
 	http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
     http://www.springframework.org/schema/mvc">
     <!-- 	配置動掃描的jar，掃描controller,model的java檔 -->
-    <context:component-scan base-package="onLineDAO"/>
+    <context:component-scan base-package="onLineDAO,serverlet"/>
 
     <!--數字越大優先度越低的視圖解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

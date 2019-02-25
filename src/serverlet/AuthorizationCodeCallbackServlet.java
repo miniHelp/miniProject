@@ -12,11 +12,13 @@ import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
+import org.springframework.stereotype.Controller;
 
 /**
  * Servlet implementation class AuthorizationCodeCallbackServlet
  */
-@WebServlet("/AuthorizationCodeCallbackServlet")
+//@WebServlet("/AuthorizationCodeCallbackServlet")
+@Controller
 public class AuthorizationCodeCallbackServlet extends AbstractAuthorizationCodeCallbackServlet {
 	private static final long serialVersionUID = 1L;
 	private static String firstPage = "" ;
