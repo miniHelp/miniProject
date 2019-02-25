@@ -9,13 +9,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import onlineModel.MerchantVO;
+import onlineModel.PlatformVO;
 import org.apache.commons.lang3.StringUtils;
 
 import Util.GetConnection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ListDAOImpl implements ListDAO {
+
 
 	@Override
 	public String insertMypay(String name, int id) throws SQLException {
@@ -57,12 +61,12 @@ public class ListDAOImpl implements ListDAO {
 	}
 
 	@Override
-	public List<Map<String, String>> PlantNoList(String colum, String str) throws Exception {
+	public List<PlatformVO> PlantNoList(String colum, String str) throws Exception {
 		String sql = "select id,name,url from py_payment_platform where " + colum + " like ? order by id asc";
 		System.out.println(sql);
 		GetConnection get = new GetConnection();
 		Connection conn = get.getConnection();
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		List<PlatformVO> list = new ArrayList<PlatformVO>();
 		PreparedStatement  pstmt = null;
 
 		try {
@@ -71,12 +75,13 @@ public class ListDAOImpl implements ListDAO {
 			pstmt.setString(1, "%" + str + "%");
 			
 			ResultSet result = pstmt.executeQuery();
+			PlatformVO platformVO = null;
 			while (result.next()) {
-				Map<String, String> resultMap = new HashMap<>();
-				resultMap.put("id", result.getString(1));
-				resultMap.put("name", result.getString(2));
-				resultMap.put("url", result.getString(3));
-				list.add(resultMap);
+				platformVO = new PlatformVO();
+				platformVO.setId(result.getString(1));
+				platformVO.setName(result.getString(2));
+				platformVO.setUrl(result.getString(3));
+				list.add(platformVO);
 			}
 
 			System.out.println(list);
@@ -125,13 +130,13 @@ public class ListDAOImpl implements ListDAO {
 	}
 
 	@Override
-	public List<Map<String, String>> merChantList(int colum) throws SQLException {
+	public List<MerchantVO> merChantList(int colum) throws SQLException {
 		System.out.println("into == merChantList");
 		String sql = "select id ,PAYMENT_PLATFORM_ID , NAME , MERCHANT_NO ,PLATFORM_NO , MERCHANT_PWD ,SIGNATURE_KEY ,SIGNATURE_TYPE ,RSA_MERCHANT_PRIVATE_KEY ,RSA_MERCHANT_PUBLIC_KEY ,RSA_SERVER_PUBLIC_KEY from PY_MERCHANT where PAYMENT_PLATFORM_ID = ?  order by id asc";
 		System.out.println(sql);
 		GetConnection get = new GetConnection();
 		Connection conn = get.getMypayConnection();
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		List<MerchantVO> list = new ArrayList<MerchantVO>();
 
 		try {
 			// 建立字串
@@ -139,22 +144,21 @@ public class ListDAOImpl implements ListDAO {
 			pstmt.setInt(1, colum);
 
 			ResultSet result = pstmt.executeQuery();
+			MerchantVO merchantVO = null;
 			while (result.next()) {
-				Map<String, String> resultMap = new HashMap<>();
-				resultMap.put("ID", result.getString(1));// 識別ID, 自動遞增
-				resultMap.put("PAYMENT_PLATFORM_ID", result.getString(2));// 哪個平台
-				resultMap.put("NAME", result.getString(3));// 商戶名稱
-				resultMap.put("MERCHANT_NO", result.getString(4));// 商戶號
-				resultMap.put("PLATFORM_NO", result.getString(5));// 平台號
-				resultMap.put("MERCHANT_PWD", result.getString(6));// 商戶密碼
-				resultMap.put("SIGNATURE_KEY", result.getString(7));// 簽章密鑰(MD5)
-				resultMap.put("SIGNATURE_TYPE", result.getString(8));// 簽章種類;1-MD5,
-																		// 2-RSA,3-RSA(PFX)
-				resultMap.put("RSA_MERCHANT_PRIVATE_KEY", result.getString(9));// 商戶私鑰
-				resultMap.put("RSA_MERCHANT_PUBLIC_KEY", result.getString(10));// 商戶公鑰
-				resultMap.put("RSA_SERVER_PUBLIC_KEY", result.getString(11));// 服務器公鑰
-
-				list.add(resultMap);
+				merchantVO = new MerchantVO();
+				merchantVO.setMerchantId(result.getString(1));
+				merchantVO.setPayment_platform_id(result.getString(2));
+				merchantVO.setName(result.getString(3));
+				merchantVO.setMerchant_no(result.getString(4));
+				merchantVO.setPlatform_no(result.getString(5));
+				merchantVO.setMerchant_pwd(result.getString(6));
+				merchantVO.setSignature_key(result.getString(7));
+				merchantVO.setSignature_type(result.getString(8));
+				merchantVO.setRsa_merchant_private_key(result.getString(9));
+				merchantVO.setRsa_merchant_public_key(result.getString(10));
+				merchantVO.setRsa_server_public_key(result.getString(11));
+				list.add(merchantVO);
 			}
 
 			System.out.println(list);
@@ -165,9 +169,7 @@ public class ListDAOImpl implements ListDAO {
 		} finally {
 			conn.close();
 		}
-
 		return list;
-
 	}
 	
 	

@@ -4,10 +4,10 @@ package onlineModel;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlantList {
+public class PlatformVO { //接口資料的bean
 	private String Name;
 	private String Url;
-	private int id;
+	private String id;
 
 	public String getName() {
 		return Name;
@@ -21,10 +21,10 @@ public class PlantList {
 	public void setUrl(String url) {
 		Url = url;
 	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

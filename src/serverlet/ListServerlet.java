@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import onLineDAO.UserImp;
-import onlineModel.PlantList;
+import onlineModel.MerchantVO;
+import onlineModel.PlatformVO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
@@ -121,9 +122,6 @@ public class ListServerlet extends HttpServlet {
 				break;
 			case "insertMypay":
 				insertMypay(request, response);
-				break;
-			case "merchantList":
-				merchantList(request, response);
 				break;
 			case "insertMerchant":// 新增一筆商戶
 				insertMerchant(request, response);
@@ -313,22 +311,25 @@ public class ListServerlet extends HttpServlet {
 
 	}
 
-	private void merchantList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	//找所有商户的资讯
+	@RequestMapping(value = "/merchantList",method = RequestMethod.POST)
+	private String merchantList(@RequestParam("id") String platformId,Map<String,Object> map) throws Exception {
 		System.out.println("merchantList");
-		int id = 0;
 		String meString = "";// 回應訊息
-		if (StringUtils.isNotEmpty(request.getParameter("id")))
-			id = Integer.valueOf(request.getParameter("id"));
+		int id = 0;
+		if (StringUtils.isNotEmpty(platformId))
+			id = Integer.valueOf(platformId);
 		else
 			System.out.println("id is null");
 
-		ListDAOImpl pa = new ListDAOImpl();
-		List<Map<String, String>> merList = pa.merChantList(id);
-		List<Map<String, String>> list = pa.PlantNoList("id", String.valueOf(id));
-		request.setAttribute("merList", merList);
-		request.setAttribute("list", list);
-		request.setAttribute("method", "merchantList");
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		pa.merChantList(id);
+		List<MerchantVO> merList = pa.merChantList(id);
+		List<PlatformVO> platlist = pa.PlantNoList("id", String.valueOf(id));
+		map.put("merList", merList);
+		map.put("platformList", platlist);
+		map.put("method", "merchantList");
+
+		return "index";
 
 	}
 
@@ -390,18 +391,13 @@ public class ListServerlet extends HttpServlet {
 			colum = "url";
 			str = platformUrl;
 		}
-		pa.PlantNoList(colum, str);
-		List<Map<String, String>> list = pa.PlantNoList(colum, str);
 
-		PlantList platformInfo = new PlantList();
-		//platformInfo.setId(list.get());
+		List<PlatformVO> list = pa.PlantNoList(colum, str);
 
+		map.put("platformInfoList",list);
 
-		System.out.println("查詢到的接口資料為:");
+		System.out.println("查詢到的接口資料為:" + list);
 
-
-
-		map.put("list", list);
 		map.put("method", "query");
 		map.put("name", str);
 

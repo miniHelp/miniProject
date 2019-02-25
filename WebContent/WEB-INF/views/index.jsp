@@ -326,40 +326,41 @@ table.merchantReDiv {
 					<td colspan="4">查無此資料</td>
 				</tr>
 			</c:if>
-			<c:forEach items="${list }" var="data">
+			<c:forEach items="${platformInfoList}" var="data">
 				<tr>
 					<td>${data.id}</td>
 					<td>${data.name}</td>
 					<td>${data.url}</td>
-					<td><input type="button" class="btn" value="修改"
+					<td>
+						<input type="button" class="btn" value="修改"
 						id="modifyPop${data.id}" dataId="${data.id}"
-						dataName="${data.name}" dataUrl="${data.url}" /></td>
+						dataName="${data.name}" dataUrl="${data.url}" />
+					</td>
 					<td><input type="button" value="超懶新增mypay平台" id="insertMypay"
 						dataId="${data.id}" dataName="${data.name}"
-						onclick='insertMypay(this);' /> <input type="button"
+						onclick='insertMypay(this);' />
+						<input type="button"
 						value="超懶一鍵新增商戶" id="insertMypayMerchent" dataId="${data.id}"
 						dataName="${data.name}"
-						dataUrl="<c:url value ="${request.contextPath}/serverlet/ListServerlet" />"
-						onclick='PlantDetal(this);' /> <input type="button"
+						dataUrl="<c:url value ="${request.contextPath}/ListServerlet" />"
+						onclick='PlantDetal(this);' />
+						<input type="button"
 						id="merchantList" value="mypay商戶列表" dataId="${data.id}"
-						dataName="${data.name}" onclick='showMerchList(this);' /></td>
+						dataName="${data.name}" onclick='showMerchList(this);' />
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
 		<input type="button" name="back" value="上一頁"
-			onclick="javascript:history.back(-1);" /> <input type="button"
-			id="home" value="回首頁" />
+			onclick="javascript:history.back(-1);" /><input type="button" id="home" value="回首頁" />
 	</div>
 
 	<!--  
 		查詢接口資料
 	-->
-	<form name='merchantListForm'
-		action='<c:url value ="${request.contextPath}/serverlet/ListServerlet" />'
-		method='post'>
-		<input type='hidden' id='merchantListId' name='id' value=''> <input
-			type="hidden" id='insertMypayForm' name="method" value="merchantList" />
-
+	<form name='merchantListForm' action="<%=request.getContextPath()%>/merchantList" method='post'>
+		<input type='hidden' id='merchantListId' name='id' value=''>
+		<input type="hidden" id='insertMypayForm' name="method" value="merchantList">
 	</form>
 
 
