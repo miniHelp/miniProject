@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE HTML>
 <!--
 /*
@@ -336,17 +337,11 @@ table.merchantReDiv {
 						id="modifyPop${data.id}" dataId="${data.id}"
 						dataName="${data.name}" dataUrl="${data.url}" />
 					</td>
-					<td><input type="button" value="超懶新增mypay平台" id="insertMypay"
-						dataId="${data.id}" dataName="${data.name}"
-						onclick='insertMypay(this);' />
-						<input type="button"
-						value="超懶一鍵新增商戶" id="insertMypayMerchent" dataId="${data.id}"
-						dataName="${data.name}"
-						dataUrl="<c:url value ="${request.contextPath}/ListServerlet" />"
-						onclick='PlantDetal(this);' />
-						<input type="button"
-						id="merchantList" value="mypay商戶列表" dataId="${data.id}"
-						dataName="${data.name}" onclick='showMerchList(this);' />
+					<td>
+						<input type="button" value="超懶新增mypay平台" id="insertMypay" dataId="${data.id}" dataName="${data.name}" onclick='insertMypay(this);' />
+						<input type="button" value="超懶一鍵新增商戶" id="insertMypayMerchent" dataId="${data.id}" dataName="${data.name}"
+							   dataUrl="<c:url value ="${request.contextPath}/ListServerlet" />" onclick='PlantDetal(this);' />
+						<input type="button" id="merchantList" value="mypay商戶列表" dataId="${data.id}" dataName="${data.name}" onclick='showMerchList(this);' />
 					</td>
 				</tr>
 			</c:forEach>
@@ -360,7 +355,7 @@ table.merchantReDiv {
 	-->
 	<form name='merchantListForm' action="<%=request.getContextPath()%>/merchantList" method='post'>
 		<input type='hidden' id='merchantListId' name='id' value=''>
-		<input type="hidden" id='insertMypayForm' name="method" value="merchantList">
+		<input type="hidden" name="method" value="merchantList">
 	</form>
 
 
@@ -454,16 +449,19 @@ table.merchantReDiv {
 	新增一筆mypay平台的from表單
 	 -->
 
+	<form:form action="<%=request.getContextPath()%>/insertMypay" method="post" modelAttribute="platform">
+		<input:hidden path=""/>
+		<input type='hidden' id='insertMypayFormId' name='platform_id' value=''>
+		<input type='hidden' id='insertMypayFormName' name='platform_name' value=''>
+		<input type="hidden" name="method" value="insertMypay">
+	</form:form>
 
-	<form name='insertMypayPlantForm'
-		action='<c:url value ="${request.contextPath}/serverlet/ListServerlet" />'
-		method='post'>
-		<input type='hidden' id='insertMypayFormId' name='id' value=''>
-		<input type='hidden' id='insertMypayFormName' name='name' value=''>
-		<input type="hidden" id='insertMypayForm' name="method"
-			value="insertMypay" />
-
-	</form>
+	<%--<form name='insertMypayPlantForm'--%>
+	<%--action="<%=request.getContextPath()%>/insertMypay" method='post'>--%>
+	<%--<input type='hidden' id='insertMypayFormId' name='id' value=''>--%>
+	<%--<input type='hidden' id='insertMypayFormName' name='name' value=''>--%>
+	<%--<input type="hidden" name="method" value="insertMypay">--%>
+	<%--</form>--%>
 
 
 	<!-- 
@@ -471,44 +469,77 @@ table.merchantReDiv {
 	 -->
 	<div id='insertMypayMerchentTable' class='formDiv'
 		style='display: none; position: relative; left: 700px'>
-		<form name='insertMypayMerchentForm'
-			action='<c:url value ="${request.contextPath}/serverlet/ListServerlet" />'
-			method='post'>
+
+		<%--改用spring的form标签来写--%>
+		<%--@elvariable id="getContextPath" type=""--%>
+		<form:form action="<%=request.getContextPath()%>/insertMerchant" method="post" modelAttribute="merchant">
 			<c:forEach items="${list}" var="data">
 				<table class="merchantReDiv" id="appendTable" name="merchantReName"
-					border="1" width='850px'>
+				border="1" width='850px'>
 					<tr>
 						<th style="width: 150px;">參數名稱</th>
 						<th>參數值</th>
 					</tr>
 					<tr>
 						<td>接口：</td>
-						<td><input type='text' id='plantName' name='plantName'
-							value='' readOnly></td>
+						<td>
+							<form:input path="name"/>
+							<input type='text' id='plantName' name='' value='' readOnly>
+						</td>
 					</tr>
 					<tr>
 						<td>商戶名稱：</td>
-						<td><input type='text' id='insertMypayMerchentFormName'
-							name='merchentName' value=''><span id="merchentTips"
-							style='color: red'></span></td>
+						<td>
+							<form:input id='insertMypayMerchentFormName' path="name" name='merchentName'/>
+							<span id="merchentTips" style='color: red'></span>
+						</td>
 					</tr>
 					<tr>
 						<td>商戶號：</td>
-						<td><input type='text' id='merchentNo' name='merchentNo'
-							value=''></td>
+						<td>
+							<form:input path="merchant_no" name='merchentNo'/>
+						</td>
 					</tr>
 				</table>
-
-
-
-
-
-				<input type='hidden' id='insertMypayMerchentFormId' name='id'
-					value=''>
-				<input type="hidden" id='insertMypayMerchentForm' name="method"
-					value="insertMerchant" />
+			<input type='hidden' id='insertMypayMerchentFormId' name='id'
+			value=''>
+			<input type="hidden" id='insertMypayMerchentForm' name="method"
+			value="insertMerchant" />
 			</c:forEach>
-		</form>
+		</form:form>
+		<%--<form name='insertMypayMerchentForm'--%>
+			<%--action='<c:url value ="${request.contextPath}/serverlet/ListServerlet" />'--%>
+			<%--method='post'>--%>
+			<%--<c:forEach items="${list}" var="data">--%>
+				<%--<table class="merchantReDiv" id="appendTable" name="merchantReName"--%>
+					<%--border="1" width='850px'>--%>
+					<%--<tr>--%>
+						<%--<th style="width: 150px;">參數名稱</th>--%>
+						<%--<th>參數值</th>--%>
+					<%--</tr>--%>
+					<%--<tr>--%>
+						<%--<td>接口：</td>--%>
+						<%--<td><input type='text' id='plantName' name='plantName'--%>
+							<%--value='' readOnly></td>--%>
+					<%--</tr>--%>
+					<%--<tr>--%>
+						<%--<td>商戶名稱：</td>--%>
+						<%--<td><input type='text' id='insertMypayMerchentFormName'--%>
+							<%--name='merchentName' value=''><span id="merchentTips"--%>
+							<%--style='color: red'></span></td>--%>
+					<%--</tr>--%>
+					<%--<tr>--%>
+						<%--<td>商戶號：</td>--%>
+						<%--<td><input type='text' id='merchentNo' name='merchentNo'--%>
+							<%--value=''></td>--%>
+					<%--</tr>--%>
+				<%--</table>--%>
+				<%--<input type='hidden' id='insertMypayMerchentFormId' name='id'--%>
+					<%--value=''>--%>
+				<%--<input type="hidden" id='insertMypayMerchentForm' name="method"--%>
+					<%--value="insertMerchant" />--%>
+			<%--</c:forEach>--%>
+		<%--</form>--%>
 	</div>
 	<!-- 
 	修改網關地址的彈窗

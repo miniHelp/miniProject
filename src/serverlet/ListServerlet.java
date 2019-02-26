@@ -29,12 +29,13 @@ import onLineDAO.plantPayMent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Servlet implementation class ListServerlet
  */
-@SessionAttributes(value={"attr1","attr2"})
 @Controller
 public class ListServerlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -46,7 +47,17 @@ public class ListServerlet extends HttpServlet {
 	@Autowired
 	private ListDAOImpl pa;
 
+	@Autowired
+	private HttpServletRequest request;
 
+
+
+	@ModelAttribute
+	public void getObject(Map<String,Object> map){
+		System.out.println("我有进来modeAttribute");
+		map.put("merchant",new MerchantVO());	//商戶
+		map.put("platform",new PlatformVO());	//接口
+	}
 
 //	@ModelAttribute
 //	public String loginValidation(@RequestParam(value = "method") String doWhat){	//要做什么动作
@@ -88,22 +99,6 @@ public class ListServerlet extends HttpServlet {
 //		return nextPageOrAction;
 //	}
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public ListServerlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doPost(request, response);
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -121,10 +116,8 @@ public class ListServerlet extends HttpServlet {
 				modify(request, response);
 				break;
 			case "insertMypay":
-				insertMypay(request, response);
-				break;
 			case "insertMerchant":// 新增一筆商戶
-				insertMerchant(request, response);
+				//insertMerchant(request, response);
 				break;
 			case "findPlant":// 找到平台資訊
 				findPlant(request, response);
@@ -212,7 +205,13 @@ public class ListServerlet extends HttpServlet {
 
 	}
 
-	private void insertMerchant(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	//新增商户
+	@RequestMapping(value = "/insertMerchant",method = RequestMethod.POST)
+	private void insertMerchant(@ModelAttribute("merchant") MerchantVO merchant,
+									@RequestParam("id") String merchantId,@RequestParam("merchentName") String merchantName,
+								@RequestParam("merchentNo") String merchantNo,Map<String,Object> map) throws Exception {
+
+
 		System.out.println("====insertMerchant===");
 		String msg = "";
 		List<Integer> list = new ArrayList();
@@ -220,22 +219,21 @@ public class ListServerlet extends HttpServlet {
 		// 第一步 先判斷拿到的值都不是空值
 		// 接口ID
 		int plantId = 0;
-		if (StringUtils.isNotEmpty(request.getParameter("id")))
-			plantId = Integer.valueOf(request.getParameter("id"));
+		if (StringUtils.isNotEmpty(merchantId))
+			plantId = Integer.valueOf(merchantId);
 		else
 			System.out.println("沒有傳入接口ID plantNum is null");
+
 		// 商戶名稱
-		String merchantName = null;
-		if (StringUtils.isNotEmpty(request.getParameter("merchentName")))
-			merchantName = new String(request.getParameter("merchentName").getBytes("ISO-8859-1"), "UTF-8");
+		if (StringUtils.isNotEmpty(merchantName))
+			merchantName = new String(merchantName.getBytes("ISO-8859-1"), "UTF-8");
 		else
 			System.out.println("沒有傳入商戶名稱 merchentName is null");
+
 		// 商戶號
-		String merchentNo = null;
-		if (StringUtils.isNotEmpty(request.getParameter("merchentNo")))
-			merchentNo = request.getParameter("merchentNo");
-		else
+		if (StringUtils.isEmpty(merchantNo))
 			System.out.println("沒有傳入商戶號  merchentNo is null");
+
 		// MD5密鑰
 		String Md5Key = null;
 		if (StringUtils.isNotEmpty(request.getParameter("Md5Key")))
@@ -286,7 +284,7 @@ public class ListServerlet extends HttpServlet {
 			System.out.println("====plantId ===   " + plantId);
 			System.out.println("====merchantName ===   " + merchantName);
 			System.out.println("====Md5Key ===   " + Md5Key);
-			System.out.println("====merchentNo ===   " + merchentNo);
+			System.out.println("====merchantNo ===   " + merchantNo);
 			System.out.println("====pswName ===   " + pswName);
 			System.out.println("====RSAPrivate ===   " + RSAPrivate);
 			System.out.println("====RSAPublic ===   " + RSAPublic);
@@ -294,7 +292,7 @@ public class ListServerlet extends HttpServlet {
 			System.out.println("====plantNo ===   " + plantNo);
 			System.out.println("====ip ===   " + ip);
 			System.out.println("====list ===   " + list);
-			msg +=  pl.insertMerchent(plantId, merchantName, Md5Key, merchentNo, pswName, RSAPrivate, RSAPublic,
+			msg +=  pl.insertMerchent(plantId, merchantName, Md5Key, merchantNo, pswName, RSAPrivate, RSAPublic,
 					state, plantNo, list, ip);
 			System.out.println("------------新增商戶完成---------");
 			request.setAttribute("method", "merchantList");
@@ -305,7 +303,7 @@ public class ListServerlet extends HttpServlet {
 			msg += e;
 		} finally {
 			request.setAttribute("msg", msg);
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			//request.getRequestDispatcher("/index.jsp").forward(request, response);
 
 		}
 
@@ -333,24 +331,23 @@ public class ListServerlet extends HttpServlet {
 
 	}
 
-	protected void insertMypay(HttpServletRequest request, HttpServletResponse response)
+	//在DB新增order_page
+	@RequestMapping(value = "/insertMypay",method = RequestMethod.POST)
+	protected String insertMypay(@ModelAttribute("platform") PlatformVO platform, Map<String,Object> map)
 			throws SQLException, ServletException, IOException {
-		System.out.println("insertMypay");
+		System.out.println("新增的平台為:" + platform);
 
 		int id = 0;
 		String meString = "";// 回應訊息
-		if (StringUtils.isNotEmpty(request.getParameter("id")))
-			id = Integer.valueOf(request.getParameter("id"));
-		else
-			System.out.println("id is null");
+		if (StringUtils.isEmpty(platform.getPlatform_id()))
+			id = Integer.valueOf(platform.getPlatform_id());
 
-		String name = new String(request.getParameter("name").getBytes("ISO-8859-1"), "UTF-8");
-		System.out.println("id==" + id + "name==" + name);
-		ListDAOImpl pa = new ListDAOImpl();
+		String name = new String(platform.getPlatform_name().getBytes("ISO-8859-1"), "UTF-8");
+		System.out.println("id==" + id + "name==" + platform.getPlatform_name());
 		meString = pa.insertMypay(name, id);
-		request.setAttribute("method", "insertMypay");
-		request.setAttribute("meString", meString);
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		map.put("method","insertMypay");
+		map.put("meString","meString");
+		return "index";
 	}
 
 	// protected void auth(HttpServletRequest request, HttpServletResponse
@@ -414,7 +411,8 @@ public class ListServerlet extends HttpServlet {
 	}
 
 	@RequestMapping(value = "/loginCheckUser",method = RequestMethod.POST)
-    protected String loginCheckUser(@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
+    protected String loginCheckUser(@ModelAttribute("platform") PlatformVO platoform,@ModelAttribute("merchant") MerchantVO merchant,
+										@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
 			,Map<String,Object> map) throws Exception {
         System.out.println("userName:"+userName);
         System.out.println("passWord:"+passWord);
@@ -445,6 +443,8 @@ public class ListServerlet extends HttpServlet {
 		Cookie cookie = new Cookie(userName,passWord);
 		cookie.setMaxAge(EXPIRY_TIME_A_DAY*7); //存活时间七天
 		map.put("cookie",cookie);
+		map.put("platoform",platoform);
+		map.put("merchant",merchant);
 
         return "index";
     }

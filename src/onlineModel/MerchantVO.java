@@ -3,7 +3,7 @@ package onlineModel;
 public class MerchantVO {
     private String merchantId;  //自动新增的商户流水号
     private String payment_platform_id;
-    private String name;
+    private String merchant_name;
     private String merchant_no;
     private String platform_no;
     private String merchant_pwd;
@@ -18,7 +18,7 @@ public class MerchantVO {
         return "MerchantVO{" +
                 "merchantId='" + merchantId + '\'' +
                 ", payment_platform_id='" + payment_platform_id + '\'' +
-                ", name='" + name + '\'' +
+                ", merchant_name='" + merchant_name + '\'' +
                 ", merchant_no='" + merchant_no + '\'' +
                 ", platform_no='" + platform_no + '\'' +
                 ", merchant_pwd='" + merchant_pwd + '\'' +
@@ -46,12 +46,12 @@ public class MerchantVO {
         this.payment_platform_id = payment_platform_id;
     }
 
-    public String getName() {
-        return name;
+    public String getMerchant_name() {
+        return merchant_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMerchant_name(String merchant_name) {
+        this.merchant_name = merchant_name;
     }
 
     public String getMerchant_no() {

@@ -78,9 +78,9 @@ public class ListDAOImpl implements ListDAO {
 			PlatformVO platformVO = null;
 			while (result.next()) {
 				platformVO = new PlatformVO();
-				platformVO.setId(result.getString(1));
-				platformVO.setName(result.getString(2));
-				platformVO.setUrl(result.getString(3));
+				platformVO.setPlatform_id(result.getString(1));
+				platformVO.setPlatform_name(result.getString(2));
+				platformVO.setPlatform_url(result.getString(3));
 				list.add(platformVO);
 			}
 
@@ -149,7 +149,7 @@ public class ListDAOImpl implements ListDAO {
 				merchantVO = new MerchantVO();
 				merchantVO.setMerchantId(result.getString(1));
 				merchantVO.setPayment_platform_id(result.getString(2));
-				merchantVO.setName(result.getString(3));
+				merchantVO.setMerchant_name(result.getString(3));
 				merchantVO.setMerchant_no(result.getString(4));
 				merchantVO.setPlatform_no(result.getString(5));
 				merchantVO.setMerchant_pwd(result.getString(6));

@@ -52,7 +52,8 @@
 	</head>
 	<body>
 
-		<!-- Header -->
+
+	<!-- Header -->
 			<header id="header" class="alt">
 				<div class="logo"><a href='<c:url value ="${request.contextPath}/newIndex.jsp" />'>mimiProject</a></div>
                 <%--<a href="<c:url value ="${request.contextPath}/login.html" />">Login</a>--%>

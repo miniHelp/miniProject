@@ -5,35 +5,41 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PlatformVO { //接口資料的bean
-	private String Name;
-	private String Url;
-	private String id;
+	private String platform_name;
+	private String platform_url;
+    private String platform_id;
 
-	public String getName() {
-		return Name;
-	}
-	public void setName(String name) {
-		Name = name;
-	}
-	public String getUrl() {
-		return Url;
-	}
-	public void setUrl(String url) {
-		Url = url;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 
-	@Override
-	public String toString() {
-		return "PlantList{" +
-				"Name='" + Name + '\'' +
-				", Url='" + Url + '\'' +
-				", id=" + id +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "PlatformVO{" +
+                "platform_name='" + platform_name + '\'' +
+                ", platform_url='" + platform_url + '\'' +
+                ", platform_id='" + platform_id + '\'' +
+                '}';
+    }
+
+    public String getPlatform_name() {
+        return platform_name;
+    }
+
+    public void setPlatform_name(String platform_name) {
+        this.platform_name = platform_name;
+    }
+
+    public String getPlatform_url() {
+        return platform_url;
+    }
+
+    public void setPlatform_url(String platform_url) {
+        this.platform_url = platform_url;
+    }
+
+    public String getPlatform_id() {
+        return platform_id;
+    }
+
+    public void setPlatform_id(String platform_id) {
+        this.platform_id = platform_id;
+    }
 }
