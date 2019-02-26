@@ -104,43 +104,45 @@ public class ListServerlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+//	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//
+//		try {
+//			String params = StringUtils.isNotEmpty(request.getParameter("method")) ? request.getParameter("method")
+//					: method.getString(request.getInputStream(), "utf-8", "method");
+//			System.out.println("method:" + params);
+//			switch (params) {
+//			case "modify":
+//				modify(request, response);
+//				break;
+//			case "insertMypay":
+//			case "insertMerchant":// 新增一筆商戶
+//				//insertMerchant(request, response);
+//				break;
+//			case "findPlant":// 找到平台資訊
+//				findPlant(request, response);
+//				break;
+//			case "merchantDetele":// 幹掉商戶
+//				merchantDetele(request, response);
+//				break;
+//			case "auth":
+//				// auth(request, response);
+//				break;
+////			case "loginTest":
+//                //loginCheckUser(request, response);
+////                break;
+//			default:
+//				break;
+//			}
+//		} catch (Exception e) {
+//			e.getMessage();
+//		}
+//
+//	}
 
-		try {
-			String params = StringUtils.isNotEmpty(request.getParameter("method")) ? request.getParameter("method")
-					: method.getString(request.getInputStream(), "utf-8", "method");
-			System.out.println("method:" + params);
-			switch (params) {
-			case "modify":
-				modify(request, response);
-				break;
-			case "insertMypay":
-			case "insertMerchant":// 新增一筆商戶
-				//insertMerchant(request, response);
-				break;
-			case "findPlant":// 找到平台資訊
-				findPlant(request, response);
-				break;
-			case "merchantDetele":// 幹掉商戶
-				merchantDetele(request, response);
-				break;
-			case "auth":
-				// auth(request, response);
-				break;
-//			case "loginTest":
-                //loginCheckUser(request, response);
-//                break;
-			default:
-				break;
-			}
-		} catch (Exception e) {
-			e.getMessage();
-		}
+	//方法都一定要宣告成public，form對應的modelAttribute才能找到
 
-	}
-
-	private void merchantDetele(HttpServletRequest request, HttpServletResponse response)
+	public void merchantDetele(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, UnsupportedEncodingException, IOException {
 		int merchId = 0;
 		String mString = "";
@@ -167,7 +169,7 @@ public class ListServerlet extends HttpServlet {
 
 	}
 
-	private void findPlant(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+	public void findPlant(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		System.out.println("====findPlant===");
 		List<Integer> list = new ArrayList();
 		int plantNum = 0;
@@ -207,7 +209,7 @@ public class ListServerlet extends HttpServlet {
 
 	//新增商户
 	@RequestMapping(value = "/insertMerchant",method = RequestMethod.POST)
-	private void insertMerchant(@ModelAttribute("merchant") MerchantVO merchant,
+	public void insertMerchant(@ModelAttribute("merchant") MerchantVO merchant,
 									@RequestParam("id") String merchantId,@RequestParam("merchentName") String merchantName,
 								@RequestParam("merchentNo") String merchantNo,Map<String,Object> map) throws Exception {
 
@@ -311,7 +313,7 @@ public class ListServerlet extends HttpServlet {
 
 	//找所有商户的资讯
 	@RequestMapping(value = "/merchantList",method = RequestMethod.POST)
-	private String merchantList(@RequestParam("id") String platformId,Map<String,Object> map) throws Exception {
+	public String merchantList(@RequestParam("id") String platformId,Map<String,Object> map) throws Exception {
 		System.out.println("merchantList");
 		String meString = "";// 回應訊息
 		int id = 0;
@@ -333,7 +335,7 @@ public class ListServerlet extends HttpServlet {
 
 	//在DB新增order_page
 	@RequestMapping(value = "/insertMypay",method = RequestMethod.POST)
-	protected String insertMypay(@ModelAttribute("platform") PlatformVO platform, Map<String,Object> map)
+	public String insertMypay(@ModelAttribute("platform") PlatformVO platform, Map<String,Object> map)
 			throws SQLException, ServletException, IOException {
 		System.out.println("新增的平台為:" + platform);
 
@@ -374,7 +376,7 @@ public class ListServerlet extends HttpServlet {
 
 
 	@RequestMapping(value = "/query",method = RequestMethod.POST)
-	protected String query(@RequestParam("id") String platformId,@RequestParam("url") String platformUrl
+	public String query(@RequestParam("id") String platformId,@RequestParam("url") String platformUrl
 			,@RequestParam("name") String platformName,Map<String,Object> map) throws Exception {
 		String colum = "";
 		String str = "";
@@ -401,7 +403,7 @@ public class ListServerlet extends HttpServlet {
 		return "index";
 	}
 
-	protected void modify(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void modify(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		String url = request.getParameter("url").trim();
 		ListDAOImpl pa = new ListDAOImpl();
@@ -411,7 +413,7 @@ public class ListServerlet extends HttpServlet {
 	}
 
 	@RequestMapping(value = "/loginCheckUser",method = RequestMethod.POST)
-    protected String loginCheckUser(@ModelAttribute("platform") PlatformVO platoform,@ModelAttribute("merchant") MerchantVO merchant,
+    public String loginCheckUser(@ModelAttribute("platform") PlatformVO platoform,@ModelAttribute("merchant") MerchantVO merchant,
 										@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
 			,Map<String,Object> map) throws Exception {
         System.out.println("userName:"+userName);
