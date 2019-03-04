@@ -142,7 +142,7 @@ public class ListServerlet extends HttpServlet {
 	//方法都一定要宣告成public，form對應的modelAttribute才能找到
 
 	public void merchantDetele(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, UnsupportedEncodingException, IOException {
+			throws  Exception {
 		int merchId = 0;
 		String mString = "";
 		try {
@@ -168,7 +168,7 @@ public class ListServerlet extends HttpServlet {
 
 	}
 
-	public void findPlant(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+	public void findPlant(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("====findPlant===");
 		List<Integer> list = new ArrayList();
 		int plantNum = 0;
