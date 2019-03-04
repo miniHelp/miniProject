@@ -54,8 +54,12 @@ public class ListServerlet extends HttpServlet {
 	@ModelAttribute
 	public void getObject(Map<String,Object> map){
 		System.out.println("我有进来modeAttribute");
-		map.put("merchant",new MerchantVO());	//商戶
-		map.put("platform",new PlatformVO());	//接口
+		if(map.get("merchant") == null){
+			map.put("merchant",new MerchantVO());	//商戶
+		}
+		if(map.get("platform") == null){
+			map.put("platform",new PlatformVO());	//接口
+		}
 	}
 
 //	@ModelAttribute
