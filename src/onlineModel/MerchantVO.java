@@ -2,7 +2,7 @@ package onlineModel;
 
 public class MerchantVO {
     private String merchantId;  //自动新增的商户流水号
-    private String payment_platform_id;
+    private String payment_platform_id; //接口编号
     private String merchant_name;
     private String merchant_no;
     private String platform_no;

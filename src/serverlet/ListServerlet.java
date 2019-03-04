@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -324,10 +323,12 @@ public class ListServerlet extends HttpServlet {
 
 		pa.merChantList(id);
 		List<MerchantVO> merList = pa.merChantList(id);
-		List<PlatformVO> platlist = pa.PlantNoList("id", String.valueOf(id));
+		//List<PlatformVO> platlist = pa.PlantNoList("id", String.valueOf(id));
 		map.put("merList", merList);
-		map.put("platformList", platlist);
-		map.put("method", "merchantList");
+		System.out.println("找到的商户列表为:" + merList);
+		//System.out.println("找到的商户列表为:" + platlist);
+		//map.put("platformList", platlist);
+		//map.put("method", "merchantList");
 
 		return "index";
 
