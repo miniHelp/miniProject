@@ -331,7 +331,7 @@ public class ListServerlet extends HttpServlet {
 		//List<PlatformVO> platlist = pa.PlantNoList("id", String.valueOf(id));
 		map.put("merList", merList);
 		System.out.println("找到的商户列表为:" + merList);
-		//System.out.println("找到的商户列表为:" + platlist);
+		System.out.println("找到的商户列表为:" + 12);
 		//map.put("platformList", platlist);
 		map.put("method", "merchantList");
 
