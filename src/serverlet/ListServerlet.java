@@ -54,6 +54,7 @@ public class ListServerlet extends HttpServlet {
 	@ModelAttribute
 	public void getObject(Map<String,Object> map){
 		System.out.println("我有进来modeAttribute");
+		System.out.println("modeAttribute的map现况:" + map);
 		if(map.get("merchant") == null){
 			map.put("merchant",new MerchantVO());	//商戶
 		}
@@ -332,7 +333,7 @@ public class ListServerlet extends HttpServlet {
 		System.out.println("找到的商户列表为:" + merList);
 		//System.out.println("找到的商户列表为:" + platlist);
 		//map.put("platformList", platlist);
-		//map.put("method", "merchantList");
+		map.put("method", "merchantList");
 
 		return "index";
 
