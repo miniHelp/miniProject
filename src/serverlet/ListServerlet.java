@@ -1,36 +1,33 @@
 package serverlet;
 
-import java.io.*;
-import java.net.URLEncoder;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.databind.JsonNode;
+import onLineDAO.ListDAOImpl;
+import onLineDAO.MerchantDAOImpl;
+import onLineDAO.UserImp;
+import onLineDAO.plantPayMent;
+import onlineModel.MerchantVO;
+import onlineModel.PlatformVO;
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import onLineDAO.UserImp;
-import onlineModel.MerchantVO;
-import onlineModel.PlatformVO;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.Header;
-import org.json.JSONObject;
-import Util.method;
-import onLineDAO.ListDAOImpl;
-import onLineDAO.MerchantDAOImpl;
-import onLineDAO.plantPayMent;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Servlet implementation class ListServerlet
@@ -63,89 +60,7 @@ public class ListServerlet extends HttpServlet {
 		}
 	}
 
-//	@ModelAttribute
-//	public String loginValidation(@RequestParam(value = "method") String doWhat){	//要做什么动作
-//
-//		String nextPageOrAction = "";
-//		String params = doWhat;
-//		System.out.println("doWhat:" + doWhat);
-//		switch (params) {
-//			case "query":
-////					query(request, response);
-//				break;
-//			case "modify":
-////					modify(request, response);
-//				break;
-//			case "insertMypay":
-////					insertMypay(request, response);
-//				break;
-//			case "merchantList":
-////					merchantList(request, response);
-//				break;
-//			case "insertMerchant":// 新增一筆商戶
-////					insertMerchant(request, response);
-//				break;
-//			case "findPlant":// 找到平台資訊
-////					findPlant(request, response);
-//				break;
-//			case "merchantDetele":// 幹掉商戶
-////					merchantDetele(request, response);
-//				break;
-//			case "auth":
-//				// auth(request, response);
-//				break;
-//			case "loginTest":
-//				nextPageOrAction = "forward:/loginCheckUser";
-////                break;
-//			default:
-//				break;
-//		}
-//		return nextPageOrAction;
-//	}
-
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//
-//		try {
-//			String params = StringUtils.isNotEmpty(request.getParameter("method")) ? request.getParameter("method")
-//					: method.getString(request.getInputStream(), "utf-8", "method");
-//			System.out.println("method:" + params);
-//			switch (params) {
-//			case "modify":
-//				modify(request, response);
-//				break;
-//			case "insertMypay":
-//			case "insertMerchant":// 新增一筆商戶
-//				//insertMerchant(request, response);
-//				break;
-//			case "findPlant":// 找到平台資訊
-//				findPlant(request, response);
-//				break;
-//			case "merchantDetele":// 幹掉商戶
-//				merchantDetele(request, response);
-//				break;
-//			case "auth":
-//				// auth(request, response);
-//				break;
-////			case "loginTest":
-//                //loginCheckUser(request, response);
-////                break;
-//			default:
-//				break;
-//			}
-//		} catch (Exception e) {
-//			e.getMessage();
-//		}
-//
-//	}
-
 	//方法都一定要宣告成public，form對應的modelAttribute才能找到
-
 	public void merchantDetele(HttpServletRequest request, HttpServletResponse response)
 			throws  Exception {
 		int merchId = 0;
@@ -173,6 +88,7 @@ public class ListServerlet extends HttpServlet {
 
 	}
 
+    @RequestMapping(value = "/findPlant",method = RequestMethod.POST)
 	public void findPlant(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("====findPlant===");
 		List<Integer> list = new ArrayList();
@@ -208,14 +124,14 @@ public class ListServerlet extends HttpServlet {
 		System.out.println(json);
 		response.setContentType("application/json");
 		response.getWriter().write(new String(json.toString().getBytes("UTF-8"), "UTF-8"));
-
 	}
 
 	//新增商户
 	@RequestMapping(value = "/insertMerchant",method = RequestMethod.POST)
-	public void insertMerchant(@ModelAttribute("merchant") MerchantVO merchant,
-									@RequestParam("id") String merchantId,@RequestParam("merchentName") String merchantName,
-								@RequestParam("merchentNo") String merchantNo,Map<String,Object> map) throws Exception {
+	public String insertMerchant(@ModelAttribute("merchant") MerchantVO merchant,
+									@RequestParam("id") String merchantId,
+                                    @RequestParam("merchant_name") String merchantName,
+								@RequestParam("merchant_no") String merchantNo,Map<String,Object> map) throws Exception {
 
 
 		System.out.println("====insertMerchant===");
@@ -310,9 +226,8 @@ public class ListServerlet extends HttpServlet {
 		} finally {
 			request.setAttribute("msg", msg);
 			//request.getRequestDispatcher("/index.jsp").forward(request, response);
-
+            return "index";
 		}
-
 	}
 
 	//找所有商户的资讯
@@ -331,7 +246,7 @@ public class ListServerlet extends HttpServlet {
 		//List<PlatformVO> platlist = pa.PlantNoList("id", String.valueOf(id));
 		map.put("merList", merList);
 		System.out.println("找到的商户列表为:" + merList);
-		System.out.println("找到的商户列表为:" + 12);
+//		System.out.println("找到的商户列表为:" + 12);
 		//map.put("platformList", platlist);
 		map.put("method", "merchantList");
 

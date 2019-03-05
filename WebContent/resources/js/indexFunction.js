@@ -91,9 +91,6 @@ var insertMypay = function(obj) {
 	var name = $(obj).attr('dataName');
 	var id = $(obj).attr('dataId');
 
-	console.log('name==' + name);
-	console.log('id==' + id);
-
 	$('#insertMypayFormId').val(id);
 	$('#insertMypayFormId').val(id);
 	$('#insertMypayFormName').val(name);
@@ -107,10 +104,7 @@ var PlantDetal = function(obj) {
 	var name = $(obj).attr('dataName');
 	var id = $(obj).attr('dataId');
 	var url = $(obj).attr('dataUrl');
-	console.log('name==' + name);
-	console.log('id==' + id);
 
-	
 	$('#merchantReDiv').hide();//避免已經有查詢過的商戶列表出來亂
 	$('#plantName').val(name);
 	$('#insertMypayMerchentFormName').val('小帮手建立' + name);
@@ -126,11 +120,9 @@ var PlantDetal = function(obj) {
 	} else {
 		$(obj).val('超懶一鍵新增商戶');
 	}
-	
 
 	// 發送ajax
-	$
-			.ajax({
+	$.ajax({
 				type : "POST",
 				// async為false -> 同步
 				// async為true -> 非同步
@@ -139,8 +131,7 @@ var PlantDetal = function(obj) {
 				// ↑↑↑↑↑↑反正就是要指到你寫的aspx拉↑↑↑↑↑↑↑↑
 				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 				data : {
-					"id" : id,
-					"method" : "findPlant"
+					"id" : id
 				},
 				success : function(msg) {
 					// 後端回傳的東西包成JSONObject回來,
@@ -154,9 +145,7 @@ var PlantDetal = function(obj) {
 					var rsa_server_public_key_tips = msg.rsa_server_public_key_tips;
 					var sign = msg.sign;
 					var list = msg.list;
-				
-					
-					console.log("sign=" + sign + "    list :" + list);
+
 
 					if (!merchant_no_tips == "undefined")
 						$('#merchentTips').text("   " + merchant_no_tips);
@@ -164,10 +153,7 @@ var PlantDetal = function(obj) {
 					// 平台號 跟其顯示名稱 提示
 					if (!(platform_no_name == null || platform_no_name == ""
 							&& typeof (platform_no_name)) == "undefined") {
-						console.log("platform_no_name"+platform_no_name);
-						console.log(typeof (platform_no_name));
-						$('#appendTable')
-								.append(
+						$('#appendTable').append(
 										"<tr  class='appendTable'><td>"
 												+ platform_no_name
 												+ ':</td>'
@@ -178,8 +164,7 @@ var PlantDetal = function(obj) {
 
 					// 密碼設定 跟其提示信息
 					if (!(merchant_pwd_name == null || merchant_pwd_name == "" || merchant_pwd_name == "undefined")) {
-						$('#appendTable')
-								.append(
+						$('#appendTable').append(
 										"<tr  class='appendTable'><td>"
 												+ merchant_pwd_name
 												+ ':</td>'
@@ -190,8 +175,7 @@ var PlantDetal = function(obj) {
 
 					//商户密码
 					if (!(merchant_pwd_name != null || merchant_pwd_name != "" || merchant_pwd_name == "undefined")) {
-						$('#appendTable')
-								.append(
+						$('#appendTable').append(
 										"<tr  class='appendTable'><td>"
 												+ platform_no_name
 												+ ':</td>'
@@ -203,15 +187,13 @@ var PlantDetal = function(obj) {
 					// 验证簽名方式
 					if (sign == "2") {
 						alert("RAS             in");
-						$('#appendTable')
-								.append(
+						$('#appendTable').append(
 										"<tr  class='appendTable'><td> RSA 商戶私鑰  :</td>"
 												+ "<td><input type='text' id='RSAPrivate' name='RSAPrivate'	value="
 												+ rsa_merchant_private_key_tips
 												+ '></td></tr>');
 						// 商戶公鑰
-						$('#appendTable')
-								.append(
+						$('#appendTable').append(
 										"<tr  class='appendTable'><td> 商戶公鑰  :</td>"
 												+ "<td><input type='text' id='RSAPublic' name='RSAPublic'	value="
 												+ rsa_server_public_key_tips
@@ -221,8 +203,7 @@ var PlantDetal = function(obj) {
 					//如果是MD5 就是1
 					if (sign == "1") {
 						console.log("MD5             in");
-						$('#appendTable')
-								.append(
+						$('#appendTable').append(
 										"<tr  class='appendTable'><td> MD5 密鑰  :</td>"
 												+ "<td><textarea cols='50' rows='3' id='Md5Key' name='Md5Key' value=''></textarea></td></tr>");
 					}
@@ -232,11 +213,8 @@ var PlantDetal = function(obj) {
 						$('#appendTable').append("<tr  class='appendTable'><td> 支付方式 :</td><td id='wayTd'><span>");
 
 						$.each(list,function(i, v) {
-											console.log("排序  :" + i, "   值  :" + list[i]);
-											console.log(v);
 											var name = way(v);
-											$('#wayTd')
-													.append(
+											$('#wayTd').append(
 															"<input type='checkbox' id='list"
 																	+ v
 																	+ "' name='payList' checked='checked'	value="
@@ -247,15 +225,15 @@ var PlantDetal = function(obj) {
 
 					}
 					
-					$('#appendTable')
-					.append(
+					$('#appendTable').append(
 							"<tr  class='appendTable'><td> 按下去按下去~:</td><td>"
-									+ "<input type='button' id='insertMerId' name='insertMerId'	value='見證奇蹟的時刻 ✧◝(⁰▿⁰)◜✧!!!!' onclick='insertMypayMerchent();'>"+
+									+ "<input type='button' id='insertMerId' name='insertMerId'	value='見證奇蹟的時刻 ✧◝(⁰▿⁰)◜✧!!!!' onclick='insertMypayMerchent(this);'>"+
 									"<input type='radio' name='state' value='on' checked> 啟用 (((o(*ﾟ▽ﾟ*)o))) "+
 									"<input type='radio' name='state' value='off' > 停用 (｡ŏ_ŏ)</td></tr>"+
 									"<input type='hidden' id='sign' name='sign'	value='"+ sign +"'>");
 
 					// do something
+                    console.log('END !~!!');
 				},
 				// statusCode範例
 				statusCode : {
@@ -269,9 +247,8 @@ var PlantDetal = function(obj) {
 
 //一件超懶新增mypay商戶
 var insertMypayMerchent = function(obj) {
-	
+
 	var  merchentNo = $('#merchentNo').val();
-	console.log(merchentNo);
 	if(!(merchentNo == null || merchentNo == "" )) {
 		document.forms['insertMypayMerchentForm'].submit();
 	} else {
@@ -305,8 +282,7 @@ var merchantDetele = function(obj){
 		return;
 	}
 	// 發送ajax
-	$
-			.ajax({
+	$.ajax({
 				type : "POST",
 				// async為false -> 同步
 				// async為true -> 非同步
@@ -472,8 +448,6 @@ var way = function(obj) {
 
 
 window.onload = function() {
-	
-	
 	var tfrow = document.getElementById('tfhover').rows.length;
 	var tbRow = [];
 	for (var i = 1; i < tfrow; i++) {

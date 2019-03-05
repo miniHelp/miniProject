@@ -340,7 +340,7 @@ table.merchantReDiv {
 					<td>
 						<input type="button" value="超懶新增mypay平台" id="insertMypay" dataId="${data.platform_id}" dataName="${data.platform_name}" onclick='insertMypay(this);' />
 						<input type="button" value="超懶一鍵新增商戶" id="insertMypayMerchent" dataId="${data.platform_id}" dataName="${data.platform_name}"
-							   dataUrl="<c:url value ="${request.contextPath}/ListServerlet" />" onclick='PlantDetal(this);' />
+							   dataUrl="<c:url value ="${request.contextPath}/findPlant" />" onclick='PlantDetal(this);' />
 						<input type="button" id="merchantList" value="mypay商戶列表" dataId="${data.platform_id}" dataName="${data.platform_name}" onclick='showMerchList(this);' />
 					</td>
 				</tr>
@@ -476,7 +476,6 @@ table.merchantReDiv {
 		<%--改用spring的form标签来写--%>
 		<%--@elvariable id="getContextPath" type=""--%>
 		<form:form action="${pageContext.request.contextPath}/insertMerchant" method="post" modelAttribute="merchant" name="insertMypayMerchentForm">
-			<c:forEach items="${list}" var="data">
 				<table class="merchantReDiv" id="appendTable" name="merchantReName"
 				border="1" width='850px'>
 					<tr>
@@ -500,7 +499,7 @@ table.merchantReDiv {
 					<tr>
 						<td>商戶號：</td>
 						<td>
-							<form:input path="merchant_no" name='merchentNo'/>
+							<form:input path="merchant_no" id="merchentNo" name='merchentNo'/>
 						</td>
 					</tr>
 				</table>
@@ -508,7 +507,6 @@ table.merchantReDiv {
 			value=''>
 			<input type="hidden" id='insertMypayMerchentForm' name="method"
 			value="insertMerchant" />
-			</c:forEach>
 		</form:form>
 		<%--<form name='insertMypayMerchentForm'--%>
 			<%--action='<c:url value ="${request.contextPath}/serverlet/ListServerlet" />'--%>
