@@ -150,9 +150,8 @@
 
 <body>
 <div id='functionDiv'>
-    <input type="button" id='changeSearchOrder' view='searchDiv'
-           value='查詢接口'> <input type="button" id='changeAuthOrder'
-                                view='authDiv' value='獲取授權'>
+    <input type="button" id='changeSearchOrder' view='searchDiv' value='查詢接口'>
+    <input type="button" id='changeAuthOrder' view='authDiv' value='獲取授權'>
     <input type="button" view='justinMagicDiv' value='賈斯小魔法' onclick='justinMagic(this);'>
 </div>
 <!--
@@ -202,25 +201,20 @@
      style='display: none; position: fixed; top: 38px'>
     <h5>MyPay Query Order 查詢是哪個接口</h5>
 
-    <form id='SeaechOrderForm'
-          action="<%=request.getContextPath()%>/query" method='post' name='SeaechOrderForm'>
+    <form id='SeaechOrderForm' action="<%=request.getContextPath()%>/query" method='post' name='SeaechOrderForm'>
         <table class="tftable" border="1">
             <tr>
-                <th style="width: 150px;">參數名稱</th>
-                <th>參數值</th>
-            </tr>
-            <tr>
+                ${param}
                 <td>接口編號：</td>
-                <td><input type='text' name='id' value='${param.id}' id="id"/></td>
-            </tr>
-            <tr>
-                <td>支付網址：</td>
-                <td><input type='text' name='url' value='${param.url}'
-                           id="url"/></td>
+                <td><input type='text' name='platformId' value='${param.platformId}' /></td>
             </tr>
             <tr>
                 <td>接口名稱：</td>
-                <td><input type='text' name='name' value='${name}' id="name"/></td>
+                <td><input type='text' name='platformName' value='${param.platformName}' /></td>
+            </tr>
+            <tr>
+                <td>支付網址：</td>
+                <td><input type='text' name='platformUrl' value='${param.platformUrl}' /></td>
             </tr>
         </table>
         <input type="submit" value='送出' id="searchSub"/>
@@ -271,13 +265,12 @@
 </div>
 
 <!-- 魔法小日志的div	 -->
-<div id='justinMagicShowDiv' class='formDiv'
-     style='display: none; position: relative; left: 800px'>
+<div id='justinMagicShowDiv' class='formDiv' style='display: none; position: relative; left: 540px; top: 85px'>
     <table id="tfhover" class="tftable" border="1">
         <tr>
             <th>信息</th>
             <td>
-                <textarea id='magicShow' style='height:250px;width:800px'>
+                <textarea id='magicShow' style='height:250px;width:700px'>
                 </textarea>
             </td>
         </tr>
@@ -285,9 +278,8 @@
 </div>
 
 <!-- 查詢接口的List，回傳的查詢訊息會顯示在這邊	 -->
-<div id='resultDiv' class='formDiv'
-     style='display: none; position: relative; left: 700px'>
-    <h5>查詢接口:${param.url}${name}</h5>
+<div id='resultDiv' class='formDiv' style='display: none; position: relative; left: 540px; top:36px'>
+    <h5>查詢接口:${param.platformId}</h5>
     <table class="merchantReDiv" border="1" width='850px'>
         <tr>
             <th width='10%'>接口ID</th>
@@ -296,7 +288,7 @@
             <th width='10%'>操作</th>
             <th width='10%'>商戶部分</th>
         </tr>
-        <c:if test="${fn:length(list) eq 0 }">
+        <c:if test="${fn:length(platformInfoList) eq 0 }">
             <tr>
                 <td colspan="4">查無此資料</td>
             </tr>
@@ -307,8 +299,7 @@
                 <td>${data.platform_name}</td>
                 <td>${data.platform_url}</td>
                 <td>
-                    <input type="button" class="btn" value="修改"
-                           id="modifyPop${data.platform_id}" dataId="${data.platform_id}"
+                    <input type="button" class="btn" value="修改" id="modifyPop${data.platform_id}" dataId="${data.platform_id}"
                            dataName="${data.platform_name}" dataUrl="${data.platform_url}"/>
                 </td>
                 <td>
@@ -335,8 +326,7 @@
 
 
 <!-- 查詢商戶資料	 -->
-<div id='merchantReDiv' class='formDiv'
-     style='display: none; position: relative; left: 700px'>
+<div id='merchantReDiv' class='formDiv' style='display: none; position: relative; left: 540px ; margin-top:50px '>
     <h5>查詢商戶:</h5>
     <c:forEach items="${merList}" var="data">
         <table class="merchantReDiv" border="1" width='850px'>
@@ -399,7 +389,7 @@
 </form:form>
 
 <!-- 新增一筆mypay商戶的from表單	 -->
-<div id='insertMypayMerchentTable' class='formDiv' style='display: none; position: relative; left: 700px'>
+<div id='insertMypayMerchentTable' class='formDiv' style='display: none; position: relative; left: 540px; margin-top:50px'>
     <%--改用spring的form标签来写--%>
     <%--@elvariable id="getContextPath" type=""--%>
     <form:form action="${pageContext.request.contextPath}/insertMerchant" method="post" modelAttribute="merchant"

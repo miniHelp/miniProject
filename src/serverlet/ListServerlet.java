@@ -297,29 +297,43 @@ public class ListServerlet extends HttpServlet {
 
 
 	@RequestMapping(value = "/query",method = RequestMethod.POST)
-	public String query(@RequestParam("id") String platformId,@RequestParam("url") String platformUrl
-			,@RequestParam("name") String platformName,Map<String,Object> map) throws Exception {
-		String colum = "";
-		String str = "";
+	public String query(@RequestParam Map<String,Object> reqMap , Map<String,Object> resMap) throws Exception {
+
+        String platformId = "" ;
+        String platformUrl = "" ;
+        String platformName = "" ;
+        if(reqMap.get("platformId") != null){
+            platformId = String.valueOf(reqMap.get("platformId"));
+        }
+        if(reqMap.get("platformUrl") != null){
+            platformUrl = String.valueOf(reqMap.get("platformUrl"));
+        }
+        if(reqMap.get("platformName") != null ){
+            platformName = new String(String.valueOf(reqMap.get("platformName")).getBytes("iso-8859-1"), "utf-8");
+        }
+
+		String columName = "";
+		String columValue = "";
 		if (StringUtils.isNotBlank(platformId)) {
-			colum = "id";
-			str = platformId;
+            columName = "id";
+            columValue = platformId;
 		} else if (StringUtils.isNotBlank(platformName)) {
-			colum = "name";
-			str = new String(platformName.getBytes("iso-8859-1"), "utf-8");
+            columName = "name";
+            columValue = new String(platformName.getBytes("iso-8859-1"), "utf-8");
 		} else if (StringUtils.isNotBlank(platformUrl)) {
-			colum = "url";
-			str = platformUrl;
+            columName = "url";
+            columValue = platformUrl;
 		}
 
-		List<PlatformVO> list = pa.PlantNoList(colum, str);
+		List<PlatformVO> list = pa.PlantNoList(columName, columValue);
 
-		map.put("platformInfoList",list);
+        resMap.put("platformInfoList",list);
+        resMap.put("method", "query");
+        resMap.put("platformId", platformId);
+        resMap.put("platformUrl", platformUrl);
+        resMap.put("platformName", platformName);
 
-		System.out.println("查詢到的接口資料為:" + list);
-
-		map.put("method", "query");
-		map.put("name", str);
+        System.out.println(resMap);
 
 		return "index";
 	}
