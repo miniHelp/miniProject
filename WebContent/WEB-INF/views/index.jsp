@@ -324,6 +324,7 @@ table.merchantReDiv {
 		</table>
 		<input type="button" name="back" value="上一頁" onclick="javascript:history.back(-1);" /><input type="button" id="home" value="回首頁" />
 	</div>
+
 	<!--  查詢接口資料 -->
 	<form name='merchantListForm' action="<%=request.getContextPath()%>/merchantList" method='post'>
 		<input type='hidden' id='merchantListId' name='id'>
@@ -429,6 +430,7 @@ table.merchantReDiv {
 			value="insertMerchant" />
 		</form:form>
 	</div>
+
 	<!-- 修改網關地址的彈窗 -->
 	<div id='modifyPop'>
 		<div class="mask"></div>
@@ -444,7 +446,6 @@ table.merchantReDiv {
 			</p>
 		</div>
 	</div>
-
 
 	<!-- 新增mypay平台後的回傳信息	 -->
 	<div id='insertReDiv' class='formDiv'
