@@ -271,46 +271,52 @@ var showMerchList = function(obj) {
 }
 
 
+
+
 var merchantDetele = function(obj){
-	var id = $(obj).attr('dataId');
-	var dataPlant = $(obj).attr('dataPlant');
-	alert('我沒有做防呆  資料ㄅㄅ');
-	
-	var back = confirm('嚇你的 要不要刪掉啦?')
-	if(back == false){
-		alert('怎樣樣R');
-		return;
-	}
-	// 發送ajax
-	$.ajax({
-				type : "POST",
-				// async為false -> 同步
-				// async為true -> 非同步
-				async : false,
-				url : url,
-				// ↑↑↑↑↑↑反正就是要指到你寫的aspx拉↑↑↑↑↑↑↑↑
-				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-				data : {
-					"id" : id,
-					"method" : "merchantDetele"
-				},
-				success : function(msg) {
-					// 後端回傳的東西包成JSONObject回來,
-					var Result = msg;
-					var mString = msg.mString;
-				alert('mString = '+ mString);
-				//重新load查詢畫面
-				$('#merchantListId').val(dataPlant);
-				document.forms['merchantListForm'].submit();
-					
-				},
-				// statusCode範例
-				statusCode : {
-					403 : function(response) {
-						LocationHerf();
-					}
-				}
-			});
+
+	$("#deleteMertchantForm").attr("action",$(obj).attr("id"));
+	$("#deleteMertchantForm").submit();
+	// var id = $(obj).attr('dataId');
+	// var dataPlant = $(obj).attr('dataPlant');
+	// // $("#deleteMertchantForm").attr("action","<%=%>");
+	// alert('我沒有做防呆  資料ㄅㄅ');
+	//
+	// var back = confirm('嚇你的 要不要刪掉啦?')
+	// if(back == false){
+	// 	alert('怎樣樣R');
+	// 	return;
+	// }
+	// // 發送ajax
+	// $.ajax({
+	// 			type : "POST",
+	// 			// async為false -> 同步
+	// 			// async為true -> 非同步
+	// 			async : false,
+	// 			url : "<%=request.getContextPath()%>/merchantDetele/" + id,
+	// 			// ↑↑↑↑↑↑反正就是要指到你寫的aspx拉↑↑↑↑↑↑↑↑
+	// 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+	// 			data : {
+	// 				"id" : id,
+	// 				"method" : "merchantDetele"
+	// 			}
+	// 			// success : function(msg) {
+	// 			// 	// 後端回傳的東西包成JSONObject回來,
+	// 			// 	var Result = msg;
+	// 			// 	var mString = msg.mString;
+	// 			// alert('mString = '+ mString);
+	// 			// //重新load查詢畫面
+	// 			// $('#merchantListId').val(dataPlant);
+	// 			// document.forms['merchantListForm'].submit();
+	// 			//
+	// 			// },
+	// 			// // statusCode範例
+	// 			// statusCode : {
+	// 			// 	403 : function(response) {
+	// 			// 		LocationHerf();
+	// 			// 	}
+	// 			// }
+	// 		});
 }
 
 // 商戶列表詳情

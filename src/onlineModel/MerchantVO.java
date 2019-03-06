@@ -1,9 +1,15 @@
 package onlineModel;
 
+import javax.validation.constraints.NotEmpty;
+
 public class MerchantVO {
     private String merchantId;  //自动新增的商户流水号
     private String payment_platform_id; //接口编号
+
+    @NotEmpty
     private String merchant_name;
+
+    @NotEmpty
     private String merchant_no;
     private String platform_no;
     private String merchant_pwd;

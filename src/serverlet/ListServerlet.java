@@ -12,10 +12,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -51,7 +48,6 @@ public class ListServerlet extends HttpServlet {
 	@ModelAttribute
 	public void getObject(Map<String,Object> map){
 		System.out.println("我有进来modeAttribute");
-		System.out.println("modeAttribute的map现况:" + map);
 		if(map.get("merchant") == null){
 			map.put("merchant",new MerchantVO());	//商戶
 		}
@@ -60,14 +56,19 @@ public class ListServerlet extends HttpServlet {
 		}
 	}
 
+
+
 	//方法都一定要宣告成public，form對應的modelAttribute才能找到
-	public void merchantDetele(HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value = "/merchantDetele/{deletePlatformId}/{deleteMerchantId}",method = RequestMethod.DELETE)
+	public String merchantDetele(@PathVariable("deletePlatformId") String deletePlatformId
+			,@PathVariable("deleteMerchantId") String deleteMerchantId,Map<String,Object> map)
 			throws  Exception {
+		System.out.println("进来删除商户的方法");
 		int merchId = 0;
 		String mString = "";
 		try {
-			if (StringUtils.isNotEmpty(request.getParameter("id"))) {
-				merchId = Integer.valueOf(request.getParameter("id"));
+			if (StringUtils.isNotEmpty(deleteMerchantId)) {
+				merchId = Integer.valueOf(deleteMerchantId);
 				MerchantDAOImpl pa = new MerchantDAOImpl();
 				mString += pa.deleteMerchent(merchId);
 			} else {
@@ -77,20 +78,19 @@ public class ListServerlet extends HttpServlet {
 		} catch (Exception e) {
 			mString += e.toString();
 		} finally {
-			// 利用ajax呼叫
-			JSONObject json = new JSONObject();
-			json.put("mString", mString);
-			System.out.println(json);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(new String(json.toString().getBytes("UTF-8"), "UTF-8"));
+
+			System.out.println(map);
 		}
+		//使用RestFul风格的删除，不能直接返回视图，要先回到任一controller，再回视图
+		//回到列出所有商户的controller，因为转交预设为Get所以要这样的写法，串被删除的商户的接口编号，再回到原本商户列表的画面
+		return "redirect:/merchantList?id=" + deletePlatformId;
 
 	}
 
-    @RequestMapping(value = "/findPlant",method = RequestMethod.POST)
-	public void findPlant(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("====findPlant===");
+	//一键懒人新增商户
+    @RequestMapping(value = "/insertMerchantLazy",method = RequestMethod.POST)
+	public void insertMerchantLazy(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("====insertMerchantLazy===");
 		List<Integer> list = new ArrayList();
 		int plantNum = 0;
 		if (StringUtils.isNotEmpty(request.getParameter("id")))
@@ -230,24 +230,23 @@ public class ListServerlet extends HttpServlet {
 		}
 	}
 
-	//找所有商户的资讯
-	@RequestMapping(value = "/merchantList",method = RequestMethod.POST)
+	//找所有商户的资讯，又设method = get 是为了让merchantDelete预设Get转交到这边时也能吃到这个方法
+	@RequestMapping(value = "/merchantList",method = {RequestMethod.POST,RequestMethod.GET})
 	public String merchantList(@RequestParam("id") String platformId,Map<String,Object> map) throws Exception {
 		System.out.println("merchantList");
 		String meString = "";// 回應訊息
 		int id = 0;
-		if (StringUtils.isNotEmpty(platformId))
-			id = Integer.valueOf(platformId);
-		else
+		if (StringUtils.isNotEmpty(platformId)){
+				id = Integer.valueOf(platformId);
+		} else {
 			System.out.println("id is null");
+		}
 
 		pa.merChantList(id);
 		List<MerchantVO> merList = pa.merChantList(id);
-		//List<PlatformVO> platlist = pa.PlantNoList("id", String.valueOf(id));
 		map.put("merList", merList);
 		System.out.println("找到的商户列表为:" + merList);
-//		System.out.println("找到的商户列表为:" + 12);
-		//map.put("platformList", platlist);
+
 		map.put("method", "merchantList");
 
 		return "index";

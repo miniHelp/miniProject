@@ -196,7 +196,7 @@
 
 </div>
 
-<!--  查詢接口的from表單 -->
+<!--  查詢接口的form表單 -->
 <div id='searchDiv' class='formDiv'
      style='display: none; position: fixed; top: 38px'>
     <h5>MyPay Query Order 查詢是哪個接口</h5>
@@ -306,8 +306,7 @@
                     <input type="button" value="超懶新增mypay平台" id="insertMypay" dataId="${data.platform_id}"
                            dataName="${data.platform_name}" onclick='insertMypay(this);'/>
                     <input type="button" value="超懶一鍵新增商戶" id="insertMypayMerchent" dataId="${data.platform_id}"
-                           dataName="${data.platform_name}"
-                           dataUrl="<c:url value ="${request.contextPath}/findPlant" />" onclick='PlantDetal(this);'/>
+                           dataName="${data.platform_name}" dataUrl="<c:url value ="${request.contextPath}/insertMerchantLazy" />" onclick='PlantDetal(this);'/>
                     <input type="button" id="merchantList" value="mypay商戶列表" dataId="${data.platform_id}"
                            dataName="${data.platform_name}" onclick='showMerchList(this);'/>
                 </td>
@@ -322,6 +321,11 @@
 <form name='merchantListForm' action="<%=request.getContextPath()%>/merchantList" method='post'>
     <input type='hidden' id='merchantListId' name='id'>
     <input type="hidden" name="method" value="merchantList">
+</form>
+
+
+<form id="deleteMertchantForm" method='post'>
+    <input type='hidden' name='_method' value="delete">
 </form>
 
 
@@ -345,8 +349,8 @@
                 <td colspan="2"><input type="button" value="詳情"
                                        dataId="${data.merchantId}" id="merListPop${data.merchantId}"
                                        onclick='merchantDetal(this);'/>
-                    <input type="button" value="幹掉他" dataId="${data.merchantId}" dataPlant="${data.payment_platform_id}"
-                           id="merDel${data.merchantId}" onclick='merchantDetele(this);'/>
+                    <input type="button" value="幹掉他" dataId="${data.merchantId}" dataPlant="${data.payment_platform_id}" class="deleteMerchant"
+                           id="${pageContext.request.contextPath}/merchantDetele/${data.payment_platform_id}/${data.merchantId}" onclick="merchantDetele(this)"/>
                 </td>
             </tr>
         </table>
@@ -454,11 +458,11 @@
         </tr>
     </table>
 </div>
-<script type="text/javascript" src="<c:url value ="/js/md5.js" />"></script>
-<script type="text/javascript" src="<c:url value ="/js/jquery-2.1.1.min.js" />"></script>
-<script type="text/javascript" src="<c:url value ="/js/jquery.validate.min.js" />"></script>
-<script type="text/javascript" src="<c:url value ="/js/pop.js" />"></script>
-<script type="text/javascript" src="<c:url value ="/js/indexFunction.js" />"></script>
+<script type="text/javascript" src="js/md5.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/pop.js"></script>
+<script type="text/javascript" src="js/indexFunction.js"></script>
 
 <c:if test="${method == 'query' }">
     <script>
