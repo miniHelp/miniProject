@@ -1,7 +1,7 @@
 package onLineDAO;
 
 import Util.GetConnection;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@Component
 public class PlatPayMent implements PlatformDAO {
 
 	public static void main(String[] args) throws SQLException {
