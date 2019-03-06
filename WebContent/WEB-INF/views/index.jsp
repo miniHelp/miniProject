@@ -422,6 +422,21 @@
                     <form:input path="merchant_no" id="merchentNo" name='merchentNo'/>
                 </td>
             </tr>
+            <tr>
+                <td> MD5 密鑰：</td>
+                <td>
+                    <form:input path="signature_key" id="signature_key" name='signature_key'/>
+                </td>
+            </tr>
+            <tr>
+                <td> 按下去按下去~:</td>
+                <td>
+                    <input type='button' id='insertMerId' name='insertMerId'value='見證奇蹟的時刻 ✧◝(⁰▿⁰)◜✧!!!!' onclick='insertMypayMerchent(this)'>
+                    <input type='radio' name='state' value='on' checked> 啟用 (((o(*ﾟ▽ﾟ*)o)))
+                    <input type='radio' name='state' value='off' > 停用 (｡ŏ_ŏ)
+                </td>
+            </tr>
+            <%--"<input type='hidden' id='sign' name='sign'	value='"+ sign +"'>--%>
         </table>
         <input type='hidden' id='insertMypayMerchentFormId' name='id'
                value=''>
