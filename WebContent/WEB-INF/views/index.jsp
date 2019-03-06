@@ -127,7 +127,7 @@ table.merchantReDiv td {
 }
 
 table.merchantReDiv {
-	width: '850px';
+	width: 850px;
 	margin-top: 8px;
 }
 
@@ -159,10 +159,6 @@ table.merchantReDiv {
 			view='authDiv' value='獲取授權'>
 			<input type="button"  view='justinMagicDiv' value='賈斯小魔法' onclick='justinMagic(this);'>
 	</div>
-
-
-
-
 	<!-- 
 	獲得權限的 還沒做好
 	 -->
@@ -203,10 +199,7 @@ table.merchantReDiv {
 
 	</div>
 
-	<!--  
-		查詢接口的from表單 -->
-	
-
+	<!--  查詢接口的from表單 -->
 	<div id='searchDiv' class='formDiv'
 		style='display: none; position: fixed; top: 38px'>
 		<h5>MyPay Query Order 查詢是哪個接口</h5>
@@ -237,14 +230,10 @@ table.merchantReDiv {
 
 	</div>
 	
-	<!-- 
-	神奇小魔法 日誌產生器
-	 -->
-
+	<!-- 神奇小魔法 日誌產生器	 -->
 	<div id='justinMagicDiv' class='formDiv'
 		style='display: none; position: fixed; top: 38px'>
 		<h5>MyPay Log Magic </h5>
-		
 			<table id="tfhover" class="tftable" border="1">
 				<tr>
 					<th style="width: 150px;">Magic</th>
@@ -278,17 +267,12 @@ table.merchantReDiv {
 					<td><input type='text' name='time' value='[10-06 15:04:42]'
 						id="time" /></td>
 				</tr>
-
 			</table>
-
 			<input type="button" value='Magic' id="magicBtn" onclick='magic();' /> 
 			<input type="button" class="reset" value='清空' /> 
 	</div>
-	
-	
-	<!-- 
-	魔法小日志的div
-	 -->
+
+	<!-- 魔法小日志的div	 -->
 	<div id='justinMagicShowDiv' class='formDiv'
 		style='display: none; position: relative; left: 800px'>
 		<table id="tfhover" class="tftable" border="1">
@@ -301,21 +285,13 @@ table.merchantReDiv {
 			</tr>
 		</table>
 	</div>
-	
-	
 
-
-	<!-- 
-		查詢接口的List，回傳的查詢訊息會顯示在這邊
-		 -->
-
+	<!-- 查詢接口的List，回傳的查詢訊息會顯示在這邊	 -->
 	<div id='resultDiv' class='formDiv'
 		style='display: none; position: relative; left: 700px'>
 		<h5>查詢接口:${param.url}${name}</h5>
-
 		<table class="merchantReDiv" border="1" width='850px'>
 			<tr>
-
 				<th width='10%'>接口ID</th>
 				<th width='20%'>接口</th>
 				<th width='60%'>支付網址</th>
@@ -346,78 +322,43 @@ table.merchantReDiv {
 				</tr>
 			</c:forEach>
 		</table>
-		<input type="button" name="back" value="上一頁"
-			onclick="javascript:history.back(-1);" /><input type="button" id="home" value="回首頁" />
+		<input type="button" name="back" value="上一頁" onclick="javascript:history.back(-1);" /><input type="button" id="home" value="回首頁" />
 	</div>
-
-	<!--  
-		查詢接口資料
-	-->
+	<!--  查詢接口資料 -->
 	<form name='merchantListForm' action="<%=request.getContextPath()%>/merchantList" method='post'>
 		<input type='hidden' id='merchantListId' name='id'>
 		<input type="hidden" name="method" value="merchantList">
 	</form>
 
 
-	<!-- 
-			查詢商戶資料
-		 -->
-
+	<!-- 查詢商戶資料	 -->
 	<div id='merchantReDiv' class='formDiv'
 		style='display: none; position: relative; left: 700px'>
 		<h5>查詢商戶:</h5>
-		<%--<script>--%>
-			<%--console.log("merList = " + ${merList});--%>
-		<%--</script>--%>
-		<%--<c:if test="${fn:length(merList) eq 0 }">--%>
-			<%--<table class="merchantReDiv" border="1" width='850px'>--%>
-				<%--<tr>--%>
-					<%--<td colspan="5">查無此資料 新增一筆吧?</td>--%>
-					<%--<td>--%>
-						<%--<input type="button" value="新增mypay商戶"--%>
-						<%--id="insertMerchantMypay"--%>
-						<%--&lt;%&ndash;dataUrl="<c:url value ="${request.contextPath}/serverlet/ListServerlet" />"&ndash;%&gt;--%>
-						<%--dataId="${data.id}" dataName="${data.name}"--%>
-						<%--onclick='insertMypayMerchent(this);' />--%>
-					<%--</td>--%>
-				<%--</tr>--%>
-			<%--</table>--%>
-		<%--</c:if>--%>
-
 		<c:forEach items="${merList}" var="data">
 			<table class="merchantReDiv" border="1" width='850px'>
 				<tr>
-
 					<th width='10%'>接口</th>
 					<th width='12%'>商戶編號</th>
 					<th width='40%'>商戶名稱</th>
 					<th width='28%'>商戶號</th>
 					<th width='10%' colspan="2">操作</th>
 				</tr>
-
 				<tr class='three'>
 					<td>${data.payment_platform_id}</td>
 					<td>${data.merchantId}</td>
 					<td>${data.merchant_name}</td>
 					<td>${data.merchant_no}</td>
 					<td colspan="2"><input type="button" value="詳情"
-						dataId="${data.merchantId}" id="merListPop${data.merchantId}"
-						onclick='merchantDetal(this);' />
-
-						<input type="button" value="幹掉他"
-						dataId="${data.merchantId}" dataPlant="${data.payment_platform_id}" id="merDel${data.merchantId}"
-						onclick='merchantDetele(this);' />
-
-						</td>
+						dataId="${data.merchantId}" id="merListPop${data.merchantId}" onclick='merchantDetal(this);' />
+						<input type="button" value="幹掉他" dataId="${data.merchantId}" dataPlant="${data.payment_platform_id}" id="merDel${data.merchantId}" onclick='merchantDetele(this);' />
+					</td>
 				</tr>
 			</table>
 			<table class="merchantReDiv" border="1" id="togglePop${data.merchantId}"
 				style='display: none' width='850px'>
 				<tr>
-					<!-- 
-				將多餘的信息 隱藏起來
-					 -->
-
+					<!-- 將多餘的信息 隱藏起來	 -->
 					<th colspan="6" id="toggleTr">詳情</th>
 				</tr>
 				<tr class='merchantDetalDiv'>
@@ -440,38 +381,19 @@ table.merchantReDiv {
 					<th class='one'>RSA公鑰 :</th>
 					<td colspan="5">${data.rsa_merchant_public_key}</td>
 				</tr>
-
-
-
 			</table>
 		</c:forEach>
         <input type="button" name="back" value="上一頁" onclick="javascript:history.back(-1);"/>
         <input type="button" id="home" value="回首頁"/>
 	</div>
 
-	<!-- 
-	新增一筆mypay平台的form表單
-	 -->
-
+	<!-- 新增一筆mypay平台的form表單 -->
 	<form:form action="${pageContext.request.contextPath}/insertMypay" method="post" modelAttribute="platform">
 		<input:hidden path="platform_id"/>
 		<input:hidden path="platform_name"/>
-		<%--<input type='hidden' id='insertMypayFormId' name='platform_id' value=''>--%>
-		<%--<input type='hidden' id='insertMypayFormName' name='platform_name' value=''>--%>
-		<%--<input type="hidden" name="method" value="insertMypay">--%>
 	</form:form>
 
-	<%--<form name='insertMypayPlantForm'--%>
-	<%--action="<%=request.getContextPath()%>/insertMypay" method='post'>--%>
-	<%--<input type='hidden' id='insertMypayFormId' name='id' value=''>--%>
-	<%--<input type='hidden' id='insertMypayFormName' name='name' value=''>--%>
-	<%--<input type="hidden" name="method" value="insertMypay">--%>
-	<%--</form>--%>
-
-
-	<!-- 
-	新增一筆mypay商戶的from表單
-	 -->
+	<!-- 新增一筆mypay商戶的from表單	 -->
 	<div id='insertMypayMerchentTable' class='formDiv' style='display: none; position: relative; left: 700px'>
 		<%--改用spring的form标签来写--%>
 		<%--@elvariable id="getContextPath" type=""--%>
@@ -486,14 +408,12 @@ table.merchantReDiv {
 						<td>接口：</td>
 						<td>
 							<form:input id='plantName' path="payment_platform_id"/>
-							<%--<input type='text' id='plantName' name='' value='' readOnly>--%>
 						</td>
 					</tr>
 					<tr>
 						<td>商戶名稱：</td>
 						<td>
 							<form:input id='insertMypayMerchentFormName' path="merchant_name" name='merchentName'/>
-							<%--<span id="merchentTips" style='color: red'></span>--%>
 						</td>
 					</tr>
 					<tr>
@@ -508,43 +428,8 @@ table.merchantReDiv {
 			<input type="hidden" id='insertMypayMerchentForm' name="method"
 			value="insertMerchant" />
 		</form:form>
-		<%--<form name='insertMypayMerchentForm'--%>
-			<%--action='<c:url value ="${request.contextPath}/serverlet/ListServerlet" />'--%>
-			<%--method='post'>--%>
-			<%--<c:forEach items="${list}" var="data">--%>
-				<%--<table class="merchantReDiv" id="appendTable" name="merchantReName"--%>
-					<%--border="1" width='850px'>--%>
-					<%--<tr>--%>
-						<%--<th style="width: 150px;">參數名稱</th>--%>
-						<%--<th>參數值</th>--%>
-					<%--</tr>--%>
-					<%--<tr>--%>
-						<%--<td>接口：</td>--%>
-						<%--<td><input type='text' id='plantName' name='plantName'--%>
-							<%--value='' readOnly></td>--%>
-					<%--</tr>--%>
-					<%--<tr>--%>
-						<%--<td>商戶名稱：</td>--%>
-						<%--<td><input type='text' id='insertMypayMerchentFormName'--%>
-							<%--name='merchentName' value=''><span id="merchentTips"--%>
-							<%--style='color: red'></span></td>--%>
-					<%--</tr>--%>
-					<%--<tr>--%>
-						<%--<td>商戶號：</td>--%>
-						<%--<td><input type='text' id='merchentNo' name='merchentNo'--%>
-							<%--value=''></td>--%>
-					<%--</tr>--%>
-				<%--</table>--%>
-				<%--<input type='hidden' id='insertMypayMerchentFormId' name='id'--%>
-					<%--value=''>--%>
-				<%--<input type="hidden" id='insertMypayMerchentForm' name="method"--%>
-					<%--value="insertMerchant" />--%>
-			<%--</c:forEach>--%>
-		<%--</form>--%>
 	</div>
-	<!-- 
-	修改網關地址的彈窗
-	 -->
+	<!-- 修改網關地址的彈窗 -->
 	<div id='modifyPop'>
 		<div class="mask"></div>
 		<div class="mess">
@@ -561,10 +446,7 @@ table.merchantReDiv {
 	</div>
 
 
-
-	<!-- 
-	新增mypay平台後的回傳信息
-	 -->
+	<!-- 新增mypay平台後的回傳信息	 -->
 	<div id='insertReDiv' class='formDiv'
 		style='display: none; position: relative; left: 800px'>
 		<table id="tfhover" class="tftable" border="1">
@@ -574,24 +456,11 @@ table.merchantReDiv {
 			</tr>
 		</table>
 	</div>
-
-
-
-
 	<script type="text/javascript" src="<c:url value ="/js/md5.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value ="/js/jquery-2.1.1.min.js" />"></script>
-<!--  <script type="text/javascript" charset="utf-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
-	<script type="text/javascript"
-		src="<c:url value ="/js/jquery.validate.min.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value ="/js/pop.js" />"></script>
-	<script type="text/javascript"
-		src="<c:url value ="/js/indexFunction.js" />"></script>
-		
-<script type="text/javascript" charset="utf-8">
-
-	</script>
+	<script type="text/javascript" src="<c:url value ="/js/jquery-2.1.1.min.js" />"></script>
+	<script type="text/javascript" src="<c:url value ="/js/jquery.validate.min.js" />"></script>
+	<script type="text/javascript" src="<c:url value ="/js/pop.js" />"></script>
+	<script type="text/javascript" src="<c:url value ="/js/indexFunction.js" />"></script>
 
 	<c:if test="${method == 'query' }">
 		<script>
@@ -621,9 +490,6 @@ table.merchantReDiv {
 			console.log("${msg}");
 		</script>
 	</c:if>
-	
-
 
 </body>
-
 </html>
