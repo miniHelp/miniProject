@@ -1,5 +1,8 @@
 package onLineDAO;
 
+import Util.GetConnection;
+import org.springframework.stereotype.Repository;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,15 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
-
-import Util.GetConnection;
-
-public class plantPayMent implements PlatformDAO {
+@Repository
+public class PlatPayMent implements PlatformDAO {
 
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
-		plantPayMent pl = new plantPayMent();
+		PlatPayMent pl = new PlatPayMent();
 		String msString = pl.getSignType(1093);
 		System.out.println(msString);
 	}

@@ -3,8 +3,8 @@ package serverlet;
 import com.fasterxml.jackson.databind.JsonNode;
 import onLineDAO.ListDAOImpl;
 import onLineDAO.MerchantDAOImpl;
+import onLineDAO.PlatPayMent;
 import onLineDAO.UserImp;
-import onLineDAO.plantPayMent;
 import onlineModel.MerchantVO;
 import onlineModel.PlatformVO;
 import org.apache.commons.lang3.StringUtils;
@@ -42,6 +42,9 @@ public class ListServerlet extends HttpServlet {
 
 	@Autowired
 	private HttpServletRequest request;
+
+	@Autowired
+	private PlatPayMent platPayMent;
 
 
 
@@ -100,20 +103,17 @@ public class ListServerlet extends HttpServlet {
 
 		// 第一步 先拿到接口有哪些配置需要設定
 
-		plantPayMent pl = new plantPayMent();
 		Map<String, String> map = new HashMap<String, String>();
-		map = pl.getPlantList(plantNum);
+		map = platPayMent.getPlantList(plantNum);
 		System.out.println("獲取到接口的參數訊息 == >" + map);
 
 		// 第二步 拿到該接口有支持那些支付方式
-		plantPayMent pl2 = new plantPayMent();
-		String sign = pl2.getSignType(plantNum);
+		String sign = platPayMent.getSignType(plantNum);
 		System.out.println("獲取到接口所支持的支付方式 == >" + sign);
 
 		// 第三步 先拿到接口有哪些支付方式
 
-		plantPayMent pl3 = new plantPayMent();
-		list = pl3.getPlantPayment(plantNum);
+		list = platPayMent.getPlantPayment(plantNum);
 		System.out.println("獲取到接口所支持的支付方式 == >" + list);
 
 		// 因為我的mpa 有設定條件不能放入其他的東西 所以將其list裝到 json物件中
