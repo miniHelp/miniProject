@@ -200,13 +200,13 @@ var PlantDetal = function(obj) {
 												+ '></td></tr>');
 					}
 
-					//如果是MD5 就是1
-					if (sign == "1") {
-						console.log("MD5             in");
-						$('#appendTable').append(
-										"<tr  class='appendTable'><td> MD5 密鑰  :</td>"
-												+ "<td><textarea cols='50' rows='3' id='Md5Key' name='Md5Key' value=''></textarea></td></tr>");
-					}
+					// //如果是MD5 就是1
+					// if (sign == "1") {
+					// 	console.log("MD5             in");
+					// 	$('#appendTable').append(
+					// 					"<tr  class='appendTable'><td> MD5 密鑰  :</td>"
+					// 							+ "<td><textarea cols='50' rows='3' id='Md5Key' name='Md5Key' value=''></textarea></td></tr>");
+					// }
 
 					// 把list裡面的支付方式滾出來
 					if (!(merchant_no_tips == "undefined")) {
@@ -225,12 +225,12 @@ var PlantDetal = function(obj) {
 
 					}
 					
-					$('#appendTable').append(
-							"<tr  class='appendTable'><td> 按下去按下去~:</td><td>"
-									+ "<input type='button' id='insertMerId' name='insertMerId'	value='見證奇蹟的時刻 ✧◝(⁰▿⁰)◜✧!!!!' onclick='insertMypayMerchent(this);'>"+
-									"<input type='radio' name='state' value='on' checked> 啟用 (((o(*ﾟ▽ﾟ*)o))) "+
-									"<input type='radio' name='state' value='off' > 停用 (｡ŏ_ŏ)</td></tr>"+
-									"<input type='hidden' id='sign' name='sign'	value='"+ sign +"'>");
+					// $('#appendTable').append(
+					// 		"<tr  class='appendTable'><td> 按下去按下去~:</td><td>"
+					// 				+ "<input type='button' id='insertMerId' name='insertMerId'	value='見證奇蹟的時刻 ✧◝(⁰▿⁰)◜✧!!!!' onclick='insertMypayMerchent(this);'>"+
+					// 				"<input type='radio' name='state' value='on' checked> 啟用 (((o(*ﾟ▽ﾟ*)o))) "+
+					// 				"<input type='radio' name='state' value='off' > 停用 (｡ŏ_ŏ)</td></tr>"+
+					// 				"<input type='hidden' id='sign' name='sign'	value='"+ sign +"'>");
 
 					// do something
                     console.log('END !~!!');
