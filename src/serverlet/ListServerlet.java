@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,6 +47,9 @@ public class ListServerlet extends HttpServlet {
 
 	@Autowired
 	private PlatPayMent platPayMent;
+
+	@Autowired
+	private MerchantDAOImpl pl;
 
 
 
@@ -128,103 +133,95 @@ public class ListServerlet extends HttpServlet {
 
 	//新增商户
 	@RequestMapping(value = "/insertMerchant",method = RequestMethod.POST)
-	public String insertMerchant(@ModelAttribute("merchant") MerchantVO merchant,
-									@RequestParam("id") String merchantId,
-                                    @RequestParam("merchant_name") String merchantName,
-								@RequestParam("merchant_no") String merchantNo,Map<String,Object> map) throws Exception {
-
+	public String insertMerchant(@Valid MerchantVO merchantVO,BindingResult errors, Map<String,Object> map) {
+		System.out.println("新增的商戶資料為:" + merchantVO);
 
 		System.out.println("====insertMerchant===");
 		String msg = "";
 		List<Integer> list = new ArrayList();
 
-		// 第一步 先判斷拿到的值都不是空值
-		// 接口ID
-		int plantId = 0;
-		if (StringUtils.isNotEmpty(merchantId))
-			plantId = Integer.valueOf(merchantId);
-		else
-			System.out.println("沒有傳入接口ID plantNum is null");
+		try {
 
-		// 商戶名稱
-		if (StringUtils.isNotEmpty(merchantName))
-			merchantName = new String(merchantName.getBytes("ISO-8859-1"), "UTF-8");
-		else
-			System.out.println("沒有傳入商戶名稱 merchentName is null");
 
-		// 商戶號
-		if (StringUtils.isEmpty(merchantNo))
-			System.out.println("沒有傳入商戶號  merchentNo is null");
+			if (errors.getErrorCount() > 0) {
+				System.out.println("資料驗證出錯");
+				map.put("merchant", merchantVO);
 
-		// MD5密鑰
-		String Md5Key = null;
-		if (StringUtils.isNotEmpty(request.getParameter("Md5Key")))
-			Md5Key = request.getParameter("Md5Key").trim();
-		// 平台號 為甚麼要取name 是因為 no 很容易跟接口編號搞混
-		String plantName = null;
-		if (StringUtils.isNotEmpty(request.getParameter("plantName")))
-			plantName = new String(request.getParameter("plantName").trim().getBytes("ISO-8859-1"), "UTF-8");
-		// 商戶密碼
-		String pswName = null;
-		if (StringUtils.isNotEmpty(request.getParameter("pswName")))
-			pswName = request.getParameter("pswName").trim();
-		// RSA私鑰
-		String RSAPublic = null;
-		if (StringUtils.isNotEmpty(request.getParameter("RSAPublic")))
-			RSAPublic = request.getParameter("RSAPublic").trim();
-		// RSA公鑰
-		String RSAPrivate = null;
-		if (StringUtils.isNotEmpty(request.getParameter("RSAPrivate")))
-			RSAPrivate = request.getParameter("RSAPrivate").trim();
-		// 平台號
-		String plantNo = null;
-		if (StringUtils.isNotEmpty(request.getParameter("plantNo")))
-			plantNo = request.getParameter("plantNo").trim();
-		// 支付方式
-		String[] payList = null;
-		if (request.getParameterValues("payList").length != 0){
-			payList = request.getParameterValues("payList");
-		for(String current:payList){
-			list.add(Integer.parseInt(current));
+				return "index";
 			}
-		}
-		// //
-		String state = null;
-		if (!StringUtils.isEmpty(RSAPublic) && StringUtils.isEmpty(RSAPrivate)) {
-			state = "2";
-		} else {
-			state = "1";
-		}
+
+			// MD5密鑰
+			String Md5Key = null;
+			if (StringUtils.isNotEmpty(merchantVO.getSignature_key()))
+				Md5Key = merchantVO.getSignature_key().trim();
+			// 平台號 為甚麼要取name 是因為 no 很容易跟接口編號搞混
+//			String plantName = null;
+//			if (StringUtils.isNotEmpty(merchantVO.getPlatform_no()))
+//				plantName = merchantVO.getPlatform_no();
+			// 商戶密碼
+			String pswName = null;
+			if (StringUtils.isNotEmpty(merchantVO.getMerchant_pwd()))
+				pswName = merchantVO.getMerchant_pwd().trim();
+			// RSA私鑰
+			String RSAPublic = null;
+			if (StringUtils.isNotEmpty(merchantVO.getRsa_merchant_private_key()))
+				RSAPublic = merchantVO.getRsa_merchant_private_key().trim();
+			// RSA公鑰
+			String RSAPrivate = null;
+			if (StringUtils.isNotEmpty(merchantVO.getRsa_merchant_public_key()))
+				RSAPrivate = merchantVO.getRsa_merchant_public_key().trim();
+//		// 平台號
+//		String plantNo = null;
+//		if (StringUtils.isNotEmpty(request.getParameter("plantNo")))
+//			plantNo = request.getParameter("plantNo").trim();
+			// 支付方式
+			String[] payList = null;
+			if (request.getParameterValues("payList").length != 0) {
+				payList = request.getParameterValues("payList");
+				for (String current : payList) {
+					list.add(Integer.parseInt(current));
+				}
+			}
+
+			String state = null;
+			if (!StringUtils.isEmpty(RSAPublic) && StringUtils.isEmpty(RSAPrivate)) {
+				state = "2";
+			} else {
+				state = "1";
+			}
+
 
 		String ip = request.getRemoteAddr();
 
-		try {
 
-			MerchantDAOImpl pl = new MerchantDAOImpl();
- 			ListDAOImpl pa = new ListDAOImpl();
+			String payment_platform_id = merchantVO.getPayment_platform_id();
+			String merchant_name = new String(merchantVO.getMerchant_name().getBytes("ISO-8859-1"),"UTF-8");
+			String merchant_no = merchantVO.getMerchant_no();
+			String platform_no = merchantVO.getPlatform_no();
 			System.out.println("====開始 insertMerchant===");
-			System.out.println("====plantId ===   " + plantId);
-			System.out.println("====merchantName ===   " + merchantName);
+			System.out.println("====plantformId ===   " + payment_platform_id);
+			System.out.println("====merchantName ===   " + merchant_name);
 			System.out.println("====Md5Key ===   " + Md5Key);
-			System.out.println("====merchantNo ===   " + merchantNo);
+			System.out.println("====merchantNo ===   " + merchantVO.getMerchant_no());
 			System.out.println("====pswName ===   " + pswName);
 			System.out.println("====RSAPrivate ===   " + RSAPrivate);
 			System.out.println("====RSAPublic ===   " + RSAPublic);
 			System.out.println("====state ===   " + state);
-			System.out.println("====plantNo ===   " + plantNo);
+			System.out.println("====plantNo ===   " + merchantVO.getPlatform_no());
 			System.out.println("====ip ===   " + ip);
 			System.out.println("====list ===   " + list);
-			msg +=  pl.insertMerchent(plantId, merchantName, Md5Key, merchantNo, pswName, RSAPrivate, RSAPublic,
-					state, plantNo, list, ip);
+			msg +=  pl.insertMerchent(Integer.parseInt(payment_platform_id), merchant_name, Md5Key, merchant_no, pswName, RSAPrivate, RSAPublic,
+					state, platform_no, list, ip);
 			System.out.println("------------新增商戶完成---------");
-			request.setAttribute("method", "merchantList");
-			pa.PlantNoList("id", String.valueOf(plantId));
+			map.put("method", "merchantList");
+			pa.PlantNoList("id", payment_platform_id);
 
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e.getStackTrace());
 			msg += e;
 		} finally {
-			request.setAttribute("msg", msg);
+			map.put("msg", msg);
+//			request.setAttribute("msg", msg);
 			//request.getRequestDispatcher("/index.jsp").forward(request, response);
             return "index";
 		}

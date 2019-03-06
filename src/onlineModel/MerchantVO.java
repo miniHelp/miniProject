@@ -4,12 +4,9 @@ import javax.validation.constraints.NotEmpty;
 
 public class MerchantVO {
     private String merchantId;  //自动新增的商户流水号
+
     private String payment_platform_id; //接口编号
-
-    @NotEmpty
     private String merchant_name;
-
-    @NotEmpty
     private String merchant_no;
     private String platform_no;
     private String merchant_pwd;
@@ -44,26 +41,26 @@ public class MerchantVO {
         this.merchantId = merchantId;
     }
 
+    @NotEmpty
     public String getPayment_platform_id() {
         return payment_platform_id;
     }
-
     public void setPayment_platform_id(String payment_platform_id) {
         this.payment_platform_id = payment_platform_id;
     }
 
+    @NotEmpty
     public String getMerchant_name() {
         return merchant_name;
     }
-
     public void setMerchant_name(String merchant_name) {
         this.merchant_name = merchant_name;
     }
 
+    @NotEmpty
     public String getMerchant_no() {
         return merchant_no;
     }
-
     public void setMerchant_no(String merchant_no) {
         this.merchant_no = merchant_no;
     }

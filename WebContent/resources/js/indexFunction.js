@@ -246,22 +246,22 @@ var PlantDetal = function(obj) {
 }
 
 //一件超懶新增mypay商戶
-var insertMypayMerchent = function(obj) {
-
-	var  merchentNo = $('#merchentNo').val();
-	if(!(merchentNo == null || merchentNo == "" )) {
-		document.forms['insertMypayMerchentForm'].submit();
-	} else {
-		alert('好歹填一下商戶號吧');
-	}
-	
-	
-	var name = $("input[name='state']");
-	if(name == "off"){
-		alert('停用三小');
-		return;
-	}
-}
+// var insertMypayMerchent = function(obj) {
+//
+// 	var  merchentNo = $('#merchentNo').val();
+// 	if(!(merchentNo == null || merchentNo == "" )) {
+// 		document.forms['insertMypayMerchentForm'].submit();
+// 	} else {
+// 		alert('好歹填一下商戶號吧');
+// 	}
+//
+//
+// 	var name = $("input[name='state']");
+// 	if(name == "off"){
+// 		alert('停用三小');
+// 		return;
+// 	}
+// }
 
 // 商戶列表
 var showMerchList = function(obj) {

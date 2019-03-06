@@ -18,6 +18,13 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <mvc:annotation-driven/>
+    <!--配置驗證文件-->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="validation"></property>
+    </bean>
+
     <!-- Spring3.1開始支援-方法級別驗證 (JSR-349 Bean Validation 1.1) -->
     <mvc:resources mapping="/css/**" location="/resources/css/"/>
     <mvc:resources mapping="/js/**" location="/resources/js/"/>
@@ -27,6 +34,5 @@
     <mvc:resources mapping="/fonts/**" location="/resources/fonts/"/>
 
     <mvc:default-servlet-handler/>
-    <mvc:annotation-driven/>
 
 </beans>

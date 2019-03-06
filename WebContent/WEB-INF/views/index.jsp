@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="errors" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE HTML>
 <!-- 值班小帮手 -->
 <html>
@@ -397,41 +398,50 @@
     <%--改用spring的form标签来写--%>
     <%--@elvariable id="getContextPath" type=""--%>
     <form:form action="${pageContext.request.contextPath}/insertMerchant" method="post" modelAttribute="merchant"
-               name="insertMypayMerchentForm">
-        <table class="merchantReDiv" id="appendTable" name="merchantReName"
-               border="1" width='850px'>
+               name="insertMypayMerchantForm">
+        <table class="merchantReDiv" id="appendTable" name="merchantReName" border="1" width='850px'>
             <tr>
                 <th style="width: 150px;">參數名稱</th>
                 <th>參數值</th>
             </tr>
             <tr>
-                <td>接口：</td>
+                <td>接口編號：</td>
                 <td>
-                    <form:input id='plantName' path="payment_platform_id"/>
+                    <form:input type="text" id='insertMypayMerchentFormId' path="payment_platform_id"/>
+                    <form:errors path="payment_platform_id"/>
+                </td>
+            </tr>
+            <tr>
+                <td>接口名稱：</td>
+                <td>
+                    <input type="text" type="text" id='plantName' name="plantName" disabled/>
                 </td>
             </tr>
             <tr>
                 <td>商戶名稱：</td>
                 <td>
                     <form:input id='insertMypayMerchentFormName' path="merchant_name" name='merchentName'/>
+                    <form:errors path="merchant_name"/>
                 </td>
             </tr>
             <tr>
                 <td>商戶號：</td>
                 <td>
                     <form:input path="merchant_no" id="merchentNo" name='merchentNo'/>
+                    <form:errors path="merchant_no"/>
                 </td>
             </tr>
             <tr>
                 <td> MD5 密鑰：</td>
                 <td>
-                    <form:input path="signature_key" id="signature_key" name='signature_key'/>
+                    <form:textarea path="signature_key" id="signature_key" name='signature_key'
+                                   cssStyle="margin: 0px; width: 550px; height: 60px;resize: none"/>
                 </td>
             </tr>
             <tr>
                 <td> 按下去按下去~:</td>
                 <td>
-                    <input type='button' id='insertMerId' name='insertMerId'value='見證奇蹟的時刻 ✧◝(⁰▿⁰)◜✧!!!!' onclick='insertMypayMerchent(this)'>
+                    <input type='button' id='insertMerId' name='insertMerId'value='見證奇蹟的時刻 ✧◝(⁰▿⁰)◜✧!!!!' onclick="document.forms['insertMypayMerchantForm'].submit()">
                     <input type='radio' name='state' value='on' checked> 啟用 (((o(*ﾟ▽ﾟ*)o)))
                     <input type='radio' name='state' value='off' > 停用 (｡ŏ_ŏ)
                 </td>
