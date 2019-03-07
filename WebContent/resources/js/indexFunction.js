@@ -102,14 +102,14 @@ var insertMypay = function(obj) {
 // 撈取mypayCenter的接口資料 這樣才能知道你的商戶裡面需要哪些資料
 var PlantDetal = function(obj) {
 	var name = $(obj).attr('dataName');
-	var id = $(obj).attr('dataId');
+	var payment_platform_id = $(obj).attr('dataId');
 	var url = $(obj).attr('dataUrl');
 
 	$('#merchantReDiv').hide();//避免已經有查詢過的商戶列表出來亂
 	$('#plantName').val(name);
 	$('#insertMypayMerchentFormName').val('小帮手建立' + name);
 	$('#insertMypayMerchentTable').toggle()
-	$('#insertMypayMerchentFormId').val(id);
+	$('#insertMypayMerchentFormId').val(payment_platform_id);
 	$('#PlantName').val(name);
 	$("tr").remove(".appendTable");
 	var value = $(obj).val();
@@ -131,7 +131,7 @@ var PlantDetal = function(obj) {
 				// ↑↑↑↑↑↑反正就是要指到你寫的aspx拉↑↑↑↑↑↑↑↑
 				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 				data : {
-					"id" : id
+					"payment_platform_id" : payment_platform_id
 				},
 				success : function(msg) {
 					// 後端回傳的東西包成JSONObject回來,

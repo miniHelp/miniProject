@@ -63,6 +63,7 @@ public class ListServerlet extends HttpServlet {
 		if(map.get("platform") == null){
 			map.put("platform",new PlatformVO());	//接口
 		}
+		map.put("isDisplay",false);
 	}
 
 
@@ -141,11 +142,15 @@ public class ListServerlet extends HttpServlet {
 		String msg = "";
 		List<Integer> list = new ArrayList();
 
+		String payment_platform_id = merchantVO.getPayment_platform_id();
+		String merchant_name = merchantVO.getMerchant_name();
 		if (errors.hasErrors()) {
 			System.out.println("資料驗證出錯");
 			for(FieldError error : errors.getFieldErrors()){
 				System.out.println(error.getField() + ":" +  error.getDefaultMessage());
 			}
+
+			map.put("isDisplay",true);
 			return "index";
 		}
 
@@ -171,10 +176,10 @@ public class ListServerlet extends HttpServlet {
 			String RSAPrivate = null;
 			if (StringUtils.isNotEmpty(merchantVO.getRsa_merchant_public_key()))
 				RSAPrivate = merchantVO.getRsa_merchant_public_key().trim();
-//		// 平台號
-//		String plantNo = null;
-//		if (StringUtils.isNotEmpty(request.getParameter("plantNo")))
-//			plantNo = request.getParameter("plantNo").trim();
+	//		// 平台號
+	//		String plantNo = null;
+	//		if (StringUtils.isNotEmpty(request.getParameter("plantNo")))
+	//			plantNo = request.getParameter("plantNo").trim();
 			// 支付方式
 			String[] payList = null;
 			if (request.getParameterValues("payList").length != 0) {
@@ -192,11 +197,11 @@ public class ListServerlet extends HttpServlet {
 			}
 
 
-		String ip = request.getRemoteAddr();
+			String ip = request.getRemoteAddr();
 
 
-			String payment_platform_id = merchantVO.getPayment_platform_id();
-			String merchant_name = new String(merchantVO.getMerchant_name().getBytes("ISO-8859-1"),"UTF-8");
+
+
 			String merchant_no = merchantVO.getMerchant_no();
 			String platform_no = merchantVO.getPlatform_no();
 			System.out.println("====開始 insertMerchant===");
@@ -293,7 +298,7 @@ public class ListServerlet extends HttpServlet {
 	// }
 
 
-	@RequestMapping(value = "/query",method = RequestMethod.POST)
+	@RequestMapping(value = "/query",method = {RequestMethod.POST,RequestMethod.GET})
 	public String query(@RequestParam Map<String,Object> reqMap , Map<String,Object> resMap) throws Exception {
 
         String platformId = "" ;

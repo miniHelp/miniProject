@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
@@ -7,7 +7,7 @@
 <!DOCTYPE HTML>
 <!-- 值班小帮手 -->
 <html>
-
+console.log("${isDisplay}");
 <head>
     <title>值班小帮手</title>
     <meta charset="utf-8">
@@ -146,6 +146,12 @@
         .merchantDetalDiv > td {
             background-color: #d6c9b9;
         }
+
+        .hideDiv{
+            display:<c:if test='${!isDislay}'>none</c:if><c:if test='${isDislay}'>block</c:if>';
+        }
+
+        .
     </style>
 </head>
 
@@ -196,16 +202,14 @@
     </form>
 
 </div>
-
 <!--  查詢接口的form表單 -->
-<div id='searchDiv' class='formDiv'
-     style='display: none; position: fixed; top: 38px'>
+<div id='searchDiv' class='formDiv hideDiv'
+     style="position: fixed; top: 38px">
     <h5>MyPay Query Order 查詢是哪個接口</h5>
 
     <form id='SeaechOrderForm' action="<%=request.getContextPath()%>/query" method='post' name='SeaechOrderForm'>
         <table class="tftable" border="1">
             <tr>
-                ${param}
                 <td>接口編號：</td>
                 <td><input type='text' name='platformId' value='${param.platformId}' /></td>
             </tr>
@@ -279,7 +283,7 @@
 </div>
 
 <!-- 查詢接口的List，回傳的查詢訊息會顯示在這邊	 -->
-<div id='resultDiv' class='formDiv' style='display: none; position: relative; left: 540px; top:36px'>
+<div id='resultDiv' class='formDiv hideDiv' style="position: relative; left: 540px; top:36px">
     <h5>查詢接口:${param.platformId}</h5>
     <table class="merchantReDiv" border="1" width='850px'>
         <tr>
@@ -314,8 +318,8 @@
             </tr>
         </c:forEach>
     </table>
-    <input type="button" name="back" value="上一頁" onclick="javascript:history.back(-1);"/><input type="button" id="home"
-                                                                                                value="回首頁"/>
+    <a><input type="button" name="back" value="上一頁" onclick="javascript:history.back(-1);"/></a>
+    <a href="${pageContext.request.contextPath}/newIndex.jsp"><input type="button" value="回首頁"/></a>
 </div>
 
 <!--  查詢接口資料 -->
@@ -384,7 +388,7 @@
         </table>
     </c:forEach>
     <input type="button" name="back" value="上一頁" onclick="javascript:history.back(-1);"/>
-    <input type="button" id="home" value="回首頁"/>
+    <a href="${pageContext.request.contextPath}/newIndex.jsp"><input type="button" id="home" value="回首頁"/></a>
 </div>
 
 <!-- 新增一筆mypay平台的form表單 -->
@@ -394,7 +398,7 @@
 </form:form>
 
 <!-- 新增一筆mypay商戶的form表單	 -->
-<div id='insertMypayMerchentTable' class='formDiv' style='display: none; position: relative; left: 540px; margin-top:50px'>
+<div id='insertMypayMerchentTable' class='formDiv hideDiv' style="position: relative; left: 540px; margin-top:50px">
     <%--改用spring的form标签来写--%>
     <%--@elvariable id="getContextPath" type=""--%>
     <form:form action="${pageContext.request.contextPath}/insertMerchant" method="post" modelAttribute="merchant"
@@ -408,7 +412,7 @@
                 <td>接口編號：</td>
                 <td>
                     <form:input type="text" id='insertMypayMerchentFormId' path="payment_platform_id"/>
-                    <form:errors path="payment_platform_id"/>
+                    <form:errors path="payment_platform_id" cssStyle="color: red;"/>
                 </td>
             </tr>
             <tr>
@@ -421,14 +425,14 @@
                 <td>商戶名稱：</td>
                 <td>
                     <form:input id='insertMypayMerchentFormName' path="merchant_name" name='merchentName'/>
-                    <form:errors path="merchant_name"/>
+                    <form:errors path="merchant_name" cssStyle="color: red;"/>
                 </td>
             </tr>
             <tr>
                 <td>商戶號：</td>
                 <td>
                     <form:input path="merchant_no" id="merchentNo" name='merchentNo'/>
-                    <form:errors path="merchant_no"/>
+                    <form:errors path="merchant_no" cssStyle="color: red;"/>
                 </td>
             </tr>
             <tr>
