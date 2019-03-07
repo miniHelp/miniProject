@@ -56,6 +56,11 @@
         </init-param>
     </filter>
 
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <!-- HiddenHttpMethodFilter過濾器可以將POST請求轉化為put請求和delete請求! -->
     <filter>
