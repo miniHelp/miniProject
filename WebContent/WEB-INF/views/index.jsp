@@ -511,12 +511,12 @@
     </script>
 </c:if>
 
-<c:if test="${not empty msg }">
-    <script>
-        alert("${msg}");
-        console.log("${msg}");
-    </script>
-</c:if>
+<%--<c:if test="${not empty msg }">--%>
+    <%--<script>--%>
+        <%--alert("${msg}");--%>
+        <%--console.log("${msg}");--%>
+    <%--</script>--%>
+<%--</c:if>--%>
 
 </body>
 </html>

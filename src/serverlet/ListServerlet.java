@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
@@ -95,14 +96,14 @@ public class ListServerlet extends HttpServlet {
 
 	}
 
-	//一键懒人新增商户
-    @RequestMapping(value = "/insertMerchantLazy",method = RequestMethod.POST)
+	//一键懒人新增商户，从ajax来的
+    @RequestMapping(value = "/insertMerchantLazy",method = {RequestMethod.POST,RequestMethod.GET})
 	public void insertMerchantLazy(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("====insertMerchantLazy===");
 		List<Integer> list = new ArrayList();
 		int plantNum = 0;
-		if (StringUtils.isNotEmpty(request.getParameter("id")))
-			plantNum = Integer.valueOf(request.getParameter("id"));
+		if (StringUtils.isNotEmpty(request.getParameter("payment_platform_id")))
+			plantNum = Integer.valueOf(request.getParameter("payment_platform_id"));
 		else
 			System.out.println("沒有傳入接口ID plantNum is null");
 
@@ -133,22 +134,22 @@ public class ListServerlet extends HttpServlet {
 
 	//新增商户
 	@RequestMapping(value = "/insertMerchant",method = RequestMethod.POST)
-	public String insertMerchant(@Valid MerchantVO merchantVO,BindingResult errors, Map<String,Object> map) {
+	public String insertMerchant(@Valid @ModelAttribute("merchant") MerchantVO merchantVO,BindingResult errors, Map<String,Object> map) {
 		System.out.println("新增的商戶資料為:" + merchantVO);
 
 		System.out.println("====insertMerchant===");
 		String msg = "";
 		List<Integer> list = new ArrayList();
 
-		try {
-
-
-			if (errors.getErrorCount() > 0) {
-				System.out.println("資料驗證出錯");
-				map.put("merchant", merchantVO);
-
-				return "index";
+		if (errors.hasErrors()) {
+			System.out.println("資料驗證出錯");
+			for(FieldError error : errors.getFieldErrors()){
+				System.out.println(error.getField() + ":" +  error.getDefaultMessage());
 			}
+			return "index";
+		}
+
+		try {
 
 			// MD5密鑰
 			String Md5Key = null;
@@ -217,7 +218,7 @@ public class ListServerlet extends HttpServlet {
 			pa.PlantNoList("id", payment_platform_id);
 
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			System.out.println(e);
 			msg += e;
 		} finally {
 			map.put("msg", msg);
