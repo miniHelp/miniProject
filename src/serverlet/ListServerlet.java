@@ -344,8 +344,7 @@ public class ListServerlet extends HttpServlet {
 	}
 
 	@RequestMapping(value = "/loginCheckUser",method = RequestMethod.POST)
-    public String loginCheckUser(@ModelAttribute("platform") PlatformVO platoform,@ModelAttribute("merchant") MerchantVO merchant,
-										@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
+    public String loginCheckUser(@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
 			,Map<String,Object> map) throws Exception {
         System.out.println("userName:"+userName);
         System.out.println("passWord:"+passWord);
@@ -376,8 +375,6 @@ public class ListServerlet extends HttpServlet {
 		Cookie cookie = new Cookie(userName,passWord);
 		cookie.setMaxAge(EXPIRY_TIME_A_DAY*7); //存活时间七天
 		map.put("cookie",cookie);
-		map.put("platoform",platoform);
-		map.put("merchant",merchant);
 
         return "index";
     }

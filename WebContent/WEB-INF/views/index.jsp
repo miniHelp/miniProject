@@ -393,7 +393,7 @@
     <input:hidden path="platform_name"/>
 </form:form>
 
-<!-- 新增一筆mypay商戶的from表單	 -->
+<!-- 新增一筆mypay商戶的form表單	 -->
 <div id='insertMypayMerchentTable' class='formDiv' style='display: none; position: relative; left: 540px; margin-top:50px'>
     <%--改用spring的form标签来写--%>
     <%--@elvariable id="getContextPath" type=""--%>
