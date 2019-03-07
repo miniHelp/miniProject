@@ -47,7 +47,6 @@ public class MerchantVO {
         this.merchantId = merchantId;
     }
 
-    @NotEmpty
     public String getPayment_platform_id() {
         return payment_platform_id;
     }
@@ -55,7 +54,6 @@ public class MerchantVO {
         this.payment_platform_id = payment_platform_id;
     }
 
-    @NotEmpty
     public String getMerchant_name() {
         return merchant_name;
     }
@@ -63,7 +61,6 @@ public class MerchantVO {
         this.merchant_name = merchant_name;
     }
 
-    @NotEmpty
     public String getMerchant_no() {
         return merchant_no;
     }
