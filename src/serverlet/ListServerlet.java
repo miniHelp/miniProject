@@ -310,8 +310,8 @@ public class ListServerlet extends HttpServlet {
         if(reqMap.get("platformUrl") != null){
             platformUrl = String.valueOf(reqMap.get("platformUrl"));
         }
-        if(reqMap.get("platformName") != null ){
-            platformName = new String(String.valueOf(reqMap.get("platformName")).getBytes("iso-8859-1"), "utf-8");
+        if(reqMap.get("platformName") != null){
+            platformName = String.valueOf(reqMap.get("platformName"));
         }
 
 		String columName = "";
@@ -321,7 +321,7 @@ public class ListServerlet extends HttpServlet {
             columValue = platformId;
 		} else if (StringUtils.isNotBlank(platformName)) {
             columName = "name";
-            columValue = new String(platformName.getBytes("iso-8859-1"), "utf-8");
+            columValue = platformName;
 		} else if (StringUtils.isNotBlank(platformUrl)) {
             columName = "url";
             columValue = platformUrl;
