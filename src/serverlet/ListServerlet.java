@@ -63,7 +63,6 @@ public class ListServerlet extends HttpServlet {
 		if(map.get("platform") == null){
 			map.put("platform",new PlatformVO());	//接口
 		}
-		map.put("isDisplay",false);
 	}
 
 
@@ -150,7 +149,7 @@ public class ListServerlet extends HttpServlet {
 				System.out.println(error.getField() + ":" +  error.getDefaultMessage());
 			}
 
-			map.put("isDisplay",true);
+			map.put("isDisplay","true");
 			return "index";
 		}
 

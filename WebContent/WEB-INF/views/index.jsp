@@ -7,12 +7,15 @@
 <!DOCTYPE HTML>
 <!-- 值班小帮手 -->
 <html>
-console.log("${isDisplay}");
 <head>
     <title>值班小帮手</title>
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <script type="text/javascript" src="js/md5.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/pop.js"></script>
+    <script type="text/javascript" src="js/indexFunction.js"></script>
 
     <style type="text/css">
         body {
@@ -148,10 +151,8 @@ console.log("${isDisplay}");
         }
 
         .hideDiv{
-            display:<c:if test='${!isDislay}'>none</c:if><c:if test='${isDislay}'>block</c:if>';
+            display:none;
         }
-
-        .
     </style>
 </head>
 
@@ -487,11 +488,11 @@ console.log("${isDisplay}");
         </tr>
     </table>
 </div>
-<script type="text/javascript" src="js/md5.js"></script>
-<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="js/jquery.validate.min.js"></script>
-<script type="text/javascript" src="js/pop.js"></script>
-<script type="text/javascript" src="js/indexFunction.js"></script>
+<c:if test="${isDisplay == 'true' && empty method}">
+    <script>
+        $('.hideDiv').show();
+    </script>
+</c:if>
 
 <c:if test="${method == 'query' }">
     <script>
@@ -514,6 +515,8 @@ console.log("${isDisplay}");
         $('#resultDiv').show();
     </script>
 </c:if>
+
+
 
 <%--<c:if test="${not empty msg }">--%>
     <%--<script>--%>
