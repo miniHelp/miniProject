@@ -339,12 +339,14 @@ public class ListServerlet extends HttpServlet {
 		return "index";
 	}
 
-	public void modify(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String id = request.getParameter("id");
-		String url = request.getParameter("url").trim();
-		ListDAOImpl pa = new ListDAOImpl();
-		pa.updateUrl(id, url);
-		response.getWriter().write(new String("{'result':'靽格摰��'}".getBytes("utf-8"), "ISO-8859-1"));
+	@RequestMapping(value = "/modifyPlatform",method = RequestMethod.POST)
+	public String modifyPlatform(PlatformVO platformVO) throws Exception {
+		System.out.println("要修改的接口为: " + platformVO);
+//		String id = request.getParameter("id");
+//		String url = request.getParameter("url").trim();
+//		pa.updateUrl(id, url);
+//		response.getWriter().write(new String("{'result':'靽格摰��'}".getBytes("utf-8"), "ISO-8859-1"));
+		return "index";
 
 	}
 

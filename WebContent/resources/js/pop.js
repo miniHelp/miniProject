@@ -3,13 +3,15 @@ $(function() {
 	$('.btn').click(function() {
 		var id = $(this).attr('dataId');
 		var url = $(this).attr('dataUrl');
+		$('#modifyPlatformId').val(id);
 		$('#showUrl').text(url);
 		$('.mask').css({
 			'display' : 'block'
 		});
 		center($('.mess'));
-		check($(this).parent(), $('.btn1'), $('.btn2'),id);
+		// check($(this).parent(), $('.btn1'), $('.btn2'),id);
 	});
+
 	// 居中
 	function center(obj) {
 		var screenWidth = $(window).width();
@@ -49,32 +51,32 @@ $(function() {
 			});
 		});
 	}
-	// 确定取消的操作
-	function check(obj, obj1, obj2,id) {
-		obj1.click(function() {
-			var modifyUrl = $('#toModifyUrl').val();
-			alert("id:"+id+"===url:"+modifyUrl);
-			$.post(window.location.href,
-				    {	
-						'method':'modify', 
-				        'id':id,
-				        'url':modifyUrl
-				    },
-				        function(data,status){
-				        alert("数据: \n" + data + "\n状态: " + status);
-				        
-				        //成功了 再發一次
-				       $('#SeaechOrderForm input[name=id]').val(id);
-				       document.forms['SeaechOrderForm'].submit();
-				        
-				    });
-			closed($('.mask'), $('.mess'));
-		});
-		obj2.click(function() {
-		
-			closed($('.mask'), $('.mess'));
-		});
-	}
+	// // 确定取消的操作
+	// function check(obj, obj1, obj2,id) {
+	// 	obj1.click(function() {
+	// 		var modifyUrl = $('#toModifyUrl').val();
+	// 		alert("id:"+id+"===url:"+modifyUrl);
+	// 		$.post(window.location.href,
+	// 			    {
+	// 					'method':'modify',
+	// 			        'id':id,
+	// 			        'url':modifyUrl
+	// 			    },
+	// 			        function(data,status){
+	// 			        alert("数据: \n" + data + "\n状态: " + status);
+	//
+	// 			        //成功了 再發一次
+	// 			       $('#SeaechOrderForm input[name=id]').val(id);
+	// 			       document.forms['SeaechOrderForm'].submit();
+	//
+	// 			    });
+	// 		closed($('.mask'), $('.mess'));
+	// 	});
+	// 	obj2.click(function() {
+	//
+	// 		closed($('.mask'), $('.mess'));
+	// 	});
+	// }
 	// 隐藏 的操作
 	function closed(obj1, obj2) {
 		obj1.hide();

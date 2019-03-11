@@ -392,11 +392,6 @@
     <a href="${pageContext.request.contextPath}/newIndex.jsp"><input type="button" id="home" value="回首頁"/></a>
 </div>
 
-<!-- 新增一筆mypay平台的form表單 -->
-<form:form action="${pageContext.request.contextPath}/insertMypay" method="post" modelAttribute="platform">
-    <input:hidden path="platform_id"/>
-    <input:hidden path="platform_name"/>
-</form:form>
 
 <!-- 新增一筆mypay商戶的form表單	 -->
 <div id='insertMypayMerchentTable' class='formDiv hideDiv' style="position: relative; left: 540px; margin-top:50px">
@@ -464,9 +459,14 @@
 <div id='modifyPop'>
     <div class="mask"></div>
     <div class="mess">
-        <span>原网址:<span id="showUrl"></span></span>
-        <p>欲修改網址:<input type="text" id="toModifyUrl" style="width: 300px;"></p>
-        <p><input type="button" value="确定" class="btn1" id="modifyUrl"/> <input type="button" value="取消" class="btn2"/></p>
+        <%--<p><span>接口编号:<span id="showId"></span></span></p>--%>
+        <p><span>原网址:<span id="showUrl"></span></span></p>
+        <form:form action="${pageContext.request.contextPath}/modifyPlatform" modelAttribute="platform" name="modifyPlatform" method="post">
+            <form:hidden path="platform_id" id="modifyPlatformId"/>
+            欲修改網址:<form:input path="platform_url" style="width: 300px;"/>
+            <input type="button" value="确定" class="btn1" id="modifyUrl" onclick="document.forms['modifyPlatform'].submit()"/>
+            <input type="button" value="取消" class="btn2"/>
+        </form:form>
     </div>
 </div>
 
