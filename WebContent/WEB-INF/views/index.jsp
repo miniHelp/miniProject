@@ -91,8 +91,8 @@
         .mess {
             position: absolute;
             display: none;
-            width: 250px;
-            height: 140px;
+            width: fit-content;
+            height: fit-content;
             border: 1px solid #ccc;
             background: #ececec;
             text-align: center;
@@ -464,17 +464,9 @@
 <div id='modifyPop'>
     <div class="mask"></div>
     <div class="mess">
-        原網址:
-        <p id="showUrl"></p>
-
-        <p>
-            欲修改網址:<input type="text" id="toModifyUrl">
-        </p>
-
-        <p>
-            <input type="button" value="确定" class="btn1" id="modifyUrl"/> <input
-                type="button" value="取消" class="btn2"/>
-        </p>
+        <span>原网址:<span id="showUrl"></span></span>
+        <p>欲修改網址:<input type="text" id="toModifyUrl" style="width: 300px;"></p>
+        <p><input type="button" value="确定" class="btn1" id="modifyUrl"/> <input type="button" value="取消" class="btn2"/></p>
     </div>
 </div>
 
