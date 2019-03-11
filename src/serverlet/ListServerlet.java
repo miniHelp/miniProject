@@ -115,7 +115,7 @@ public class ListServerlet extends HttpServlet {
 
 		// 第二步 拿到該接口有支持那些支付方式
 		String sign = platPayMent.getSignType(plantNum);
-		System.out.println("獲取到接口所支持的支付方式 == >" + sign);
+		System.out.println("獲取到接口所支持的签名方式 == >" + sign);
 
 		// 第三步 先拿到接口有哪些支付方式
 
