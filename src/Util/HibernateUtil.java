@@ -16,13 +16,13 @@ public class HibernateUtil {
     private static final SessionFactory sessionFactoryMypayCenter;
 
     static {
-    	// µù¥UªA°È
+    	// è¨»å†Šæœå‹™
     	final StandardServiceRegistry registryMypayCenter = new StandardServiceRegistryBuilder()
                 .configure("MyPayCenterCP30_hibernate.cfg.xml").build();
         final StandardServiceRegistry registryMyPay = new StandardServiceRegistryBuilder()
                 .configure("MyPayCP30_hibernate.cfg.xml").build();
         try {
-            // ³Ğ«ØSessionFactory
+            // å‰µå»ºSessionFactory
             sessionFactoryMypayCenter = new MetadataSources(registryMypayCenter).buildMetadata().buildSessionFactory();
             sessionFactoryMypay = new MetadataSources(registryMyPay).buildMetadata().buildSessionFactory();
         } catch (Throwable ex) {
