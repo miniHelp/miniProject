@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="onlineModel.MerchantVO" table="PY_MERCHANT" >
+        
+        <id name="merchantId" column="ID">
+            <generator class="sequence">
+                <param name="sequence_name">SEQ_MERCHANT_ID</param>
+            </generator>  
+        </id>
+
+
+        <property name="accumulate_record" column="ACCUMULATE_RECORD" />
+        <property name="accumulate_amount" column="ACCUMULATE_AMOUNT" />
+        <property name="max_stop_amount" column="ACCUMULATE_RECORD" />
+        <property name="create_date" column="CREATE_DATE" />
+        <property name="update_date" column="UPDATE_DATE" />
+        <property name="submit_url" column="UPDATE_DATE" />
+        <property name="sort_value" column="SORT_VALUE" />
+        <property name="last_trading_time" column="LAST_TRADING_TIME" />
+        <property name="merchant_status" column="MAX_STOP_AMOUNT" />
+        <property name="payment_platform_id" column="STATUS" />
+        <property name="order_page_id" column="ORDER_PAGE_ID" />
+        <property name="platform_no" column="PLATFORM_NO" />
+        <property name="merchant_no" column="MERCHANT_NO" />
+        <property name="merchant_name" column="NAME" />
+        <property name="signature_key" column="SIGNATURE_KEY" />
+        <property name="signature_type" column="SIGNATURE_TYPE" />
+        <property name="rsa_merchant_private_key" column="RSA_MERCHANT_PRIVATE_KEY" />
+        <property name="rsa_merchant_public_key" column="RSA_MERCHANT_PUBLIC_KEY" />
+        <property name="rsa_server_public_key" column="RSA_SERVER_PUBLIC_KEY" />
+        <property name="pfx_mer_public_key_path" column="PFX_MER_PUBLIC_KEY_PATH" />
+        <property name="pfx_mer_private_key_path" column="PFX_MER_PRIVATE_KEY_PATH" />
+        <property name="pfx_mer_private_key_pwd" column="PFX_MER_PRIVATE_KEY_PWD" />
+        <property name="pfx_ser_public_key_path" column="PFX_SER_PUBLIC_KEY_PATH" />
+        <property name="group_area" column="GROUP_AREA" />
+        <property name="is_recharge_random_decimal" column="IS_RECHARGE_RANDOM_DECIMAL" />
+        <property name="merchant_pwd" column="MERCHANT_PWD" />
+        <property name="pfx_mer_public_key_file" column="PFX_MER_PUBLIC_KEY_FILE" />
+        <property name="pfx_mer_private_key_file" column="PFX_MER_PRIVATE_KEY_FILE" />
+        <property name="pfx_ser_public_key_file" column="PFX_SER_PUBLIC_KEY_FILE" />
+        <property name="qrcode_file_name" column="QRCODE_FILE_NAME" />
+        <property name="qrcode_file_content" column="QRCODE_FILE_CONTENT" />
+        <property name="is_pc_used" column="IS_PC_USED" />
+        <property name="is_wap_used" column="IS_WAP_USED" />
+        <property name="is_10_multiple_reduce_1" column="IS_10_MULTIPLE_REDUCE_1" />
+        <property name="is_only_integer" column="IS_ONLY_INTEGER" />
+        <property name="recharge_amount_min" column="RECHARGE_AMOUNT_MIN" />
+        <property name="recharge_amount_max" column="RECHARGE_AMOUNT_MAX" />
+        <property name="fee_percentage" column="FEE_PERCENTAGE" />
+        <property name="is_online_payment_used" column="IS_ONLINE_PAYMENT_USED" />
+        <property name="sp_limit" column="SP_LIMIT" />
+        <property name="quick_amount_group" column="QUICK_AMOUNT_GROUP" />
+        <property name="is_recharge_center_used" column="IS_RECHARGE_CENTER_USED" />
+        <property name="recharge_center_type" column="RECHARGE_CENTER_TYPE" />
+        <property name="is_recharge_random_integer" column="IS_RECHARGE_RANDOM_INTEGER" />
+        <property name="recharge_random_integer_digit" column="RECHARGE_RANDOM_INTEGER_DIGIT" />
+        <property name="recharge_random_decimal_digit" column="RECHARGE_RANDOM_DECIMAL_DIGIT" />
+        <property name="recharge_times_limit" column="RECHARGE_TIMES_LIMIT" />
+        
+    </class>
+</hibernate-mapping>

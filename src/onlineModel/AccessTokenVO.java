@@ -4,7 +4,7 @@ package onlineModel;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AccessToken {
+public class AccessTokenVO {
 	String access_token = "";
 	String token_type = "";
 	String refresh_token = "";

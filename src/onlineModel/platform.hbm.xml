@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="onlineModel.PlatformVO" table="PY_PAYMENT_PLATFORM" >
+        
+        <id name="platform_id" column="ID">
+            <generator class="sequence">
+                <param name="sequence_name">PLATFORM_PARAMS_SEQ</param>
+            </generator>  
+        </id>
+
+        <property name="platform_name" column="NAME" />
+        <property name="platform_url" column="URL" />
+        <property name="merchant_no_tips" column="MERCHANT_NO_TIPS" />
+        <property name="merchant_pwd_name" column="MERCHANT_PWD_NAME" />
+        <property name="platform_no_name" column="PLATFORM_NO_NAME" />
+        <property name="platform_no_tips" column="PLATFORM_NO_TIPS" />
+        <property name="rsa_merchant_private_key_tips" column="RSA_MERCHANT_PRIVATE_KEY_TIPS" />
+        <property name="platform_descr" column="DESCR" />
+        <property name="rsa_merchant_public_key_tips" column="RSA_MERCHANT_PUBLIC_KEY_TIPS" />
+        <property name="platform_url" column="URL" />
+        <property name="rsa_server_public_key_tips" column="RSA_SERVER_PUBLIC_KEY_TIPS" />
+        <property name="query_pay_result_url" column="QUERY_PAY_RESULT_URL" />
+        <property name="callback_file" column="CALLBACK_FILE" />
+        <property name="callback_param" column="CALLBACK_PARAM" />
+        <property name="need_platform_no" column="NEED_PLATFORM_NO" />
+        <property name="need_merchant_pwd" column="NEED_MERCHANT_PWD" />
+        <property name="create_date" column="CREATE_DATE" />
+        <property name="update_date" column="UPDATE_DATE" />
+        <property name="platform_status" column="STATUS" />
+        <property name="last_submit_order_date" column="LAST_SUBMIT_ORDER_DATE" />
+        <property name="last_callback_date" column="LAST_CALLBACK_DATE" />
+        <property name="success_rate" column="SUCCESS_RATE" />
+        <property name="paid_order_num" column="PAID_ORDER_NUM" />
+        <property name="total_order_num" column="TOTAL_ORDER_NUM" />
+        <property name="is_guma" column="IS_GUMA" />
+        <property name="is_new_jc_setting" column="IS_NEW_JC_SETTING" />
+        <property name="is_use_proxy" column="IS_USE_PROXY" />
+        <property name="pfx_mer_public_key_tips" column="PFX_MER_PUBLIC_KEY_TIPS" />
+        <property name="pfx_mer_private_key_tips" column="PFX_MER_PRIVATE_KEY_TIPS" />
+        <property name="pfx_ser_public_key_tips" column="PFX_SER_PUBLIC_KEY_TIPS" />
+        <property name="pfx_mer_private_key_pwd_tips" column="PFX_MER_PRIVATE_KEY_PWD_TIPS" />
+    </class>
+</hibernate-mapping>

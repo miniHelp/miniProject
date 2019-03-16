@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="onlineModel.MerchantPaymentVO" table="PY_MERCHANT_PAYMENT" >
+        
+        <id name="merchant_payment_id" column="ID">
+            <generator class="sequence">
+                <param name="sequence_name">SEQ_MERCHANT_PAYMENT_ID</param>
+            </generator>  
+        </id>
+
+        <property name="type" column="TYPE" />
+        <property name="merchant_id" column="MERCHANT_ID" />
+        <property name="payment_method_id" column="PAYMENT_METHOD_ID" />
+        <property name="create_date" column="CREATE_DATE" />
+        <property name="update_date" column="UPDATE_DATE" />
+
+    </class>
+</hibernate-mapping>
