@@ -5,8 +5,8 @@ import java.sql.Date;
 public class MerchantPaymentVO {
 
     private Integer merchant_payment_id;
-    private Character type;
-    private String merchant_id;
+    private String type;
+    private Integer merchant_id;
     private Integer payment_method_id;
     private Date create_date;
     private Date update_date;
@@ -20,19 +20,19 @@ public class MerchantPaymentVO {
         this.merchant_payment_id = merchant_payment_id;
     }
 
-    public Character getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Character type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public String getMerchant_id() {
+    public Integer getMerchant_id() {
         return merchant_id;
     }
 
-    public void setMerchant_id(String merchant_id) {
+    public void setMerchant_id(Integer merchant_id) {
         this.merchant_id = merchant_id;
     }
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="onlineModel.MerchantLogVO" table="PY_MERCHANT_LOG" >
+        
+        <id name="merchant_log_id" column="ID">
+            <generator class="sequence">
+                <param name="sequence_name">SEQ_MERCHANT_LOG</param>
+            </generator>  
+        </id>
+
+        <property name="kind" column="KIND" />
+        <property name="msg" column="MSG" />
+        <property name="user_id" column="USER_ID" />
+        <property name="create_date" column="CREATE_DATE" />
+        <property name="user_login_id" column="USER_LOGIN_ID" />
+        <property name="user_name" column="USER_NAME" />
+        <property name="user_ip" column="USER_IP" />
+        <property name="user_ip_area" column="USER_IP_AREA" />
+
+    </class>
+</hibernate-mapping>

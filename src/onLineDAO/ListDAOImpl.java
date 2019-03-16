@@ -1,21 +1,19 @@
 package onLineDAO;
 
+import Util.GetConnection;
+import Util.HibernateUtil;
+import onlineModel.MerchantVO;
+import onlineModel.PlatformVO;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import onlineModel.MerchantVO;
-import onlineModel.PlatformVO;
-import org.apache.commons.lang3.StringUtils;
-
-import Util.GetConnection;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class ListDAOImpl implements ListDAO {
@@ -62,38 +60,53 @@ public class ListDAOImpl implements ListDAO {
 
 	@Override
 	public List<PlatformVO> PlantNoList(String colum, String str) throws Exception {
-		String sql = "select id,name,url from py_payment_platform where " + colum + " like ? order by id asc";
-		System.out.println(sql);
-		GetConnection get = new GetConnection();
-		Connection conn = get.getConnection();
-		List<PlatformVO> list = new ArrayList<PlatformVO>();
-		PreparedStatement  pstmt = null;
+//		String sql = "select id,name,url from py_payment_platform where " + colum + " like ? order by id asc";
+//		System.out.println(sql);
+//		GetConnection get = new GetConnection();
+//		Connection conn = get.getConnection();
+//		List<PlatformVO> list = new ArrayList<PlatformVO>();
+//		PreparedStatement  pstmt = null;
+//
+//		try {
+//			// 建立字串
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, "%" + str + "%");
+//
+//			ResultSet result = pstmt.executeQuery();
+//			PlatformVO platformVO = null;
+//			while (result.next()) {
+//				platformVO = new PlatformVO();
+//				platformVO.setPlatform_id(result.getInt(1));
+//				platformVO.setPlatform_name(result.getString(2));
+//				platformVO.setPlatform_url(result.getString(3));
+//				list.add(platformVO);
+//			}
+//
+//			System.out.println(list);
+//
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			System.out.println(e.getMessage());
+//		} finally {
+//			conn.close();
+//			pstmt.close();
+//		}
+//
+//		return list;
 
+		List<PlatformVO> list = null;
+		Session session = HibernateUtil.getMypayCenterSessionFactory().getCurrentSession();
 		try {
-			// 建立字串
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%" + str + "%");
-			
-			ResultSet result = pstmt.executeQuery();
-			PlatformVO platformVO = null;
-			while (result.next()) {
-				platformVO = new PlatformVO();
-				platformVO.setPlatform_id(result.getString(1));
-				platformVO.setPlatform_name(result.getString(2));
-				platformVO.setPlatform_url(result.getString(3));
-				list.add(platformVO);
-			}
-
-			System.out.println(list);
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
-		} finally {
-			conn.close();
-			pstmt.close();
+			session.beginTransaction();
+			Query<PlatformVO> query =
+					session.createQuery("from PlatformVO where "+ colum + " like ?0 order by platform_id asc", PlatformVO.class);
+			query.setParameter(0,colum.equals("platform_id") ? Integer.parseInt(str) : str);
+            list  = query.getResultList();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
 		}
-
 		return list;
 	}
 
@@ -148,7 +161,7 @@ public class ListDAOImpl implements ListDAO {
 			while (result.next()) {
 				merchantVO = new MerchantVO();
 				merchantVO.setMerchantId(result.getString(1));
-				merchantVO.setPayment_platform_id(result.getString(2));
+				merchantVO.setPayment_platform_id(result.getInt(2));
 				merchantVO.setMerchant_name(result.getString(3));
 				merchantVO.setMerchant_no(result.getString(4));
 				merchantVO.setPlatform_no(result.getString(5));

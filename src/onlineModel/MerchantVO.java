@@ -1,21 +1,22 @@
 package onlineModel;
 
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
 
-public class MerchantVO {
+public class MerchantVO implements Serializable {
     private String merchantId;  //自动新增的商户流水号
 
 
     @NotEmpty
-    private String payment_platform_id; //接口编号
+    private Integer payment_platform_id; //接口编号
     private Integer order_page_id;
     private String merchant_descr;
     private Integer accumulate_record;
     private Integer accumulate_amount;
     private Integer max_stop_amount;
-    private Character merchant_status;
+    private String merchant_status;
     private String signature_key;
     private Date create_date;
     private Date update_date;
@@ -36,29 +37,29 @@ public class MerchantVO {
     private String pfx_mer_private_key_path;
     private String pfx_mer_private_key_pwd;
     private String pfx_ser_public_key_path;
-    private Character group_area;
-    private Character is_recharge_random_decimal;
+    private String group_area;
+    private String is_recharge_random_decimal;
     private String merchant_pwd;
     private Blob pfx_mer_public_key_file;
     private Blob pfx_mer_private_key_file;
     private Blob pfx_ser_public_key_file;
     private String qrcode_file_name;
     private Blob qrcode_file_content;
-    private Character is_pc_used;
-    private Character is_wap_used;
-    private Character is_10_multiple_reduce_1;
-    private Character is_only_integer;
+    private String is_pc_used;
+    private String is_wap_used;
+    private String is_10_multiple_reduce_1;
+    private String is_only_integer;
     private Integer recharge_amount_min;
     private Integer recharge_amount_max;
     private Integer fee_percentage;
-    private Character is_online_payment_used;
-    private Character sp_limit;
+    private String is_online_payment_used;
+    private String sp_limit;
     private String quick_amount_group;
-    private Character is_recharge_center_used;
+    private String is_recharge_center_used;
     private String recharge_center_type;
-    private Character is_recharge_random_integer;
-    private Character recharge_random_integer_digit;
-    private Character recharge_random_decimal_digit;
+    private String is_recharge_random_integer;
+    private String recharge_random_integer_digit;
+    private String recharge_random_decimal_digit;
     private Integer recharge_times_limit;
 
     public Integer getOrder_page_id() {
@@ -101,11 +102,11 @@ public class MerchantVO {
         this.max_stop_amount = max_stop_amount;
     }
 
-    public Character getMerchant_status() {
+    public String getMerchant_status() {
         return merchant_status;
     }
 
-    public void setMerchant_status(Character merchant_status) {
+    public void setMerchant_status(String merchant_status) {
         this.merchant_status = merchant_status;
     }
 
@@ -181,19 +182,19 @@ public class MerchantVO {
         this.pfx_ser_public_key_path = pfx_ser_public_key_path;
     }
 
-    public Character getGroup_area() {
+    public String getGroup_area() {
         return group_area;
     }
 
-    public void setGroup_area(Character group_area) {
+    public void setGroup_area(String group_area) {
         this.group_area = group_area;
     }
 
-    public Character getIs_recharge_random_decimal() {
+    public String getIs_recharge_random_decimal() {
         return is_recharge_random_decimal;
     }
 
-    public void setIs_recharge_random_decimal(Character is_recharge_random_decimal) {
+    public void setIs_recharge_random_decimal(String is_recharge_random_decimal) {
         this.is_recharge_random_decimal = is_recharge_random_decimal;
     }
 
@@ -237,35 +238,35 @@ public class MerchantVO {
         this.qrcode_file_content = qrcode_file_content;
     }
 
-    public Character getIs_pc_used() {
+    public String getIs_pc_used() {
         return is_pc_used;
     }
 
-    public void setIs_pc_used(Character is_pc_used) {
+    public void setIs_pc_used(String is_pc_used) {
         this.is_pc_used = is_pc_used;
     }
 
-    public Character getIs_wap_used() {
+    public String getIs_wap_used() {
         return is_wap_used;
     }
 
-    public void setIs_wap_used(Character is_wap_used) {
+    public void setIs_wap_used(String is_wap_used) {
         this.is_wap_used = is_wap_used;
     }
 
-    public Character getIs_10_multiple_reduce_1() {
+    public String getIs_10_multiple_reduce_1() {
         return is_10_multiple_reduce_1;
     }
 
-    public void setIs_10_multiple_reduce_1(Character is_10_multiple_reduce_1) {
+    public void setIs_10_multiple_reduce_1(String is_10_multiple_reduce_1) {
         this.is_10_multiple_reduce_1 = is_10_multiple_reduce_1;
     }
 
-    public Character getIs_only_integer() {
+    public String getIs_only_integer() {
         return is_only_integer;
     }
 
-    public void setIs_only_integer(Character is_only_integer) {
+    public void setIs_only_integer(String is_only_integer) {
         this.is_only_integer = is_only_integer;
     }
 
@@ -293,19 +294,19 @@ public class MerchantVO {
         this.fee_percentage = fee_percentage;
     }
 
-    public Character getIs_online_payment_used() {
+    public String getIs_online_payment_used() {
         return is_online_payment_used;
     }
 
-    public void setIs_online_payment_used(Character is_online_payment_used) {
+    public void setIs_online_payment_used(String is_online_payment_used) {
         this.is_online_payment_used = is_online_payment_used;
     }
 
-    public Character getSp_limit() {
+    public String getSp_limit() {
         return sp_limit;
     }
 
-    public void setSp_limit(Character sp_limit) {
+    public void setSp_limit(String sp_limit) {
         this.sp_limit = sp_limit;
     }
 
@@ -317,11 +318,11 @@ public class MerchantVO {
         this.quick_amount_group = quick_amount_group;
     }
 
-    public Character getIs_recharge_center_used() {
+    public String getIs_recharge_center_used() {
         return is_recharge_center_used;
     }
 
-    public void setIs_recharge_center_used(Character is_recharge_center_used) {
+    public void setIs_recharge_center_used(String is_recharge_center_used) {
         this.is_recharge_center_used = is_recharge_center_used;
     }
 
@@ -333,27 +334,27 @@ public class MerchantVO {
         this.recharge_center_type = recharge_center_type;
     }
 
-    public Character getIs_recharge_random_integer() {
+    public String getIs_recharge_random_integer() {
         return is_recharge_random_integer;
     }
 
-    public void setIs_recharge_random_integer(Character is_recharge_random_integer) {
+    public void setIs_recharge_random_integer(String is_recharge_random_integer) {
         this.is_recharge_random_integer = is_recharge_random_integer;
     }
 
-    public Character getRecharge_random_integer_digit() {
+    public String getRecharge_random_integer_digit() {
         return recharge_random_integer_digit;
     }
 
-    public void setRecharge_random_integer_digit(Character recharge_random_integer_digit) {
+    public void setRecharge_random_integer_digit(String recharge_random_integer_digit) {
         this.recharge_random_integer_digit = recharge_random_integer_digit;
     }
 
-    public Character getRecharge_random_decimal_digit() {
+    public String getRecharge_random_decimal_digit() {
         return recharge_random_decimal_digit;
     }
 
-    public void setRecharge_random_decimal_digit(Character recharge_random_decimal_digit) {
+    public void setRecharge_random_decimal_digit(String recharge_random_decimal_digit) {
         this.recharge_random_decimal_digit = recharge_random_decimal_digit;
     }
 
@@ -394,10 +395,10 @@ public class MerchantVO {
         this.merchantId = merchantId;
     }
 
-    public String getPayment_platform_id() {
+    public Integer getPayment_platform_id() {
         return payment_platform_id;
     }
-    public void setPayment_platform_id(String payment_platform_id) {
+    public void setPayment_platform_id(Integer payment_platform_id) {
         this.payment_platform_id = payment_platform_id;
     }
 

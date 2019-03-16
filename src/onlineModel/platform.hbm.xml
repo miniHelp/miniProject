@@ -4,7 +4,6 @@
 
 <hibernate-mapping>
     <class name="onlineModel.PlatformVO" table="PY_PAYMENT_PLATFORM" >
-        
         <id name="platform_id" column="ID">
             <generator class="sequence">
                 <param name="sequence_name">PLATFORM_PARAMS_SEQ</param>
@@ -20,7 +19,6 @@
         <property name="rsa_merchant_private_key_tips" column="RSA_MERCHANT_PRIVATE_KEY_TIPS" />
         <property name="platform_descr" column="DESCR" />
         <property name="rsa_merchant_public_key_tips" column="RSA_MERCHANT_PUBLIC_KEY_TIPS" />
-        <property name="platform_url" column="URL" />
         <property name="rsa_server_public_key_tips" column="RSA_SERVER_PUBLIC_KEY_TIPS" />
         <property name="query_pay_result_url" column="QUERY_PAY_RESULT_URL" />
         <property name="callback_file" column="CALLBACK_FILE" />

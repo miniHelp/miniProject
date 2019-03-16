@@ -141,7 +141,7 @@ public class ListServerlet extends HttpServlet {
 		String msg = "";
 		List<Integer> list = new ArrayList();
 
-		String payment_platform_id = merchantVO.getPayment_platform_id();
+		Integer payment_platform_id = merchantVO.getPayment_platform_id();
 		String merchant_name = merchantVO.getMerchant_name();
 		if (errors.hasErrors()) {
 			System.out.println("資料驗證出錯");
@@ -215,11 +215,11 @@ public class ListServerlet extends HttpServlet {
 			System.out.println("====plantNo ===   " + merchantVO.getPlatform_no());
 			System.out.println("====ip ===   " + ip);
 			System.out.println("====list ===   " + list);
-			msg +=  pl.insertMerchent(Integer.parseInt(payment_platform_id), merchant_name, Md5Key, merchant_no, pswName, RSAPrivate, RSAPublic,
+			msg +=  pl.insertMerchent(payment_platform_id, merchant_name, Md5Key, merchant_no, pswName, RSAPrivate, RSAPublic,
 					state, platform_no, list, ip);
 			System.out.println("------------新增商戶完成---------");
 			map.put("method", "merchantList");
-			pa.PlantNoList("id", payment_platform_id);
+			pa.PlantNoList("id", String.valueOf(payment_platform_id));
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -263,8 +263,9 @@ public class ListServerlet extends HttpServlet {
 
 		int id = 0;
 		String meString = "";// 回應訊息
-		if (StringUtils.isEmpty(platform.getPlatform_id()))
-			id = Integer.valueOf(platform.getPlatform_id());
+//		if (StringUtils.isEmpty(platform.getPlatform_id()))
+//			id = Integer.valueOf(platform.getPlatform_id());
+		id = platform.getPlatform_id();
 
 		String name = new String(platform.getPlatform_name().getBytes("ISO-8859-1"), "UTF-8");
 		System.out.println("id==" + id + "name==" + platform.getPlatform_name());
@@ -316,13 +317,16 @@ public class ListServerlet extends HttpServlet {
 		String columName = "";
 		String columValue = "";
 		if (StringUtils.isNotBlank(platformId)) {
-            columName = "id";
+//            columName = "id";
+			columName = "platform_id";
             columValue = platformId;
 		} else if (StringUtils.isNotBlank(platformName)) {
-            columName = "name";
+//            columName = "name";
+			columName = "platform_name";
             columValue = platformName;
 		} else if (StringUtils.isNotBlank(platformUrl)) {
-            columName = "url";
+//            columName = "url";
+			columName = "platform_url";
             columValue = platformUrl;
 		}
 

@@ -14,14 +14,14 @@
 
         <property name="accumulate_record" column="ACCUMULATE_RECORD" />
         <property name="accumulate_amount" column="ACCUMULATE_AMOUNT" />
-        <property name="max_stop_amount" column="ACCUMULATE_RECORD" />
+        <property name="max_stop_amount" column="MAX_STOP_AMOUNT" />
         <property name="create_date" column="CREATE_DATE" />
         <property name="update_date" column="UPDATE_DATE" />
-        <property name="submit_url" column="UPDATE_DATE" />
+        <property name="submit_url" column="SUBMIT_URL" />
         <property name="sort_value" column="SORT_VALUE" />
         <property name="last_trading_time" column="LAST_TRADING_TIME" />
-        <property name="merchant_status" column="MAX_STOP_AMOUNT" />
-        <property name="payment_platform_id" column="STATUS" />
+        <property name="merchant_status" column="MERCHANT_STATUS" />
+        <property name="payment_platform_id" column="PAYMENT_PLATFORM_ID" />
         <property name="order_page_id" column="ORDER_PAGE_ID" />
         <property name="platform_no" column="PLATFORM_NO" />
         <property name="merchant_no" column="MERCHANT_NO" />

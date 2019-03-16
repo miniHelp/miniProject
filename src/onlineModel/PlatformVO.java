@@ -1,17 +1,16 @@
 package onlineModel;
 
 
-import org.springframework.stereotype.Component;
-
+import java.io.Serializable;
 import java.sql.Date;
 
-@Component
-public class PlatformVO { //接口資料的bean
+
+public class PlatformVO implements Serializable { //接口資料的bean
 
 	private String platform_name;
 	private String platform_descr;
     private String platform_url;
-    private String platform_id;
+    private Integer platform_id;
     private String merchant_no_tips;
     private String merchant_pwd_name;
     private String merchant_pwd_tips;
@@ -26,11 +25,11 @@ public class PlatformVO { //接口資料的bean
     private String pfx_mer_private_key_pwd_tips;
     private String callback_file;
     private String callback_param;
-    private Character platform_status;
+    private String platform_status;
     private Date create_date;
     private Date update_date;
-    private Character need_platform_no;
-    private Character need_merchant_pwd;
+    private String need_platform_no;
+    private String need_merchant_pwd;
     private String query_pay_result_url;
     private Date last_submit_order_date;
     private Date last_callback_date;
@@ -41,24 +40,21 @@ public class PlatformVO { //接口資料的bean
     private String is_new_jc_setting;
     private String is_use_proxy;
 
-    public Character getPlatform_status() {
+    public String getPlatform_status() {
         return platform_status;
     }
 
-    public void setPlatform_status(Character platform_status) {
+    public void setPlatform_status(String platform_status) {
         this.platform_status = platform_status;
     }
 
 
-    public void setNeed_platform_no(Character need_platform_no) {
-        this.need_platform_no = need_platform_no;
-    }
 
-    public Character getNeed_merchant_pwd() {
+    public String getNeed_merchant_pwd() {
         return need_merchant_pwd;
     }
 
-    public void setNeed_merchant_pwd(Character need_merchant_pwd) {
+    public void setNeed_merchant_pwd(String need_merchant_pwd) {
         this.need_merchant_pwd = need_merchant_pwd;
     }
 
@@ -140,11 +136,11 @@ public class PlatformVO { //接口資料的bean
         this.update_date = update_date;
     }
 
-    public char getNeed_platform_no() {
+    public String getNeed_platform_no() {
         return need_platform_no;
     }
 
-    public void setNeed_platform_no(char need_platform_no) {
+    public void setNeed_platform_no(String need_platform_no) {
         this.need_platform_no = need_platform_no;
     }
 
@@ -313,11 +309,11 @@ public class PlatformVO { //接口資料的bean
         this.platform_url = platform_url;
     }
 
-    public String getPlatform_id() {
+    public Integer getPlatform_id() {
         return platform_id;
     }
 
-    public void setPlatform_id(String platform_id) {
+    public void setPlatform_id(Integer platform_id) {
         this.platform_id = platform_id;
     }
 }
