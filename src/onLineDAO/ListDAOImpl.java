@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -59,48 +57,19 @@ public class ListDAOImpl implements ListDAO {
 	}
 
 	@Override
-	public List<PlatformVO> PlantNoList(String colum, String str) throws Exception {
-//		String sql = "select id,name,url from py_payment_platform where " + colum + " like ? order by id asc";
-//		System.out.println(sql);
-//		GetConnection get = new GetConnection();
-//		Connection conn = get.getConnection();
-//		List<PlatformVO> list = new ArrayList<PlatformVO>();
-//		PreparedStatement  pstmt = null;
-//
-//		try {
-//			// 建立字串
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, "%" + str + "%");
-//
-//			ResultSet result = pstmt.executeQuery();
-//			PlatformVO platformVO = null;
-//			while (result.next()) {
-//				platformVO = new PlatformVO();
-//				platformVO.setPlatform_id(result.getInt(1));
-//				platformVO.setPlatform_name(result.getString(2));
-//				platformVO.setPlatform_url(result.getString(3));
-//				list.add(platformVO);
-//			}
-//
-//			System.out.println(list);
-//
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			System.out.println(e.getMessage());
-//		} finally {
-//			conn.close();
-//			pstmt.close();
-//		}
-//
-//		return list;
+	public List<PlatformVO> PlantNoList(String column, String str) throws Exception {
 
 		List<PlatformVO> list = null;
 		Session session = HibernateUtil.getMypayCenterSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			Query<PlatformVO> query =
-					session.createQuery("from PlatformVO where "+ colum + " like ?0 order by platform_id asc", PlatformVO.class);
-			query.setParameter(0,colum.equals("platform_id") ? Integer.parseInt(str) : str);
+					session.createQuery("from PlatformVO where "+ column + " like :column order by platform_id asc", PlatformVO.class);
+			if(column.equals("platform_id")){
+				query.setParameter("column",Integer.parseInt(str));
+			}else{
+				query.setParameter("column","%" + str + "%");
+			}
             list  = query.getResultList();
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
@@ -143,54 +112,31 @@ public class ListDAOImpl implements ListDAO {
 	}
 
 	@Override
-	public List<MerchantVO> merChantList(int colum) throws SQLException {
-		System.out.println("into == merChantList");
-		String sql = "select id ,PAYMENT_PLATFORM_ID , NAME , MERCHANT_NO ,PLATFORM_NO , MERCHANT_PWD ,SIGNATURE_KEY ,SIGNATURE_TYPE ,RSA_MERCHANT_PRIVATE_KEY ,RSA_MERCHANT_PUBLIC_KEY ,RSA_SERVER_PUBLIC_KEY from PY_MERCHANT where PAYMENT_PLATFORM_ID = ?  order by id asc";
-		System.out.println(sql);
-		GetConnection get = new GetConnection();
-		Connection conn = get.getMypayConnection();
-		List<MerchantVO> list = new ArrayList<MerchantVO>();
+	public List<MerchantVO> merChantList(int column) throws SQLException {
 
+		List<MerchantVO> list = null;
+		Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
+		System.out.println("要查詢接編號:" + column + "底下所有商戶!!");
 		try {
-			// 建立字串
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, colum);
-
-			ResultSet result = pstmt.executeQuery();
-			MerchantVO merchantVO = null;
-			while (result.next()) {
-				merchantVO = new MerchantVO();
-				merchantVO.setMerchantId(result.getString(1));
-				merchantVO.setPayment_platform_id(result.getInt(2));
-				merchantVO.setMerchant_name(result.getString(3));
-				merchantVO.setMerchant_no(result.getString(4));
-				merchantVO.setPlatform_no(result.getString(5));
-				merchantVO.setMerchant_pwd(result.getString(6));
-				merchantVO.setSignature_key(result.getString(7));
-				merchantVO.setSignature_type(result.getString(8));
-				merchantVO.setRsa_merchant_private_key(result.getString(9));
-				merchantVO.setRsa_merchant_public_key(result.getString(10));
-				merchantVO.setRsa_server_public_key(result.getString(11));
-				list.add(merchantVO);
-			}
-
-			System.out.println(list);
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
-		} finally {
-			conn.close();
+			session.beginTransaction();
+			Query<MerchantVO> query =
+					session.createQuery("from MerchantVO where payment_platform_id=:payment_platform_id order by merchantId asc", MerchantVO.class);
+			query.setParameter("payment_platform_id",column);
+			list  = query.getResultList();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
 		}
 		return list;
 	}
-	
-	
+
+
 	/**
-	 * 
+	 *
 	 */
-	
-	
+
+
 
 
 }

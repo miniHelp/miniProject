@@ -7,10 +7,10 @@ import java.sql.Date;
 
 public class PlatformVO implements Serializable { //接口資料的bean
 
-	private String platform_name;
-	private String platform_descr;
-    private String platform_url;
     private Integer platform_id;
+    private String platform_name;
+    private String platform_descr;
+    private String platform_url;
     private String merchant_no_tips;
     private String merchant_pwd_name;
     private String merchant_pwd_tips;

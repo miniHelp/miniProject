@@ -1,16 +1,21 @@
 package onLineDAO;
 
+import Util.GetConnection;
+import Util.HibernateUtil;
+import onlineModel.MerchantLogVO;
+import onlineModel.MerchantPaymentVO;
+import onlineModel.MerchantVO;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
+import java.util.Date;
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
-import Util.GetConnection;
-import org.springframework.stereotype.Component;
 
 @Component
 public class MerchantDAOImpl implements MerchentDAO {
@@ -67,54 +72,50 @@ public class MerchantDAOImpl implements MerchentDAO {
 
 	@Override
 	public String insertMerchent(int plant, String merchantName, String MD5, String merchentNo, String password,
-			String RSAPrivate, String RSAPublic, String type ,String  plantNo ,List<Integer>list ,String ip) throws Exception {
-		String sql = "INSERT INTO PY_MERCHANT (ID, ORDER_PAGE_ID, PAYMENT_PLATFORM_ID, MERCHANT_NO,"
-				+ " NAME, MAX_STOP_AMOUNT, CREATE_DATE, UPDATE_DATE, SUBMIT_URL,GROUP_AREA ,SIGNATURE_TYPE,"
-				+ " SIGNATURE_KEY, RSA_MERCHANT_PRIVATE_KEY,RSA_SERVER_PUBLIC_KEY," + "PLATFORM_NO,MERCHANT_PWD"
-				+ " ,IS_RECHARGE_RANDOM_DECIMAL , STATUS)"
+			String RSAPrivate, String RSAPublic, String type ,String  plantNo ,List<Integer>list ,String ip) throws Exception{
+		Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
 
-				+ "VALUES (?, ?, ?, ?, ?,      '9999',  sysdate , sysdate,"
-				+ "'http://211.75.237.90','1',?, ?, ?, ? ,?,?,'N','1')";
-
-		System.out.println(sql);
-		System.out.println(merchantName + "  ===  " + merchantName);
-		String meString = "";
-		GetConnection get = new GetConnection();
-		Connection conn = get.getMypayConnection();
-		conn.setAutoCommit(false);  
-		int id = getSeq(conn);
-
-		PreparedStatement pstmt = conn.prepareStatement(sql);
 		try {
-			pstmt.setInt(1, id);// 自增主鍵
-			pstmt.setInt(2, plant);// 平台的ID 測試機上跟層級是一樣的
-			pstmt.setInt(3, plant);
-			pstmt.setString(4, merchentNo);// 商戶號
-			pstmt.setString(5, merchantName + "自動產生測試號");
-			pstmt.setString(6, type);
-			pstmt.setString(7, StringUtils.isNotEmpty(MD5) ? MD5 : "");// md5密
-			pstmt.setString(8, StringUtils.isNotEmpty(RSAPrivate) ? RSAPrivate : "");
-			pstmt.setString(9, StringUtils.isNotEmpty(RSAPublic) ? RSAPublic : "");
-			pstmt.setString(10, StringUtils.isNotEmpty(plantNo) ? plantNo : "");
-			pstmt.setString(11, StringUtils.isNotEmpty(password) ? password : "");
-			pstmt.executeUpdate();
-			conn.commit();    
-			System.out.println(pstmt.toString());
-			meString += meString + "," + insertMerPayment(id, type, list);
-			System.out.println("------------新增商戶支付方式完成------------");
-			meString += meString + "," + insertMerLog(ip, id, merchantName);
-			System.out.println("------------新增商戶log完成------------");
-			
-			
-			return meString  += meString + "商戶新增成功";
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return meString = e.getMessage();
-		} finally {
-			pstmt.close();
-			conn.close();
+			MerchantVO merchantVO = new MerchantVO();
+			session.beginTransaction();
 
-		}
+			merchantVO.setOrder_page_id(plant);
+			merchantVO.setPayment_platform_id(plant);
+			merchantVO.setMerchant_no(merchentNo);
+			merchantVO.setMerchant_name(merchantName + "自動產生測試號");
+			merchantVO.setMax_stop_amount(999999);
+			merchantVO.setAccumulate_amount(0);
+			merchantVO.setAccumulate_record(0);
+			merchantVO.setCreate_date(new java.sql.Date(new Date().getTime()));
+			merchantVO.setUpdate_date(new java.sql.Date(new Date().getTime()));
+			merchantVO.setSubmit_url("http://211.75.237.90");
+			merchantVO.setGroup_area("1");
+			merchantVO.setMerchant_status("1");
+			merchantVO.setSignature_type(type);
+			merchantVO.setSignature_key(StringUtils.isNotEmpty(MD5) ? MD5 : "");
+			merchantVO.setRsa_merchant_private_key(StringUtils.isNotEmpty(RSAPrivate) ? RSAPrivate : "");
+			merchantVO.setRsa_server_public_key(StringUtils.isNotEmpty(RSAPublic) ? RSAPublic : "");
+			merchantVO.setPlatform_no(StringUtils.isNotEmpty(plantNo) ? plantNo : "");
+			merchantVO.setMerchant_pwd(StringUtils.isNotEmpty(password) ? password : "");
+			session.saveOrUpdate(merchantVO);
+
+            Query<Object> query = session.createQuery("select max(merchantId) from MerchantVO", Object.class);
+            List<Object> listQuery = query.getResultList();
+            session.getTransaction().commit();
+
+            insertMerPayment((int)listQuery.get(0), type, list);
+            System.out.println("------------新增商戶支付方式完成------------");
+            insertMerLog(ip, (int)listQuery.get(0), merchantName);
+            System.out.println("------------新增商戶log完成------------");
+
+        } catch (Exception ex) {
+
+            session.getTransaction().rollback();
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+
+		return "新增商戶完成";
 	}
 
 	/**
@@ -127,54 +128,30 @@ public class MerchantDAOImpl implements MerchentDAO {
 	 */
 	
 	@Override
-	public String insertMerLog(String userIp, int merchId, String name ) throws SQLException {
-		String sql = "INSERT INTO PY_MERCHANT_LOG										"
-				+ "  (ID,                                                           "
-				+ "   KIND,                                                         "
-				+ "   MSG,                                                          "
-				+ "   CREATE_DATE,                                                  "
-				+ "   USER_ID,                                                      "
-				+ "   USER_LOGIN_ID,                                                "
-				+ "   USER_NAME,                                                    "
-				+ "   USER_IP                                                      "
-				+ "   )                                                 "
-				+ "VALUES                                                           "
-				+ "  (?,                                                         "
-				+ "   ?,                                                       "
-				+ "   ?,                                                        "
-				+ "   sysdate,                                                "
-				+ "   ?,                                                    "
-				+ "   ?,                                              "
-				+ "   ?,                                                  "
-				+ "   ?                                                    "
-				+ "   )                                              ";
-
-		System.out.println(sql);
-		String meString = "";
-		GetConnection get = new GetConnection();
-		Connection conn = get.getMypayConnection();
-		int num = getLogSeq(conn);
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+	public String insertMerLog(String userIp, int merchId, String name) throws SQLException {
+		Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
 		try {
-			pstmt.setInt(1, num);// 自增主鍵
-			pstmt.setString(2, "2");// 2是新增
-			pstmt.setString(3,  "商户编号："+ merchId +" "+name + " 启用商户");
-			pstmt.setInt(4, 1061);// 懶惰按鈕
-			pstmt.setString(5, "懶惰按鈕");
-			pstmt.setString(6, "懶惰按鈕");
-			pstmt.setString(7, userIp);
+			session.beginTransaction();
+			MerchantLogVO merchantLogVO = new MerchantLogVO();
+			merchantLogVO.setKind("2");
+			merchantLogVO.setMsg("商户编号："+ merchId +" "+name + " 启用商户");
+			merchantLogVO.setCreate_date(new java.sql.Date(new Date().getTime()));
+			merchantLogVO.setUser_id(1061);
+			merchantLogVO.setUser_login_id("懶惰按鈕");
+			merchantLogVO.setUser_name("懶惰按鈕");
+			merchantLogVO.setUser_ip(userIp);
 
-			pstmt.executeUpdate();
-			System.out.println(pstmt.toString());
-			return meString = "商戶Log新增成功";
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return meString = e.getMessage();
-		} finally {
-			pstmt.close();
-			conn.close();
+			session.saveOrUpdate(merchantLogVO);
+			session.getTransaction().commit();
 
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}finally {
+			return "商戶Log新增成功";
 		}
+
+
 
 	}
 
@@ -189,52 +166,32 @@ public class MerchantDAOImpl implements MerchentDAO {
 	
 	@Override
 	public String insertMerPayment(int id, String type, List<Integer> payment) throws SQLException {
-		String sql = "INSERT INTO PY_MERCHANT_PAYMENT										"
-				+ "  (ID,                                                           "
-				+ "   MERCHANT_ID,                                                         "
-				+ "   PAYMENT_METHOD_ID,                                                          "
-				+ "   TYPE,                                                  "
-				+ "   CREATE_DATE,                                                      "
-				+ "   UPDATE_DATE                                                "
-				+ "   )                                                 "
-				+ "VALUES                                                           "
-				+ "  (?,                                                         "
-				+ "   ?,                                                       "
-				+ "   ?,                                                        "
-				+ "   ?,                                                "
-				+ "   sysdate,                                                    " + "   sysdate"
-				+ "   )                                              ";
-
 		String meString = "";
-		GetConnection get = new GetConnection();
-		Connection conn = get.getMypayConnection();
-		PreparedStatement pstmt = conn.prepareStatement(sql);
 
-		try {
-			for (int y = 1; y < 3; y++) {
-				for (int i = 0; i < payment.size(); i++) {
-					System.out.println(y+"   ===    "+ i);
-					System.out.println(sql);
-					int num = getPaymentSeq(conn);
-					pstmt.setInt(1, num);// 自增主鍵
-					pstmt.setInt(2, id);// 對應的商戶編號
-					pstmt.setInt(3, payment.get(i));
-					pstmt.setString(4, String.valueOf(y));// 一個是支付方式 一個是商戶確認鑰用的
-															// 所以兩個都滾完
-					pstmt.executeUpdate();
-					System.out.println(pstmt.toString());
-				}
-
+			Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
+        try {
+            MerchantPaymentVO merchantPaymentVO = null;
+            session.beginTransaction();
+            for (int y = 1; y < 3; y++) {
+                    for (int i = 0; i < payment.size(); i++) {
+                        merchantPaymentVO = new MerchantPaymentVO();
+                        merchantPaymentVO.setMerchant_id(id);
+                        merchantPaymentVO.setPayment_method_id(payment.get(i));
+                        merchantPaymentVO.setType(String.valueOf(y));
+                        merchantPaymentVO.setCreate_date(new java.sql.Date(new Date().getTime()));
+                        merchantPaymentVO.setUpdate_date(new java.sql.Date(new Date().getTime()));
+                        session.saveOrUpdate(merchantPaymentVO);
+                    }
+                }
+                session.getTransaction().commit();
+				meString = "新增商戶支付方式  完成";
+			} catch (RuntimeException ex) {
+				session.getTransaction().rollback();
+				meString = ex.getMessage();
+				throw ex;
+			}finally {
+				return meString;
 			}
-			return meString = "新增商戶支付方式  完成";
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return meString = e.getMessage();
-		} finally {
-			pstmt.close();
-			conn.close();
-
-		}
 	}
 
 	/**

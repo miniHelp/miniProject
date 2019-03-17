@@ -5,7 +5,7 @@
 <hibernate-mapping>
     <class name="onlineModel.MerchantLogVO" table="PY_MERCHANT_LOG" >
         
-        <id name="merchant_log_id" column="ID">
+        <id name="merchant_log_id" column="ID" type="java.lang.Integer">
             <generator class="sequence">
                 <param name="sequence_name">SEQ_MERCHANT_LOG</param>
             </generator>  

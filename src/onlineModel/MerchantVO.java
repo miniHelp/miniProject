@@ -1,35 +1,30 @@
 package onlineModel;
 
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
 
 public class MerchantVO implements Serializable {
-    private String merchantId;  //自动新增的商户流水号
 
+    private Integer merchantId;  //自动新增的商户流水号
 
     @Digits(integer = 5 , fraction = 0)
+    @NotNull
     private Integer payment_platform_id; //接口编号
-    @NotEmpty
+    @org.hibernate.validator.constraints.NotEmpty
     private String merchant_name;
-    @NotEmpty
+    @org.hibernate.validator.constraints.NotEmpty
     private String merchant_no;
-    @NotEmpty
     private Integer order_page_id;
     private String merchant_descr;
-    @NotEmpty
     private Integer accumulate_record;
-    @NotEmpty
     private Integer accumulate_amount;
-    @NotEmpty
     private Integer max_stop_amount;
     private String merchant_status;
     private String signature_key;
-    @NotEmpty
     private Date create_date;
-    @NotEmpty
     private Date update_date;
     private String submit_url;
     private Integer sort_value;
@@ -52,9 +47,7 @@ public class MerchantVO implements Serializable {
     private String qrcode_file_name;
     private Blob qrcode_file_content;
     private String is_pc_used;
-
     private String is_wap_used;
-
     private String is_10_multiple_reduce_1;
     private String is_only_integer;
     private Integer recharge_amount_min;
@@ -404,11 +397,11 @@ public class MerchantVO implements Serializable {
                 '}';
     }
 
-    public String getMerchantId() {
+    public Integer getMerchantId() {
         return merchantId;
     }
 
-    public void setMerchantId(String merchantId) {
+    public void setMerchantId(Integer merchantId) {
         this.merchantId = merchantId;
     }
 

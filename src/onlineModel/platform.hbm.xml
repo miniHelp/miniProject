@@ -4,7 +4,7 @@
 
 <hibernate-mapping>
     <class name="onlineModel.PlatformVO" table="PY_PAYMENT_PLATFORM" >
-        <id name="platform_id" column="ID">
+        <id name="platform_id" column="ID" type="java.lang.Integer">
             <generator class="sequence">
                 <param name="sequence_name">PLATFORM_PARAMS_SEQ</param>
             </generator>  

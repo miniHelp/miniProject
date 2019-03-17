@@ -53,7 +53,6 @@ public class ListServerlet extends HttpServlet {
 	private MerchantDAOImpl pl;
 
 
-
 	@ModelAttribute
 	public void getObject(Map<String,Object> map){
 		System.out.println("我有进来modeAttribute");
@@ -135,6 +134,7 @@ public class ListServerlet extends HttpServlet {
 	//新增商户
 	@RequestMapping(value = "/insertMerchant",method = RequestMethod.POST)
 	public String insertMerchant(@Valid @ModelAttribute("merchant") MerchantVO merchantVO,BindingResult errors, Map<String,Object> map) {
+		//	這裡的ModelAttribute一定要加，表單才會驗證
 		System.out.println("新增的商戶資料為:" + merchantVO);
 
 		System.out.println("====insertMerchant===");
@@ -148,7 +148,6 @@ public class ListServerlet extends HttpServlet {
 			for(FieldError error : errors.getFieldErrors()){
 				System.out.println(error.getField() + ":" +  error.getDefaultMessage());
 			}
-
 			map.put("isDisplay","true");
 			return "index";
 		}
@@ -175,10 +174,10 @@ public class ListServerlet extends HttpServlet {
 			String RSAPrivate = null;
 			if (StringUtils.isNotEmpty(merchantVO.getRsa_merchant_public_key()))
 				RSAPrivate = merchantVO.getRsa_merchant_public_key().trim();
-	//		// 平台號
-	//		String plantNo = null;
-	//		if (StringUtils.isNotEmpty(request.getParameter("plantNo")))
-	//			plantNo = request.getParameter("plantNo").trim();
+			//		// 平台號
+			//		String plantNo = null;
+			//		if (StringUtils.isNotEmpty(request.getParameter("plantNo")))
+			//			plantNo = request.getParameter("plantNo").trim();
 			// 支付方式
 			String[] payList = null;
 			if (request.getParameterValues("payList").length != 0) {
@@ -226,9 +225,7 @@ public class ListServerlet extends HttpServlet {
 			msg += e;
 		} finally {
 			map.put("msg", msg);
-//			request.setAttribute("msg", msg);
-			//request.getRequestDispatcher("/index.jsp").forward(request, response);
-            return "index";
+			return "index";
 		}
 	}
 
@@ -267,7 +264,7 @@ public class ListServerlet extends HttpServlet {
 //			id = Integer.valueOf(platform.getPlatform_id());
 		id = platform.getPlatform_id();
 
-		String name = new String(platform.getPlatform_name().getBytes("ISO-8859-1"), "UTF-8");
+		String name = platform.getPlatform_name();
 		System.out.println("id==" + id + "name==" + platform.getPlatform_name());
 		meString = pa.insertMypay(name, id);
 		map.put("method","insertMypay");

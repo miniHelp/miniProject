@@ -125,13 +125,17 @@
         }
 
         table.merchantReDiv td {
-            text-align:center;
             background-color: #c7ae8f;
         }
+
 
         table.merchantReDiv {
             width: 850px;
             margin-top: 8px;
+        }
+
+        #resultDiv table td{
+            text-align:center;
         }
 
         /*
@@ -377,23 +381,27 @@
             </tr>
             <tr class='merchantDetalDiv'>
                 <th class='one'>平台號 :</th>
-                <th class='two'>${data.platform_no}</th>
+                <th class='two'>${empty data.platform_no ? "無" : data.platform_no}</th>
                 <th class='one'>商戶密碼 :</th>
-                <th class='two'>${data.merchant_pwd}</th>
+                <th class='two'>${empty data.merchant_pwd ? "無" : data.merchant_pwd}</th>
                 <th class='one'>簽章種類 :</th>
-                <th class='two' id="signType">${data.signature_type}</th>
+                <th class='two' id="signType">
+                    <c:if test="${data.signature_type == 1}">MD5</c:if>
+                    <c:if test="${data.signature_type == 2}">RSA</c:if>
+                    <c:if test="${data.signature_type == 3}">RSA(PFX)</c:if>
+                </th>
             </tr>
             <tr class='merchantDetalDiv'>
                 <th class='one'>MD5密鑰 :</th>
                 <td colspan="5">${data.signature_key}</td>
             </tr>
             <tr class='merchantDetalDiv'>
-                <th class='one'>RSA私鑰 :</th>
+                <th class='one'>RSA商戶私鑰 :</th>
                 <td colspan="5">${data.rsa_merchant_private_key}</td>
             </tr>
             <tr class='merchantDetalDiv'>
-                <th class='one'>RSA公鑰 :</th>
-                <td colspan="5">${data.rsa_merchant_public_key}</td>
+                <th class='one'>RSA平台公鑰 :</th>
+                <td colspan="5">${data.rsa_server_public_key}</td>
             </tr>
         </table>
     </c:forEach>
@@ -412,14 +420,6 @@
             <tr>
                 <th style="width: 150px;">參數名稱</th>
                 <th>參數值</th>
-            </tr>
-            <tr>
-                <td>接口編號：</td>
-                <td>
-                    <form:input type="text" id='insertMypayMerchentFormId' path="payment_platform_id"/>
-                    <%--<input:hidden type="text" cssClass='insertMypayMerchentFormId' path="order_page_id"/>--%>
-                    <form:errors path="payment_platform_id" cssStyle="color: red;"/>
-                </td>
             </tr>
             <tr>
                 <td>接口名稱：</td>
@@ -451,6 +451,7 @@
             <tr>
                 <td> 按下去按下去~:</td>
                 <td>
+                    <input:hidden id='insertMypayMerchentFormId' path="payment_platform_id"/>
                     <input:hidden path="merchant_status" value="1"/>
                     <input:hidden path="accumulate_record" value="0"/>
                     <input:hidden path="max_stop_amount" value="0"/>
