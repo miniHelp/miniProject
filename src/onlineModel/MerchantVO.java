@@ -1,5 +1,6 @@
 package onlineModel;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.sql.Blob;
@@ -9,25 +10,30 @@ public class MerchantVO implements Serializable {
     private String merchantId;  //自动新增的商户流水号
 
 
-    @NotEmpty
+    @Digits(integer = 5 , fraction = 0)
     private Integer payment_platform_id; //接口编号
+    @NotEmpty
+    private String merchant_name;
+    @NotEmpty
+    private String merchant_no;
+    @NotEmpty
     private Integer order_page_id;
     private String merchant_descr;
+    @NotEmpty
     private Integer accumulate_record;
+    @NotEmpty
     private Integer accumulate_amount;
+    @NotEmpty
     private Integer max_stop_amount;
     private String merchant_status;
     private String signature_key;
+    @NotEmpty
     private Date create_date;
+    @NotEmpty
     private Date update_date;
     private String submit_url;
     private Integer sort_value;
     private Date last_trading_time;
-    @NotEmpty
-    private String merchant_name;
-
-    @NotEmpty
-    private String merchant_no;
     private String platform_no;
     private String signature_type;
     private String rsa_merchant_private_key;
@@ -46,7 +52,9 @@ public class MerchantVO implements Serializable {
     private String qrcode_file_name;
     private Blob qrcode_file_content;
     private String is_pc_used;
+
     private String is_wap_used;
+
     private String is_10_multiple_reduce_1;
     private String is_only_integer;
     private Integer recharge_amount_min;
@@ -61,6 +69,15 @@ public class MerchantVO implements Serializable {
     private String recharge_random_integer_digit;
     private String recharge_random_decimal_digit;
     private Integer recharge_times_limit;
+    private String qrcode_file;
+
+    public String getQrcode_file() {
+        return qrcode_file;
+    }
+
+    public void setQrcode_file(String qrcode_file) {
+        this.qrcode_file = qrcode_file;
+    }
 
     public Integer getOrder_page_id() {
         return order_page_id;
