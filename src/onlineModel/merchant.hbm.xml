@@ -20,7 +20,7 @@
         <property name="submit_url" column="SUBMIT_URL" />
         <property name="sort_value" column="SORT_VALUE" />
         <property name="last_trading_time" column="LAST_TRADING_TIME" />
-        <property name="merchant_status" column="MERCHANT_STATUS" />
+        <property name="merchant_status" column="STATUS" />
         <property name="payment_platform_id" column="PAYMENT_PLATFORM_ID" />
         <property name="order_page_id" column="ORDER_PAGE_ID" />
         <property name="platform_no" column="PLATFORM_NO" />
@@ -59,6 +59,7 @@
         <property name="recharge_random_integer_digit" column="RECHARGE_RANDOM_INTEGER_DIGIT" />
         <property name="recharge_random_decimal_digit" column="RECHARGE_RANDOM_DECIMAL_DIGIT" />
         <property name="recharge_times_limit" column="RECHARGE_TIMES_LIMIT" />
+        <property name="qrcode_file" column="QRCODE_FILE" />
         
     </class>
 </hibernate-mapping>
