@@ -1,9 +1,11 @@
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="errors" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE HTML>
 <!-- 值班小帮手 -->
 <html>
@@ -123,6 +125,7 @@
         }
 
         table.merchantReDiv td {
+            text-align:center;
             background-color: #c7ae8f;
         }
 
@@ -196,10 +199,9 @@
 
         </table>
 
-        <input type="submit" value='送出' id="authSub"/> <input type="button"
-                                                              class="reset" value='清空'/> <input type="hidden"
-                                                                                                name="method"
-                                                                                                value="auth"/>
+        <input type="submit" value='送出' id="authSub"/>
+        <input type="button" class="reset" value='清空'/>
+        <input type="hidden" name="method" value="auth"/>
     </form>
 
 </div>
@@ -341,10 +343,13 @@
     <c:forEach items="${merList}" var="data">
         <table class="merchantReDiv" border="1" width='850px'>
             <tr>
-                <th width='10%'>接口</th>
-                <th width='12%'>商戶編號</th>
-                <th width='40%'>商戶名稱</th>
-                <th width='28%'>商戶號</th>
+                <th width='12.5%'>接口</th>
+                <th width='12.5%'>商戶編號</th>
+                <th width='30%'>商戶名稱</th>
+                <th width='12.5%'>商戶號</th>
+                <th width='12.5%'>最大停用金額</th>
+                <th width='12.5%'>累計筆數</th>
+                <th width='12.5%'>累計金額</th>
                 <th width='10%' colspan="2">操作</th>
             </tr>
             <tr class='three'>
@@ -352,7 +357,11 @@
                 <td>${data.merchantId}</td>
                 <td>${data.merchant_name}</td>
                 <td>${data.merchant_no}</td>
-                <td colspan="2"><input type="button" value="詳情"
+                <td>${data.max_stop_amount}</td>
+                <td>${data.accumulate_record}</td>
+                <td>${data.accumulate_amount}</td>
+                <td colspan="2">
+                    <input type="button" value="詳情"
                                        dataId="${data.merchantId}" id="merListPop${data.merchantId}"
                                        onclick='merchantDetal(this);'/>
                     <input type="button" value="幹掉他" dataId="${data.merchantId}" dataPlant="${data.payment_platform_id}" class="deleteMerchant"
@@ -372,7 +381,7 @@
                 <th class='one'>商戶密碼 :</th>
                 <th class='two'>${data.merchant_pwd}</th>
                 <th class='one'>簽章種類 :</th>
-                <th class='two' id="signType">${data.signature_key}</th>
+                <th class='two' id="signType">${data.signature_type}</th>
             </tr>
             <tr class='merchantDetalDiv'>
                 <th class='one'>MD5密鑰 :</th>
@@ -408,6 +417,7 @@
                 <td>接口編號：</td>
                 <td>
                     <form:input type="text" id='insertMypayMerchentFormId' path="payment_platform_id"/>
+                    <%--<input:hidden type="text" cssClass='insertMypayMerchentFormId' path="order_page_id"/>--%>
                     <form:errors path="payment_platform_id" cssStyle="color: red;"/>
                 </td>
             </tr>
@@ -441,9 +451,15 @@
             <tr>
                 <td> 按下去按下去~:</td>
                 <td>
+                    <input:hidden path="merchant_status" value="1"/>
+                    <input:hidden path="accumulate_record" value="0"/>
+                    <input:hidden path="max_stop_amount" value="0"/>
+                    <input:hidden path="create_date" value="<%=new Date()%>"/>
+                    <input:hidden path="update_date" value="<%=new Date()%>"/>
                     <input type='button' id='insertMerId' name='insertMerId'value='見證奇蹟的時刻 ✧◝(⁰▿⁰)◜✧!!!!' onclick="document.forms['insertMypayMerchantForm'].submit()">
                     <input type='radio' name='state' value='on' checked> 啟用 (((o(*ﾟ▽ﾟ*)o)))
                     <input type='radio' name='state' value='off' > 停用 (｡ŏ_ŏ)
+
                 </td>
             </tr>
             <%--"<input type='hidden' id='sign' name='sign'	value='"+ sign +"'>--%>
