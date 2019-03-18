@@ -125,12 +125,4 @@ public class ListDAOImpl implements ListDAO {
 		return list;
 	}
 
-
-	/**
-	 *
-	 */
-
-
-
-
 }
