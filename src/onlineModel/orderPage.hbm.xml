@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="onlineModel.OrderPageVO" table="PY_ORDER_PAGE" >
+        <id name="order_page_id" column="ID" type="java.lang.Integer">
+            <generator class="sequence">
+                <param name="sequence_name">SEQ_ORDER_PAGE_ID</param>
+            </generator>  
+        </id>
+
+        <property name="order_page_name" column="NAME" />
+        <property name="order_page_descr" column="DESCR" />
+        <property name="domain_name" column="DOMAIN_NAME" />
+        <property name="title" column="TITLE" />
+        <property name="close_msg" column="CLOSE_MSG" />
+        <property name="order_page_status" column="STATUS" />
+        <property name="create_date" column="CREATE_DATE" />
+        <property name="update_date" column="UPDATE_DATE" />
+        <property name="logo_bg_gradient_color_up" column="LOGO_BG_GRADIENT_COLOR_UP" />
+        <property name="logo_bg_gradient_color_middle" column="LOGO_BG_GRADIENT_COLOR_MIDDLE" />
+        <property name="logo_bg_gradient_color_down" column="LOGO_BG_GRADIENT_COLOR_DOWN" />
+        <property name="logo_image_name" column="LOGO_IMAGE_NAME" />
+        <property name="logo_slogan_image_name" column="LOGO_SLOGAN_IMAGE_NAME" />
+        <property name="logo_consulting_is_show" column="LOGO_CONSULTING_IS_SHOW" />
+        <property name="logo_consulting_name" column="LOGO_CONSULTING_NAME" />
+        <property name="logo_consulting_url" column="LOGO_CONSULTING_URL" />
+        <property name="submit_up_text" column="SUBMIT_UP_TEXT" />
+        <property name="submit_account_tips" column="SUBMIT_ACCOUNT_TIPS" />
+        <property name="submit_account_again_tips" column="SUBMIT_ACCOUNT_AGAIN_TIPS" />
+        <property name="submit_amount_tips" column="SUBMIT_AMOUNT_TIPS" />
+        <property name="submit_button_color_up" column="SUBMIT_BUTTON_COLOR_UP" />
+        <property name="submit_button_color_down" column="SUBMIT_BUTTON_COLOR_DOWN" />
+        <property name="submit_button_font_color" column="SUBMIT_BUTTON_FONT_COLOR" />
+        <property name="submit_down_text" column="SUBMIT_DOWN_TEXT" />
+        <property name="website_bg_image_name" column="WEBSITE_BG_IMAGE_NAME" />
+        <property name="website_copyright" column="WEBSITE_COPYRIGHT" />
+        <property name="phone_logo_image_name" column="PHONE_LOGO_IMAGE_NAME" />
+        <property name="phone_notice" column="PHONE_NOTICE" />
+        <property name="phone_up_text" column="PHONE_UP_TEXT" />
+        <property name="phone_down_text" column="PHONE_DOWN_TEXT" />
+        <property name="phone_account_tips" column="PHONE_ACCOUNT_TIPS" />
+        <property name="phone_account_again_tips" column="PHONE_ACCOUNT_AGAIN_TIPS" />
+        <property name="phone_amount_tips" column="PHONE_AMOUNT_TIPS" />
+        <property name="phone_button_color" column="PHONE_BUTTON_COLOR" />
+        <property name="phone_button_font_color" column="PHONE_BUTTON_FONT_COLOR" />
+        <property name="order_page_server_ip" column="ORDER_PAGE_SERVER_IP" />
+        <property name="logo_bg_image_name" column="LOGO_BG_IMAGE_NAME" />
+        <property name="logo_bg_type" column="LOGO_BG_TYPE" />
+        <property name="logo_consulting_bg_color" column="LOGO_CONSULTING_BG_COLOR" />
+        <property name="logo_consulting_font_color" column="LOGO_CONSULTING_FONT_COLOR" />
+        <property name="website_bg_float_image_name" column="WEBSITE_BG_FLOAT_IMAGE_NAME" />
+        <property name="website_bg_color" column="WEBSITE_BG_TYPE" />
+        <property name="phone_consulting_is_show" column="PHONE_CONSULTING_IS_SHOW" />
+        <property name="phone_consulting_url" column="PHONE_CONSULTING_URL" />
+        <property name="phone_copyright" column="PHONE_COPYRIGHT" />
+        <property name="logo_consulting_border_color" column="LOGO_CONSULTING_BORDER_COLOR" />
+        <property name="phone_logo_bg_color_up" column="PHONE_LOGO_BG_COLOR_UP" />
+        <property name="phone_logo_bg_color_down" column="PHONE_LOGO_BG_COLOR_DOWN" />
+        <property name="phone_logo_bg_type" column="PHONE_LOGO_BG_TYPE" />
+        <property name="recharge_center_type_name" column="RECHARGE_CENTER_TYPE_NAME" />
+
+    </class>
+</hibernate-mapping>

@@ -21,7 +21,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.persistence.Entity;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -195,12 +194,7 @@ public class ListServerlet extends HttpServlet {
 				state = "1";
 			}
 
-
 			String ip = request.getRemoteAddr();
-
-
-
-
 			String merchant_no = merchantVO.getMerchant_no();
 			String platform_no = merchantVO.getPlatform_no();
 			System.out.println("====開始 insertMerchant===");
@@ -255,19 +249,19 @@ public class ListServerlet extends HttpServlet {
 
 	//在DB新增order_page
 	@RequestMapping(value = "/insertMypay",method = RequestMethod.POST)
-	public String insertMypay(@ModelAttribute("platform") PlatformVO platform, Map<String,Object> map)
+	public String insertMypay(@RequestParam("order_page_id") String order_page_id,
+		  	@RequestParam("order_page_name") String order_page_name, Map<String,Object> map)
 			throws SQLException, ServletException, IOException {
-		System.out.println("新增的平台為:" + platform);
 
 		int id = 0;
 		String meString = "";// 回應訊息
-//		if (StringUtils.isEmpty(platform.getPlatform_id()))
-//			id = Integer.valueOf(platform.getPlatform_id());
-		id = platform.getPlatform_id();
+		if (StringUtils.isEmpty(order_page_id)){
+			id = Integer.valueOf(order_page_id);
+		}
 
-		String name = platform.getPlatform_name();
-		System.out.println("id==" + id + "name==" + platform.getPlatform_name());
-		meString = pa.insertMypay(name, id);
+		System.out.println("id==" + id + "name==" + order_page_name);
+		meString = pa.insertMypay(order_page_name, id);
+		System.out.println(meString);
 		map.put("method","insertMypay");
 		map.put("meString","meString");
 		return "index";

@@ -38,6 +38,7 @@
 
 		<!--Java物件與資料庫表格的映射檔 -->
 		<mapping resource="onlineModel/merchant.hbm.xml" />
+		<mapping resource="onlineModel/orderPage.hbm.xml" />
 		<mapping resource="onlineModel/merchantPayment.hbm.xml" />
 		<mapping resource="onlineModel/merchantLog.hbm.xml" />
 

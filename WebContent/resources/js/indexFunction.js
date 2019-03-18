@@ -93,7 +93,7 @@ var insertMypay = function(obj) {
 
 	$('#insertMypayFormId').val(id);
 	$('#insertMypayFormName').val(name);
-	document.forms['insertMypayPlantForm'].submit();
+	document.forms['insertMypayPlatform'].submit();
 }
 
 var modifyPlatform = function(obj) {

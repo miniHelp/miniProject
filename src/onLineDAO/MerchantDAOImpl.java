@@ -1,6 +1,5 @@
 package onLineDAO;
 
-import Util.GetConnection;
 import Util.HibernateUtil;
 import onlineModel.MerchantLogVO;
 import onlineModel.MerchantPaymentVO;
@@ -10,9 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -26,49 +22,6 @@ public class MerchantDAOImpl implements MerchentDAO {
 
 	}
 
-	// 商戶的序號
-	private int getSeq(Connection connection) throws SQLException {
-		System.out.println("into == getSeq");
-		int myId = 0;
-		String sql = "select seq_merchant_id.nextval from dual ";
-		PreparedStatement pst = connection.prepareStatement(sql);
-		synchronized (this) {
-			ResultSet rs = pst.executeQuery();
-			if (rs.next())
-				myId = rs.getInt(1);
-		}
-		return myId;
-	}
-
-	// 商戶支付方式的序號
-	private int getPaymentSeq(Connection conn) throws SQLException {
-
-		System.out.println("into == getLogSeq");
-		int myId = 0;
-		String sql = "select seq_merchant_payment_id.nextval from dual";
-		PreparedStatement pst = conn.prepareStatement(sql);
-		synchronized (this) {
-			ResultSet rs = pst.executeQuery();
-			if (rs.next())
-				myId = rs.getInt(1);
-		}
-		return myId;
-
-	}
-
-	// Log黨的序號
-	private int getLogSeq(Connection connection) throws SQLException {
-		System.out.println("into == getLogSeq");
-		int myId = 0;
-		String sql = "select SEQ_MERCHANT_LOG.nextval from dual";
-		PreparedStatement pst = connection.prepareStatement(sql);
-		synchronized (this) {
-			ResultSet rs = pst.executeQuery();
-			if (rs.next())
-				myId = rs.getInt(1);
-		}
-		return myId;
-	}
 
 	@Override
 	public String insertMerchent(int plant, String merchantName, String MD5, String merchentNo, String password,
@@ -173,25 +126,25 @@ public class MerchantDAOImpl implements MerchentDAO {
             MerchantPaymentVO merchantPaymentVO = null;
             session.beginTransaction();
             for (int y = 1; y < 3; y++) {
-                    for (int i = 0; i < payment.size(); i++) {
-                        merchantPaymentVO = new MerchantPaymentVO();
-                        merchantPaymentVO.setMerchant_id(id);
-                        merchantPaymentVO.setPayment_method_id(payment.get(i));
-                        merchantPaymentVO.setType(String.valueOf(y));
-                        merchantPaymentVO.setCreate_date(new java.sql.Date(new Date().getTime()));
-                        merchantPaymentVO.setUpdate_date(new java.sql.Date(new Date().getTime()));
-                        session.saveOrUpdate(merchantPaymentVO);
-                    }
-                }
+				for (int i = 0; i < payment.size(); i++) {
+					merchantPaymentVO = new MerchantPaymentVO();
+					merchantPaymentVO.setMerchant_id(id);
+					merchantPaymentVO.setPayment_method_id(payment.get(i));
+					merchantPaymentVO.setType(String.valueOf(y));
+					merchantPaymentVO.setCreate_date(new java.sql.Date(new Date().getTime()));
+					merchantPaymentVO.setUpdate_date(new java.sql.Date(new Date().getTime()));
+					session.saveOrUpdate(merchantPaymentVO);
+				}
+            }
                 session.getTransaction().commit();
-				meString = "新增商戶支付方式  完成";
-			} catch (RuntimeException ex) {
-				session.getTransaction().rollback();
-				meString = ex.getMessage();
-				throw ex;
-			}finally {
-				return meString;
-			}
+				meString = "新增商戶支付方式完成";
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			meString = ex.getMessage();
+			throw ex;
+		}finally {
+			return meString;
+		}
 	}
 
 	/**
@@ -203,37 +156,22 @@ public class MerchantDAOImpl implements MerchentDAO {
 	
 	@Override
 	public String deleteMerchent(int merchId) throws SQLException {
-		String sql = "DELETE from PY_MERCHANT where id = ?";
 		String meString = "";
-		GetConnection get = new GetConnection();
-		Connection conn = get.getMypayConnection();
-		conn.setAutoCommit(false);  
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-
+		Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
 		try {
-			
-					System.out.println(sql);
-					int num = getPaymentSeq(conn);
-					pstmt.setInt(1, merchId);// 自增主鍵
-					pstmt.executeUpdate();
-					conn.commit();
-					System.out.println(pstmt.toString());
-					System.out.println("商戶 " + merchId + " 刪除成功");
-					
-
-			
+			session.beginTransaction();
+			MerchantVO merchantVO = session.get(MerchantVO.class,merchId);
+			session.delete(merchantVO);
+			session.getTransaction().commit();
 			return meString = "商戶 " + merchId + " 刪除成功";
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return meString = e.getMessage();
 		} finally {
-			pstmt.close();
-			conn.close();
+			return meString;
 
 		}
 		
 	}
-
-	
 
 }

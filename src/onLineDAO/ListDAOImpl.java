@@ -1,16 +1,16 @@
 package onLineDAO;
 
-import Util.GetConnection;
 import Util.HibernateUtil;
 import onlineModel.MerchantVO;
+import onlineModel.OrderPageVO;
 import onlineModel.PlatformVO;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -19,41 +19,33 @@ public class ListDAOImpl implements ListDAO {
 
 	@Override
 	public String insertMypay(String name, int id) throws SQLException {
-		String sql = "insert into PY_ORDER_PAGE (RECHARGE_CENTER_TYPE_NAME ,LOGO_CONSULTING_NAME ,LOGO_CONSULTING_IS_SHOW ,LOGO_BG_GRADIENT_COLOR_DOWN ,LOGO_BG_GRADIENT_COLOR_UP ,CREATE_DATE ,UPDATE_DATE ,CLOSE_MSG ,STATUS ,DOMAIN_NAME,TITLE,ID,NAME)"
-				+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		System.out.println(sql);
-		System.out.println(name + "===" + id);
 		String meString = "";
-		GetConnection get = new GetConnection();
-		Connection conn = get.getMypayConnection();
-
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+		Session session = HibernateUtil.getMypayCenterSessionFactory().getCurrentSession();
+		SimpleDateFormat sd = new SimpleDateFormat("dd-MM月  -yy");
 		try {
-			pstmt.setString(1, "充值中心A");// 第一個?要插入的值
-			pstmt.setString(2, "商务咨询");
-			pstmt.setString(3, "Y");
-			pstmt.setString(4, "#ededed");
-			pstmt.setString(5, "#ffffff");
-			pstmt.setString(6, "08-8月 -18");
-			pstmt.setString(7, "08-8月 -18");
-			pstmt.setString(8, "网站已经关闭");
-			pstmt.setString(9, "1");
-			pstmt.setString(10, "http://192.168.0.21/order");
-			pstmt.setString(11, name + "充值中心");
-			pstmt.setInt(12, id);
-			pstmt.setString(13, name + "充值中心");
-			pstmt.executeUpdate();
-			System.out.println(pstmt.toString());
-			return meString = "新增成功";
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return meString = e.getMessage();
-		} finally {
-			pstmt.close();
-			conn.close();
+			OrderPageVO orderPageVO = new OrderPageVO();
+			orderPageVO.setRecharge_center_type_name("充值中心A");
+			orderPageVO.setLogo_consulting_name("商务咨询");
+			orderPageVO.setLogo_consulting_is_show("Y");
+			orderPageVO.setLogo_bg_gradient_color_down("#ededed");
+			orderPageVO.setLogo_bg_gradient_color_up("#ffffff");
+			orderPageVO.setCreate_date(java.sql.Date.valueOf(sd.format(new Date().getTime())));
+			orderPageVO.setUpdate_date(java.sql.Date.valueOf(sd.format(new Date().getTime())));
+			orderPageVO.setClose_msg("网站已经关闭");
+			orderPageVO.setOrder_page_status("1");
+			orderPageVO.setDomain_name("http://192.168.0.21/order");
+			orderPageVO.setTitle(name + "充值中心");
+			orderPageVO.setOrder_page_id(id);
+			orderPageVO.setOrder_page_name(name + "充值中心");
+			session.getTransaction().commit();
+			meString = "新增成功";
 
+		}catch (RuntimeException ex){
+			session.getTransaction().rollback();
+			throw ex;
 		}
 
+		return meString;
 	}
 
 	@Override

@@ -173,6 +173,23 @@
 獲得權限的 還沒做好
  -->
 
+<%------------------------------隱藏的form表單區----------------------------%>
+<!--  查詢接口資料 -->
+<form name='merchantListForm' action="<%=request.getContextPath()%>/merchantList" method='post'>
+    <input type='hidden' id='merchantListId' name='id'>
+    <input type="hidden" name="method" value="merchantList">
+</form>
+<!--  新增接口orderpage -->
+<form id="insertMypayPlatform" action="${pageContext.request.contextPath}/insertMypay" method='post'>
+    <input type='hidden' name='order_page_id' id="insertMypayFormId">
+    <input type='hidden' name='order_page_name' id="insertMypayFormName">
+</form>
+<!--  刪除商戶 -->
+<form id="deleteMertchantForm" method='post'>
+    <input type='hidden' name='_method' value="delete">
+</form>
+<%---------------------------------------------------------------------------%>
+
 <div id='authDiv' class='formDiv'
      style='display: none; position: fixed; top: 38px'>
     <h5>MyPay Auth Order 查詢是哪個授權</h5>
@@ -329,17 +346,6 @@
     <a href="${pageContext.request.contextPath}/newIndex.jsp"><input type="button" value="回首頁"/></a>
 </div>
 
-<!--  查詢接口資料 -->
-<form name='merchantListForm' action="<%=request.getContextPath()%>/merchantList" method='post'>
-    <input type='hidden' id='merchantListId' name='id'>
-    <input type="hidden" name="method" value="merchantList">
-</form>
-
-
-<form id="deleteMertchantForm" method='post'>
-    <input type='hidden' name='_method' value="delete">
-</form>
-
 
 <!-- 查詢商戶資料	 -->
 <div id='merchantReDiv' class='formDiv' style='display: none; position: relative; left: 540px ; margin-top:50px '>
@@ -463,12 +469,9 @@
 
                 </td>
             </tr>
-            <%--"<input type='hidden' id='sign' name='sign'	value='"+ sign +"'>--%>
         </table>
-        <input type='hidden' id='insertMypayMerchentFormId' name='id'
-               value=''>
-        <input type="hidden" id='insertMypayMerchentForm' name="method"
-               value="insertMerchant"/>
+        <input type='hidden' id='insertMypayMerchentFormId' name='id' value=''>
+        <input type="hidden" id='insertMypayMerchentForm' name="method" value="insertMerchant"/>
     </form:form>
 </div>
 
