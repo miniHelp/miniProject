@@ -175,7 +175,7 @@
 
 <%------------------------------隱藏的form表單區----------------------------%>
 <!--  查詢接口資料 -->
-<form name='merchantListForm' action="<%=request.getContextPath()%>/merchantList" method='post'>
+<form name='merchantListForm' action="${pageContext.request.contextPath}/merchantList" method='post'>
     <input type='hidden' id='merchantListId' name='id'>
     <input type="hidden" name="method" value="merchantList">
 </form>
@@ -527,15 +527,5 @@
         $('#resultDiv').show();
     </script>
 </c:if>
-
-
-
-<%--<c:if test="${not empty msg }">--%>
-    <%--<script>--%>
-        <%--alert("${msg}");--%>
-        <%--console.log("${msg}");--%>
-    <%--</script>--%>
-<%--</c:if>--%>
-
 </body>
 </html>
