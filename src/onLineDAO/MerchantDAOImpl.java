@@ -5,7 +5,7 @@ import Util.HibernateUtil;
 import onlineModel.MerchantLogVO;
 import onlineModel.MerchantPaymentVO;
 import onlineModel.MerchantVO;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;

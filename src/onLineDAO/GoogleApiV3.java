@@ -57,7 +57,7 @@ import com.google.gdata.data.spreadsheet.WorksheetEntry;
 import com.google.gdata.data.spreadsheet.WorksheetFeed;
 import com.google.gdata.util.ServiceException;
 
-import onlineModel.AccessToken;
+import onlineModel.AccessTokenVO;
 
 public class GoogleApiV3 {
 	// 創建一個name
