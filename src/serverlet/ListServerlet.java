@@ -21,6 +21,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.persistence.Entity;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -341,12 +342,9 @@ public class ListServerlet extends HttpServlet {
 	}
 
 	@RequestMapping(value = "/modifyPlatform",method = RequestMethod.POST)
-	public String modifyPlatform(PlatformVO platformVO) throws Exception {
+	public String modifyPlatform(@ModelAttribute("platform") PlatformVO platformVO) throws Exception {
 		System.out.println("要修改的接口为: " + platformVO);
-//		String id = request.getParameter("id");
-//		String url = request.getParameter("url").trim();
-//		pa.updateUrl(id, url);
-//		response.getWriter().write(new String("{'result':'靽格摰��'}".getBytes("utf-8"), "ISO-8859-1"));
+		pa.updateUrl(platformVO.getPlatform_id(),platformVO.getPlatform_url());
 		return "index";
 
 	}

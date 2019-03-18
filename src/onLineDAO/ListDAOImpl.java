@@ -91,24 +91,18 @@ public class ListDAOImpl implements ListDAO {
 	}
 
 	@Override
-	public void updateUrl(String id, String url) throws Exception {
-		GetConnection get = new GetConnection();
-		Connection conn = null;
-		int count = 0;
+	public void updateUrl(int id, String url) throws Exception {
+
+		Session session = HibernateUtil.getMypayCenterSessionFactory().getCurrentSession();
 		try {
-			conn = get.getConnection();
-			String sql = "update py_payment_platform  set url = ? where id = ? ";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, url);
-			ps.setString(2, id);
-			count = ps.executeUpdate();
-			System.out.println("完成" + count + "筆更新");
+			session.beginTransaction();
+			PlatformVO platformVO = session.get(PlatformVO.class,id);
+			platformVO.setPlatform_url(url);
+			session.saveOrUpdate(platformVO);
+			session.getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println(e);
-		} finally {
-			conn.close();
 		}
-
 	}
 
 	@Override
