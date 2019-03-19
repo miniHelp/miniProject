@@ -5,11 +5,12 @@
 <hibernate-mapping>
     <class name="onlineModel.OrderPageVO" table="PY_ORDER_PAGE" >
         <id name="order_page_id" column="ID" type="java.lang.Integer">
-            <generator class="sequence">
-                <param name="sequence_name">SEQ_ORDER_PAGE_ID</param>
-            </generator>  
+            <!--<generator class="sequence">-->
+                <!--<param name="sequence_name">SEQ_ORDER_PAGE_ID</param>-->
+            <!--</generator>  -->
         </id>
 
+        <!--<property name="order_page_id" column="ID" />-->
         <property name="order_page_name" column="NAME" />
         <property name="order_page_descr" column="DESCR" />
         <property name="domain_name" column="DOMAIN_NAME" />

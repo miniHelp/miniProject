@@ -5,7 +5,7 @@ import java.sql.Date;
 
 public class OrderPageVO {
 
-    private int order_page_id;
+    private Integer order_page_id;
     private String order_page_name;
     private String order_page_descr;
     private String domain_name;
@@ -56,25 +56,197 @@ public class OrderPageVO {
     private String phone_logo_bg_color_up;
     private String phone_logo_bg_color_down;
     private String phone_logo_bg_type;
-    private String recharge_center_type_name;
 
-
-    public String getRecharge_center_type_name() {
-        return recharge_center_type_name;
+    public Integer getOrder_page_id() {
+        return order_page_id;
     }
 
-    public void setRecharge_center_type_name(String recharge_center_type_name) {
-        this.recharge_center_type_name = recharge_center_type_name;
+    public void setOrder_page_id(Integer order_page_id) {
+        this.order_page_id = order_page_id;
     }
 
-
-
-    public String getPhone_logo_bg_type() {
-        return phone_logo_bg_type;
+    public String getOrder_page_name() {
+        return order_page_name;
     }
 
-    public void setPhone_logo_bg_type(String phone_logo_bg_type) {
-        this.phone_logo_bg_type = phone_logo_bg_type;
+    public void setOrder_page_name(String order_page_name) {
+        this.order_page_name = order_page_name;
+    }
+
+    public String getOrder_page_descr() {
+        return order_page_descr;
+    }
+
+    public void setOrder_page_descr(String order_page_descr) {
+        this.order_page_descr = order_page_descr;
+    }
+
+    public String getDomain_name() {
+        return domain_name;
+    }
+
+    public void setDomain_name(String domain_name) {
+        this.domain_name = domain_name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getClose_msg() {
+        return close_msg;
+    }
+
+    public void setClose_msg(String close_msg) {
+        this.close_msg = close_msg;
+    }
+
+    public String getOrder_page_status() {
+        return order_page_status;
+    }
+
+    public void setOrder_page_status(String order_page_status) {
+        this.order_page_status = order_page_status;
+    }
+
+    public Date getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(Date create_date) {
+        this.create_date = create_date;
+    }
+
+    public Date getUpdate_date() {
+        return update_date;
+    }
+
+    public void setUpdate_date(Date update_date) {
+        this.update_date = update_date;
+    }
+
+    public String getLogo_bg_gradient_color_up() {
+        return logo_bg_gradient_color_up;
+    }
+
+    public void setLogo_bg_gradient_color_up(String logo_bg_gradient_color_up) {
+        this.logo_bg_gradient_color_up = logo_bg_gradient_color_up;
+    }
+
+    public String getLogo_bg_gradient_color_middle() {
+        return logo_bg_gradient_color_middle;
+    }
+
+    public void setLogo_bg_gradient_color_middle(String logo_bg_gradient_color_middle) {
+        this.logo_bg_gradient_color_middle = logo_bg_gradient_color_middle;
+    }
+
+    public String getLogo_bg_gradient_color_down() {
+        return logo_bg_gradient_color_down;
+    }
+
+    public void setLogo_bg_gradient_color_down(String logo_bg_gradient_color_down) {
+        this.logo_bg_gradient_color_down = logo_bg_gradient_color_down;
+    }
+
+    public String getLogo_image_name() {
+        return logo_image_name;
+    }
+
+    public void setLogo_image_name(String logo_image_name) {
+        this.logo_image_name = logo_image_name;
+    }
+
+    public String getLogo_slogan_image_name() {
+        return logo_slogan_image_name;
+    }
+
+    public void setLogo_slogan_image_name(String logo_slogan_image_name) {
+        this.logo_slogan_image_name = logo_slogan_image_name;
+    }
+
+    public String getLogo_consulting_is_show() {
+        return logo_consulting_is_show;
+    }
+
+    public void setLogo_consulting_is_show(String logo_consulting_is_show) {
+        this.logo_consulting_is_show = logo_consulting_is_show;
+    }
+
+    public String getLogo_consulting_name() {
+        return logo_consulting_name;
+    }
+
+    public void setLogo_consulting_name(String logo_consulting_name) {
+        this.logo_consulting_name = logo_consulting_name;
+    }
+
+    public String getLogo_consulting_url() {
+        return logo_consulting_url;
+    }
+
+    public void setLogo_consulting_url(String logo_consulting_url) {
+        this.logo_consulting_url = logo_consulting_url;
+    }
+
+    public Clob getSubmit_up_text() {
+        return submit_up_text;
+    }
+
+    public void setSubmit_up_text(Clob submit_up_text) {
+        this.submit_up_text = submit_up_text;
+    }
+
+    public String getSubmit_account_tips() {
+        return submit_account_tips;
+    }
+
+    public void setSubmit_account_tips(String submit_account_tips) {
+        this.submit_account_tips = submit_account_tips;
+    }
+
+    public String getSubmit_account_again_tips() {
+        return submit_account_again_tips;
+    }
+
+    public void setSubmit_account_again_tips(String submit_account_again_tips) {
+        this.submit_account_again_tips = submit_account_again_tips;
+    }
+
+    public String getSubmit_amount_tips() {
+        return submit_amount_tips;
+    }
+
+    public void setSubmit_amount_tips(String submit_amount_tips) {
+        this.submit_amount_tips = submit_amount_tips;
+    }
+
+    public String getSubmit_button_color_up() {
+        return submit_button_color_up;
+    }
+
+    public void setSubmit_button_color_up(String submit_button_color_up) {
+        this.submit_button_color_up = submit_button_color_up;
+    }
+
+    public String getSubmit_button_color_down() {
+        return submit_button_color_down;
+    }
+
+    public void setSubmit_button_color_down(String submit_button_color_down) {
+        this.submit_button_color_down = submit_button_color_down;
+    }
+
+    public String getSubmit_button_font_color() {
+        return submit_button_font_color;
+    }
+
+    public void setSubmit_button_font_color(String submit_button_font_color) {
+        this.submit_button_font_color = submit_button_font_color;
     }
 
     public Clob getSubmit_down_text() {
@@ -285,195 +457,25 @@ public class OrderPageVO {
         this.phone_logo_bg_color_down = phone_logo_bg_color_down;
     }
 
-    public int getOrder_page_id() {
-        return order_page_id;
+    public String getPhone_logo_bg_type() {
+        return phone_logo_bg_type;
     }
 
-    public void setOrder_page_id(int order_page_id) {
-        this.order_page_id = order_page_id;
+    public void setPhone_logo_bg_type(String phone_logo_bg_type) {
+        this.phone_logo_bg_type = phone_logo_bg_type;
     }
 
-    public String getOrder_page_name() {
-        return order_page_name;
+    public String getRecharge_center_type_name() {
+        return recharge_center_type_name;
     }
 
-    public void setOrder_page_name(String order_page_name) {
-        this.order_page_name = order_page_name;
+    public void setRecharge_center_type_name(String recharge_center_type_name) {
+        this.recharge_center_type_name = recharge_center_type_name;
     }
 
-    public String getOrder_page_descr() {
-        return order_page_descr;
-    }
+    private String recharge_center_type_name;
 
-    public void setOrder_page_descr(String order_page_descr) {
-        this.order_page_descr = order_page_descr;
-    }
 
-    public String getDomain_name() {
-        return domain_name;
-    }
 
-    public void setDomain_name(String domain_name) {
-        this.domain_name = domain_name;
-    }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getClose_msg() {
-        return close_msg;
-    }
-
-    public void setClose_msg(String close_msg) {
-        this.close_msg = close_msg;
-    }
-
-    public String getOrder_page_status() {
-        return order_page_status;
-    }
-
-    public void setOrder_page_status(String order_page_status) {
-        this.order_page_status = order_page_status;
-    }
-
-    public Date getCreate_date() {
-        return create_date;
-    }
-
-    public void setCreate_date(Date create_date) {
-        this.create_date = create_date;
-    }
-
-    public Date getUpdate_date() {
-        return update_date;
-    }
-
-    public void setUpdate_date(Date update_date) {
-        this.update_date = update_date;
-    }
-
-    public String getLogo_bg_gradient_color_up() {
-        return logo_bg_gradient_color_up;
-    }
-
-    public void setLogo_bg_gradient_color_up(String logo_bg_gradient_color_up) {
-        this.logo_bg_gradient_color_up = logo_bg_gradient_color_up;
-    }
-
-    public String getLogo_bg_gradient_color_middle() {
-        return logo_bg_gradient_color_middle;
-    }
-
-    public void setLogo_bg_gradient_color_middle(String logo_bg_gradient_color_middle) {
-        this.logo_bg_gradient_color_middle = logo_bg_gradient_color_middle;
-    }
-
-    public String getLogo_bg_gradient_color_down() {
-        return logo_bg_gradient_color_down;
-    }
-
-    public void setLogo_bg_gradient_color_down(String logo_bg_gradient_color_down) {
-        this.logo_bg_gradient_color_down = logo_bg_gradient_color_down;
-    }
-
-    public String getLogo_image_name() {
-        return logo_image_name;
-    }
-
-    public void setLogo_image_name(String logo_image_name) {
-        this.logo_image_name = logo_image_name;
-    }
-
-    public String getLogo_slogan_image_name() {
-        return logo_slogan_image_name;
-    }
-
-    public void setLogo_slogan_image_name(String logo_slogan_image_name) {
-        this.logo_slogan_image_name = logo_slogan_image_name;
-    }
-
-    public String getLogo_consulting_is_show() {
-        return logo_consulting_is_show;
-    }
-
-    public void setLogo_consulting_is_show(String logo_consulting_is_show) {
-        this.logo_consulting_is_show = logo_consulting_is_show;
-    }
-
-    public String getLogo_consulting_name() {
-        return logo_consulting_name;
-    }
-
-    public void setLogo_consulting_name(String logo_consulting_name) {
-        this.logo_consulting_name = logo_consulting_name;
-    }
-
-    public String getLogo_consulting_url() {
-        return logo_consulting_url;
-    }
-
-    public void setLogo_consulting_url(String logo_consulting_url) {
-        this.logo_consulting_url = logo_consulting_url;
-    }
-
-    public Clob getSubmit_up_text() {
-        return submit_up_text;
-    }
-
-    public void setSubmit_up_text(Clob submit_up_text) {
-        this.submit_up_text = submit_up_text;
-    }
-
-    public String getSubmit_account_tips() {
-        return submit_account_tips;
-    }
-
-    public void setSubmit_account_tips(String submit_account_tips) {
-        this.submit_account_tips = submit_account_tips;
-    }
-
-    public String getSubmit_account_again_tips() {
-        return submit_account_again_tips;
-    }
-
-    public void setSubmit_account_again_tips(String submit_account_again_tips) {
-        this.submit_account_again_tips = submit_account_again_tips;
-    }
-
-    public String getSubmit_amount_tips() {
-        return submit_amount_tips;
-    }
-
-    public void setSubmit_amount_tips(String submit_amount_tips) {
-        this.submit_amount_tips = submit_amount_tips;
-    }
-
-    public String getSubmit_button_color_up() {
-        return submit_button_color_up;
-    }
-
-    public void setSubmit_button_color_up(String submit_button_color_up) {
-        this.submit_button_color_up = submit_button_color_up;
-    }
-
-    public String getSubmit_button_color_down() {
-        return submit_button_color_down;
-    }
-
-    public void setSubmit_button_color_down(String submit_button_color_down) {
-        this.submit_button_color_down = submit_button_color_down;
-    }
-
-    public String getSubmit_button_font_color() {
-        return submit_button_font_color;
-    }
-
-    public void setSubmit_button_font_color(String submit_button_font_color) {
-        this.submit_button_font_color = submit_button_font_color;
-    }
 }

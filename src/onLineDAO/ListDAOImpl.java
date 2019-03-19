@@ -19,24 +19,28 @@ public class ListDAOImpl implements ListDAO {
 
 	@Override
 	public String insertMypay(String name, int id) throws SQLException {
+		System.out.println("要新增的接口orderpageid为" + id);
 		String meString = "";
-		Session session = HibernateUtil.getMypayCenterSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
 		SimpleDateFormat sd = new SimpleDateFormat("dd-MM月  -yy");
 		try {
+			session.beginTransaction();
 			OrderPageVO orderPageVO = new OrderPageVO();
+			orderPageVO.setOrder_page_id(id);
 			orderPageVO.setRecharge_center_type_name("充值中心A");
 			orderPageVO.setLogo_consulting_name("商务咨询");
 			orderPageVO.setLogo_consulting_is_show("Y");
 			orderPageVO.setLogo_bg_gradient_color_down("#ededed");
 			orderPageVO.setLogo_bg_gradient_color_up("#ffffff");
-			orderPageVO.setCreate_date(java.sql.Date.valueOf(sd.format(new Date().getTime())));
-			orderPageVO.setUpdate_date(java.sql.Date.valueOf(sd.format(new Date().getTime())));
+			orderPageVO.setCreate_date(new java.sql.Date(new Date().getTime()));
+			orderPageVO.setUpdate_date(new java.sql.Date(new Date().getTime()));
 			orderPageVO.setClose_msg("网站已经关闭");
 			orderPageVO.setOrder_page_status("1");
 			orderPageVO.setDomain_name("http://192.168.0.21/order");
 			orderPageVO.setTitle(name + "充值中心");
 			orderPageVO.setOrder_page_id(id);
 			orderPageVO.setOrder_page_name(name + "充值中心");
+			session.save(orderPageVO);
 			session.getTransaction().commit();
 			meString = "新增成功";
 

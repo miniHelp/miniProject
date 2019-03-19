@@ -252,10 +252,10 @@ public class ListServerlet extends HttpServlet {
 	public String insertMypay(@RequestParam("order_page_id") String order_page_id,
 		  	@RequestParam("order_page_name") String order_page_name, Map<String,Object> map)
 			throws SQLException, ServletException, IOException {
-
-		int id = 0;
+		System.out.println("新增的接口orderpageid = " + order_page_id + ",接口名称为 = " + order_page_name);
 		String meString = "";// 回應訊息
-		if (StringUtils.isEmpty(order_page_id)){
+		int id = 0;
+		if (StringUtils.isNotEmpty(order_page_id)){
 			id = Integer.valueOf(order_page_id);
 		}
 
