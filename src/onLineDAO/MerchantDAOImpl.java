@@ -39,12 +39,15 @@ public class MerchantDAOImpl implements MerchentDAO {
 			merchantVO.setMax_stop_amount(999999);
 			merchantVO.setAccumulate_amount(0);
 			merchantVO.setAccumulate_record(0);
+			merchantVO.setFee_percentage(0);
 			merchantVO.setCreate_date(new java.sql.Date(new Date().getTime()));
 			merchantVO.setUpdate_date(new java.sql.Date(new Date().getTime()));
 			merchantVO.setSubmit_url("http://211.75.237.90");
 			merchantVO.setGroup_area("1");
 			merchantVO.setMerchant_status("1");
 			merchantVO.setSignature_type(type);
+			merchantVO.setIs_online_payment_used("Y");	//在线支付使用
+			merchantVO.setIs_recharge_center_used("Y");	//充值中心使用
 			merchantVO.setSignature_key(StringUtils.isNotEmpty(MD5) ? MD5 : "");
 			merchantVO.setRsa_merchant_private_key(StringUtils.isNotEmpty(RSAPrivate) ? RSAPrivate : "");
 			merchantVO.setRsa_server_public_key(StringUtils.isNotEmpty(RSAPublic) ? RSAPublic : "");
