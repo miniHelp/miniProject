@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/iconfont.css">
 </head>
 <body  id="mydiv" class="loginBody">
-<form class="layui-form" action="<%=request.getContextPath()%>/loginCheckUser" method="post">
+<form class="layui-form" action="${pageContext.request.contextPath}/loginCheckUser" method="post">
     <div class="login_face"><img src="images/timg.jpg" class="userAvatar"></div>
     <div class="layui-form-item input-item layui-input-focus">
         <label for="userName">后台账号</label>

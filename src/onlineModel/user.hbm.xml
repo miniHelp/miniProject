@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="onlineModel.UserVO" table="PY_USER" >
+        <id name="user_id" column="ID" type="java.lang.Integer">
+            <generator class="sequence">
+                <param name="sequence_name">SEQ_USER</param>
+            </generator>  
+        </id>
+        <property name="user_name" column="NAME" />
+        <property name="user_descr" column="DESCR" />
+        <property name="login_id" column="LOGIN_ID" />
+        <property name="login_pwd" column="PWD" />
+        <property name="email" column="EMAIL" />
+        <property name="icon_path" column="ICON_PATH" />
+        <property name="ip_address" column="IP_ADDRESS" />
+        <property name="last_access_date" column="LAST_ACCESS_DATE" />
+        <property name="user_status" column="STATUS" />
+        <property name="roles" column="ROLES" />
+        <property name="create_date" column="CREATE_DATE" />
+        <property name="update" column="UPDATE_DATE" />
+        <property name="user_group" column="USER_GROUP" />
+        <property name="can_change_unpaid_status" column="CAN_CHANGE_UNPAID_STATUS" />
+        <property name="change_unpaid_pwd" column="CHANGE_UNPAID_PWD" />
+        <property name="can_change_wait_confirm_status" column="CAN_CHANGE_WAIT_CONFIRM_STATUS" />
+        <property name="change_wait_confirm_pwd" column="CHANGE_WAIT_CONFIRM_PWD" />
+        <property name="wait_confirm_pwd_fee_duration" column="WAIT_CONFIRM_PWD_EFF_DURATION" />
+        <property name="unpaid_fee_duration" column="UNPAID_PWD_EFF_DURATION" />
+        <property name="pwd_error_times" column="PWD_ERROR_TIMES" />
+        <property name="can_change_name" column="CAN_CHANGE_NAME" />
+        <property name="change_name_pwd" column="CHANGE_NAME_PWD" />
+        <property name="change_name_fee_duration" column="CHANGE_NAME_EFF_DURATION" />
+    </class>
+</hibernate-mapping>

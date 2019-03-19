@@ -41,7 +41,7 @@
 		<mapping resource="onlineModel/orderPage.hbm.xml" />
 		<mapping resource="onlineModel/merchantPayment.hbm.xml" />
 		<mapping resource="onlineModel/merchantLog.hbm.xml" />
-
+		<mapping resource="onlineModel/user.hbm.xml" />
 	</session-factory>
 	
 </hibernate-configuration>
