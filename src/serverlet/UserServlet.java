@@ -7,12 +7,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
+@SessionAttributes("loggingUser")   //正在登入的会员
 @RequestMapping("/user")
 public class UserServlet {
+
+    private static final int A_HOUR_SECOND = 60 * 60 * 3600;   //一小时的秒数
 
     @Autowired
     private UserImp ul;
@@ -23,50 +33,34 @@ public class UserServlet {
         return "login";
     }
 
-    @RequestMapping(value = "/loginCheckUser",method = RequestMethod.POST)
-    public String loginCheckUser(@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
+    @RequestMapping(value = "/logOut")
+    public RedirectView logOut(){   //重蹈回view
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession(true);
+        session.removeAttribute("loggingUser");
+        return new RedirectView("login");
+    }
+
+    @RequestMapping(value = "/loginCheckUser",method = {RequestMethod.POST,RequestMethod.GET})
+    public ModelAndView loginCheckUser(@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
             , Map<String,Object> map) throws Exception {
 
-        System.out.println("userName:"+userName);
-        System.out.println("passWord:"+passWord);
+        ModelAndView mav = new ModelAndView();
 		String toWhere = "";
         LoginVO loginVO = ul.loginCheck(userName,passWord);
         if(loginVO.isLoginSuccess()){
-			toWhere = "index";
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true);
+            toWhere = "index";
+            mav.addObject("loggingUser",loginVO);   //把正在登入的使用者资讯存进session
+            session.setMaxInactiveInterval(A_HOUR_SECOND);  //让session存活一小时
 		}else{
             map.put("errorMsg",loginVO.getLoginMessage());
 			toWhere = "login";
-		}
-        System.out.println("登入是否成功 = " + loginVO.isLoginSuccess());
-        return toWhere;
-
-
-//        JsonNode json = userImp.selectUserByUserId(userName);
-//        System.out.println("json:"+json);
-//        JSONObject resJson = new JSONObject();
-//
-//
-//        if(json.size() != 0){
-//            if(!json.get(0).get("PWD").asText().equals(passWord)){
-//				map.put("resCode","1001");
-//				map.put("resMsg","pass word in wrong.");
-//            }else{
-//				map.put("resCode","0000");
-//				map.put("resMsg","success");
-//            }
-//        }else{
-//			map.put("resCode", "1002");
-//			map.put("resMsg", "not found.");
-//        }
-//
-//        System.out.println("错误讯息为:"+map);
-//
-//		HttpHeaders responseHeaders = new HttpHeaders();
-//		responseHeaders.add("Content-Type","application/json");
-//
-//		Cookie cookie = new Cookie(userName,passWord);
-//		cookie.setMaxAge(EXPIRY_TIME_A_DAY*7); //存活时间七天
-//		map.put("cookie",cookie);
+            mav.addObject("errorMsg",loginVO.getLoginMessage());
+        }
+        mav.setViewName(toWhere);
+        return mav;
 
     }
 }

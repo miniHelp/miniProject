@@ -64,8 +64,10 @@ public class MerchantDAOImpl implements MerchentDAO {
             insertMerLog(ip, (int)listQuery.get(0), merchantName);
             System.out.println("------------新增商戶log完成------------");
 
-        } catch (Exception ex) {
-
+        }catch (SQLException ex){
+			session.getTransaction().rollback();
+			throw ex;
+		} catch (Exception ex) {
             session.getTransaction().rollback();
             System.out.println(ex.getMessage());
             throw ex;

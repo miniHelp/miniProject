@@ -256,19 +256,18 @@ public class ListServerlet extends HttpServlet {
 	@RequestMapping(value = "/insertMypay",method = RequestMethod.POST)
 	public String insertMypay(@RequestParam("order_page_id") String order_page_id,
 		  	@RequestParam("order_page_name") String order_page_name, Map<String,Object> map)
-			throws SQLException, ServletException, IOException {
+			throws SQLException, ServletException {
 		System.out.println("新增的接口orderpageid = " + order_page_id + ",接口名称为 = " + order_page_name);
 		String meString = "";// 回應訊息
 		int id = 0;
 		if (StringUtils.isNotEmpty(order_page_id)){
 			id = Integer.valueOf(order_page_id);
 		}
-
 		System.out.println("id==" + id + "name==" + order_page_name);
 		meString = pa.insertMypay(order_page_name, id);
 		System.out.println(meString);
 		map.put("method","insertMypay");
-		map.put("meString","meString");
+		map.put("meString",meString);
 		return "index";
 	}
 
