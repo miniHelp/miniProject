@@ -352,25 +352,25 @@ public class ListServerlet extends HttpServlet {
     public String loginCheckUser(@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
 			,Map<String,Object> map) throws Exception {
 
-		HttpServletResponse response =
-				((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-		HttpServletRequest request =
-				((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		String toWhere = "";
-
-		System.out.println("userName:"+userName);
-		System.out.println("passWord:"+passWord);
-		boolean isLoginSuccess = ul.loginCheck(userName,passWord);
-
-        if(isLoginSuccess){
-			toWhere = "index";
-		}else{
-			response.sendRedirect(request.getContextPath() + "/login.jsp");
-			toWhere = "login";
-		}
-
-        System.out.println("登入是否成功 = " + isLoginSuccess);
-        return toWhere;
+//		HttpServletResponse response =
+//				((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+//		HttpServletRequest request =
+//				((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+//		String toWhere = "";
+//
+//		System.out.println("userName:"+userName);
+//		System.out.println("passWord:"+passWord);
+//		boolean isLoginSuccess = ul.loginCheck(userName,passWord);
+//
+//        if(isLoginSuccess){
+//			toWhere = "index";
+//		}else{
+//			response.sendRedirect(request.getContextPath() + "/login.jsp");
+//			toWhere = "login";
+//		}
+//
+//        System.out.println("登入是否成功 = " + isLoginSuccess);
+        return "index";
 
 
 //        JsonNode json = userImp.selectUserByUserId(userName);
