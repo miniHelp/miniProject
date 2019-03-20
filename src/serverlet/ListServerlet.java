@@ -5,6 +5,7 @@ import onLineDAO.ListDAOImpl;
 import onLineDAO.MerchantDAOImpl;
 import onLineDAO.PlatPayMent;
 import onLineDAO.UserImp;
+import onlineModel.LoginVO;
 import onlineModel.MerchantVO;
 import onlineModel.PlatformVO;
 import org.apache.commons.lang3.StringUtils;
@@ -19,10 +20,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -197,8 +195,12 @@ public class ListServerlet extends HttpServlet {
 			}
 
 			String ip = request.getRemoteAddr();
+			HttpSession session = request.getSession();
+			LoginVO loginUser = (LoginVO) session.getAttribute("loggingUser");
+			System.out.println("现在登入的使用者资讯是 = " + loginUser);
 			String merchant_no = merchantVO.getMerchant_no();
 			String platform_no = merchantVO.getPlatform_no();
+			String username = loginUser.getLoginUser().getUser_name();
 			System.out.println("====開始 insertMerchant===");
 			System.out.println("====plantformId ===   " + payment_platform_id);
 			System.out.println("====merchantName ===   " + merchant_name);
@@ -211,8 +213,10 @@ public class ListServerlet extends HttpServlet {
 			System.out.println("====plantNo ===   " + merchantVO.getPlatform_no());
 			System.out.println("====ip ===   " + ip);
 			System.out.println("====list ===   " + list);
+			System.out.println("====Username ===   " + username);
+
 			msg +=  pl.insertMerchent(payment_platform_id, merchant_name, Md5Key, merchant_no, pswName, RSAPrivate, RSAPublic,
-					state, platform_no, list, ip);
+					state, platform_no, list, ip,username);
 			System.out.println("------------新增商戶完成---------");
 			map.put("method", "merchantList");
 			pa.PlantNoList("id", String.valueOf(payment_platform_id));
@@ -254,6 +258,9 @@ public class ListServerlet extends HttpServlet {
 	public String insertMypay(@RequestParam("order_page_id") String order_page_id,
 		  	@RequestParam("order_page_name") String order_page_name, Map<String,Object> map)
 			throws SQLException, ServletException {
+
+		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		HttpSession session = attr.getRequest().getSession(true);
 		System.out.println("新增的接口orderpageid = " + order_page_id + ",接口名称为 = " + order_page_name);
 		String meString = "";// 回應訊息
 		int id = 0;
@@ -292,20 +299,16 @@ public class ListServerlet extends HttpServlet {
 
 
 	@RequestMapping(value = "/query",method = {RequestMethod.POST,RequestMethod.GET})
-	public String query(@RequestParam Map<String,Object> reqMap , Map<String,Object> resMap) throws Exception {
+	public String query(@RequestParam Map<String,String> reqMap , Map<String,Object> resMap) throws Exception {
 
-        String platformId = "" ;
-        String platformUrl = "" ;
-        String platformName = "" ;
-        if(reqMap.get("platformId") != null){
-            platformId = String.valueOf(reqMap.get("platformId"));
-        }
-        if(reqMap.get("platformUrl") != null){
-            platformUrl = String.valueOf(reqMap.get("platformUrl"));
-        }
-        if(reqMap.get("platformName") != null){
-            platformName = String.valueOf(reqMap.get("platformName"));
-        }
+
+        String platformId = reqMap.get("platformId");
+        String platformName = reqMap.get("platformName");
+		String platformUrl = reqMap.get("platformUrl");
+		if(StringUtils.isBlank(platformId) && StringUtils.isBlank(platformName) && StringUtils.isBlank(platformUrl)){
+			resMap.put("errorMsg", "必须输入其中一个查询参数");
+			return "index";
+		}
 
 		String columName = "";
 		String columValue = "";

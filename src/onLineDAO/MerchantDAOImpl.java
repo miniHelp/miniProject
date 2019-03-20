@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,8 @@ public class MerchantDAOImpl implements MerchentDAO {
 
 	@Override
 	public String insertMerchent(int plant, String merchantName, String MD5, String merchentNo, String password,
-			String RSAPrivate, String RSAPublic, String type ,String  plantNo ,List<Integer>list ,String ip) throws Exception{
+			String RSAPrivate, String RSAPublic, String type
+			,String  plantNo ,List<Integer>list ,String ip, String username) throws Exception{
 		Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
 
 		try {
@@ -63,7 +65,7 @@ public class MerchantDAOImpl implements MerchentDAO {
 
             insertMerPayment((int)listQuery.get(0), type, list);
             System.out.println("------------新增商戶支付方式完成------------");
-            insertMerLog(ip, (int)listQuery.get(0), merchantName);
+            insertMerLog(ip, (int)listQuery.get(0), merchantName,username);
             System.out.println("------------新增商戶log完成------------");
 
         }catch (SQLException ex){
@@ -88,7 +90,7 @@ public class MerchantDAOImpl implements MerchentDAO {
 	 */
 	
 	@Override
-	public String insertMerLog(String userIp, int merchId, String name) throws SQLException {
+	public String insertMerLog(String userIp, int merchId, String name,String username) throws SQLException {
 		Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -97,8 +99,8 @@ public class MerchantDAOImpl implements MerchentDAO {
 			merchantLogVO.setMsg("商户编号："+ merchId +" "+name + " 启用商户");
 			merchantLogVO.setCreate_date(new java.sql.Date(new Date().getTime()));
 			merchantLogVO.setUser_id(1061);
-			merchantLogVO.setUser_login_id("懶惰按鈕");
-			merchantLogVO.setUser_name("懶惰按鈕");
+			merchantLogVO.setUser_login_id(username);
+			merchantLogVO.setUser_name(username);
 			merchantLogVO.setUser_ip(userIp);
 
 			session.saveOrUpdate(merchantLogVO);

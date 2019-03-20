@@ -246,6 +246,11 @@
                 <td>支付網址：</td>
                 <td><input type='text' name='platformUrl' value='${param.platformUrl}' /></td>
             </tr>
+            <c:if test="${!empty errorMsg}">
+                <tr>
+                    <th style="color:red" colspan="2">${errorMsg}</th>
+                </tr>
+            </c:if>
         </table>
         <input type="submit" value='送出' id="searchSub"/>
         <input type="button" class="reset" value='清空'/>
@@ -504,6 +509,11 @@
 <c:if test="${isDisplay == 'true' && empty method}">
     <script>
         $('.hideDiv').show();
+    </script>
+</c:if>
+<c:if test="${!errorMsg}">
+    <script>
+        $('.hideDiv:eq(0)').show();
     </script>
 </c:if>
 

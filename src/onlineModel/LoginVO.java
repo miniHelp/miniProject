@@ -39,4 +39,14 @@ public class LoginVO {
     public void setLoginUser(UserVO loginUser) {
         this.loginUser = loginUser;
     }
+
+    @Override
+    public String toString() {
+        return "LoginVO{" +
+                "isLoginIdExist=" + isLoginIdExist +
+                ", isLoginSuccess=" + isLoginSuccess +
+                ", loginUser=" + loginUser +
+                ", loginMessage='" + loginMessage + '\'' +
+                '}';
+    }
 }
