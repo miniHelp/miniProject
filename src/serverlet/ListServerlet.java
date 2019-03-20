@@ -54,9 +54,6 @@ public class ListServerlet extends HttpServlet {
 	@Autowired
 	private MerchantDAOImpl pl;
 
-	@Autowired
-	private UserImp ul;
-
 
 	@ModelAttribute
 	public void getObject(Map<String,Object> map){
@@ -346,61 +343,4 @@ public class ListServerlet extends HttpServlet {
 		return "index";
 
 	}
-
-//	@RequestMapping(value = "/loginCheckUser",method = RequestMethod.POST)
-//    public String loginCheckUser(@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
-//			,Map<String,Object> map) throws Exception {
-
-//		HttpServletResponse response =
-//				((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-//		HttpServletRequest request =
-//				((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-//		String toWhere = "";
-//
-//		System.out.println("userName:"+userName);
-//		System.out.println("passWord:"+passWord);
-//		boolean isLoginSuccess = ul.loginCheck(userName,passWord);
-//
-//        if(isLoginSuccess){
-//			toWhere = "index";
-//		}else{
-//			response.sendRedirect(request.getContextPath() + "/login.jsp");
-//			toWhere = "login";
-//		}
-//
-//        System.out.println("登入是否成功 = " + isLoginSuccess);
-//        return "index";
-
-
-//        JsonNode json = userImp.selectUserByUserId(userName);
-//        System.out.println("json:"+json);
-//        JSONObject resJson = new JSONObject();
-//
-//
-//        if(json.size() != 0){
-//            if(!json.get(0).get("PWD").asText().equals(passWord)){
-//				map.put("resCode","1001");
-//				map.put("resMsg","pass word in wrong.");
-//            }else{
-//				map.put("resCode","0000");
-//				map.put("resMsg","success");
-//            }
-//        }else{
-//			map.put("resCode", "1002");
-//			map.put("resMsg", "not found.");
-//        }
-//
-//        System.out.println("错误讯息为:"+map);
-//
-//		HttpHeaders responseHeaders = new HttpHeaders();
-//		responseHeaders.add("Content-Type","application/json");
-//
-//		Cookie cookie = new Cookie(userName,passWord);
-//		cookie.setMaxAge(EXPIRY_TIME_A_DAY*7); //存活时间七天
-//		map.put("cookie",cookie);
-
-//    }
-
-
-
 }

@@ -39,6 +39,8 @@ public class MerchantDAOImpl implements MerchentDAO {
 			merchantVO.setMax_stop_amount(999999);
 			merchantVO.setAccumulate_amount(0);
 			merchantVO.setAccumulate_record(0);
+			merchantVO.setRecharge_amount_max(999999);
+			merchantVO.setRecharge_amount_min(1);
 			merchantVO.setFee_percentage(0);
 			merchantVO.setCreate_date(new java.sql.Date(new Date().getTime()));
 			merchantVO.setUpdate_date(new java.sql.Date(new Date().getTime()));

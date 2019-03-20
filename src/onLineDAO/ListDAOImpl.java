@@ -30,6 +30,7 @@ public class ListDAOImpl implements ListDAO {
 			meString = "此OrderPage已经新增过了" ;
 		}else{
 			try {
+				orderPageVO = new OrderPageVO();
 				orderPageVO.setOrder_page_id(order_page_id);
 				orderPageVO.setRecharge_center_type_name("充值中心A");
 				orderPageVO.setLogo_consulting_name("商务咨询");
