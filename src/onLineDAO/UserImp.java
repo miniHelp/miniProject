@@ -4,6 +4,7 @@ import Util.DBQueryRunner;
 import Util.GetConnection;
 import Util.HibernateUtil;
 import com.fasterxml.jackson.databind.JsonNode;
+import onlineModel.LoginVO;
 import onlineModel.UserVO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.codec.digest.Md5Crypt;
@@ -15,48 +16,64 @@ import sun.security.provider.MD5;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Caster on 2018/11/5.
  */
 @Component
 public class UserImp implements UserDAO{
+
     @Override
-    public UserVO selectUserByUserId(String login_id) throws SQLException {
+    public LoginVO loginCheck(String login_id,String login_password)throws SQLException {
+        boolean isLoginSuccess = false;
+        LoginVO loginVO = isLoingIdExist(login_id);
+        if(!loginVO.isLoginIdExist()) {  //如果账号不存在
+            loginVO.setLoginSuccess(isLoginSuccess);
+            loginVO.setLoginMessage("没有此账号");
+        }else{
+            String p1 = loginVO.getLoginUser().getLogin_pwd();
+            String p2 = DigestUtils.md5Hex(login_password.getBytes());
+            try {
+                if(p1.equals(p2)){
+                    isLoginSuccess = true;
+                    loginVO.setLoginMessage("登入成功");
+                }else{
+                    loginVO.setLoginMessage("密码错误");
+                }
+                loginVO.setLoginSuccess(isLoginSuccess);
+            }catch(Exception e){
+                System.out.println(e);
+                throw e;
+            }
+        }
+        return loginVO;
+
+    }
+
+    private LoginVO isLoingIdExist(String login_id) throws SQLException {
         Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
         UserVO userVO = null;
+        boolean isLoingIdExist = false;
         try {
             session.beginTransaction();
             Query<UserVO> query = session.createQuery("from UserVO where login_id = :login_id",UserVO.class);
             query.setParameter("login_id",login_id);
             userVO = (UserVO)query.getResultList().get(0);
+            if(userVO != null){
+                isLoingIdExist = true;
+            }
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e);
             session.getTransaction().rollback();
         }
-        return userVO;
+        LoginVO loginVO = new LoginVO();
+        loginVO.setLoginIdExist(isLoingIdExist);
+        loginVO.setLoginUser(userVO);
+
+        return loginVO;
     }
 
-
-    @Override
-    public boolean loginCheck(String login_id,String login_password)throws SQLException {
-        UserVO userVO = selectUserByUserId(login_id);
-        boolean isLoginSuccess = false;
-        String p1 = userVO.getLogin_pwd();
-        String p2 = DigestUtils.md5Hex(login_password.getBytes());
-        System.out.println("DB捞出来该User的密码为:" + p1);
-        System.out.println("使用者自己打的密码为:" + p2);
-        try {
-            if(p1.equals(p2)){
-                isLoginSuccess = true;
-            }else{
-                isLoginSuccess = false;
-            }
-        }catch(Exception e){
-            System.out.println(e);
-            throw e;
-        }
-        return isLoginSuccess;
-    }
 }

@@ -1,6 +1,7 @@
 package serverlet;
 
 import onLineDAO.UserImp;
+import onlineModel.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,13 +30,14 @@ public class UserServlet {
         System.out.println("userName:"+userName);
         System.out.println("passWord:"+passWord);
 		String toWhere = "";
-        boolean isLoginSuccess = ul.loginCheck(userName,passWord);
-        if(isLoginSuccess){
+        LoginVO loginVO = ul.loginCheck(userName,passWord);
+        if(loginVO.isLoginSuccess()){
 			toWhere = "index";
 		}else{
+            map.put("errorMsg",loginVO.getLoginMessage());
 			toWhere = "login";
 		}
-        System.out.println("登入是否成功 = " + isLoginSuccess);
+        System.out.println("登入是否成功 = " + loginVO.isLoginSuccess());
         return toWhere;
 
 
