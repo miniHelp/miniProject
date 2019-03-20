@@ -348,9 +348,9 @@ public class ListServerlet extends HttpServlet {
 
 	}
 
-	@RequestMapping(value = "/loginCheckUser",method = RequestMethod.POST)
-    public String loginCheckUser(@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
-			,Map<String,Object> map) throws Exception {
+//	@RequestMapping(value = "/loginCheckUser",method = RequestMethod.POST)
+//    public String loginCheckUser(@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
+//			,Map<String,Object> map) throws Exception {
 
 //		HttpServletResponse response =
 //				((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
@@ -370,7 +370,7 @@ public class ListServerlet extends HttpServlet {
 //		}
 //
 //        System.out.println("登入是否成功 = " + isLoginSuccess);
-        return "index";
+//        return "index";
 
 
 //        JsonNode json = userImp.selectUserByUserId(userName);
@@ -400,7 +400,7 @@ public class ListServerlet extends HttpServlet {
 //		cookie.setMaxAge(EXPIRY_TIME_A_DAY*7); //存活时间七天
 //		map.put("cookie",cookie);
 
-    }
+//    }
 
 
 

@@ -5,13 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <title>值班小帮手</title>
-    <link rel="stylesheet" href="layui/css/layui.css">
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iconfont.css">
 </head>
 <body  id="mydiv" class="loginBody">
-<form class="layui-form" action="${pageContext.request.contextPath}/loginCheckUser" method="post">
-    <div class="login_face"><img src="images/timg.jpg" class="userAvatar"></div>
+<form class="layui-form" action="${pageContext.request.contextPath}/user/loginCheckUser" method="post">
+    <div class="login_face"><img src="${pageContext.request.contextPath}/images/timg.jpg" class="userAvatar"></div>
     <div class="layui-form-item input-item layui-input-focus">
         <label for="userName">后台账号</label>
         <input type="text" placeholder="请输入商家账号"  autocomplete="off" name="userName" id="userName" class="layui-input  " lay-verify="required">
@@ -35,12 +35,12 @@
         <a href="javascript:;" class="seraph icon-sina layui-col-xs4 layui-col-sm4 layui-col-md4 layui-col-lg4"></a>
     </div>
 </form>
-<script src="layui/layui.js" charset="utf-8"></script>
-<script type="text/javascript" src="js/canvas-particle.js"></script>
-<script src="js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/canvas-particle.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<script src="js/systemUrl.js"></script>
-<script src='js/md5.js'></script>
+<script src="${pageContext.request.contextPath}/js/systemUrl.js"></script>
+<script src='${pageContext.request.contextPath}/js/md5.js'></script>
 <script type="text/javascript">
     $(function(){
         //配置

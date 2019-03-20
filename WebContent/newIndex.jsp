@@ -57,7 +57,7 @@
 			<header id="header" class="alt">
 				<div class="logo"><a href='<c:url value ="${request.contextPath}/newIndex.jsp" />'>mimiProject</a></div>
                 <%--<a href="<c:url value ="${request.contextPath}/login.html" />">Login</a>--%>
-                <a id="loginBtn" href="<%=request.getContextPath()%>/login.jsp">Login</a>
+                <a id="loginBtn" href="${pageContext.request.contextPath}/user/login">Login</a>
                 <%--<button id="loginBtn">创建新用户</button>--%>
 			</header>
 

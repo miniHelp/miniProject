@@ -13,11 +13,11 @@
     <title>值班小帮手</title>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
-    <script type="text/javascript" src="js/md5.js"></script>
-    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="js/pop.js"></script>
-    <script type="text/javascript" src="js/indexFunction.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/md5.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/pop.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/indexFunction.js"></script>
 
     <style type="text/css">
         body {
@@ -231,7 +231,7 @@
      style="position: fixed; top: 38px">
     <h5>MyPay Query Order 查詢是哪個接口</h5>
 
-    <form id='SeaechOrderForm' action="<%=request.getContextPath()%>/query" method='post' name='SeaechOrderForm'>
+    <form id='SeaechOrderForm' action="${pageContext.request.contextPath}/query" method='post' name='SeaechOrderForm'>
         <table class="tftable" border="1">
             <tr>
                 <td>接口編號：</td>

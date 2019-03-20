@@ -5,6 +5,7 @@ import Util.GetConnection;
 import Util.HibernateUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import onlineModel.UserVO;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.hibernate.Session;
@@ -39,11 +40,11 @@ public class UserImp implements UserDAO{
 
 
     @Override
-    public boolean loginCheck(String login_id,String userpassword)throws SQLException {
+    public boolean loginCheck(String login_id,String login_password)throws SQLException {
         UserVO userVO = selectUserByUserId(login_id);
         boolean isLoginSuccess = false;
         String p1 = userVO.getLogin_pwd();
-        String p2 = MD5Encoder.encode(userpassword.getBytes());
+        String p2 = DigestUtils.md5Hex(login_password.getBytes());
         System.out.println("DB捞出来该User的密码为:" + p1);
         System.out.println("使用者自己打的密码为:" + p2);
         try {
