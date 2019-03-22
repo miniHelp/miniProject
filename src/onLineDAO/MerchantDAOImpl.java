@@ -73,9 +73,12 @@ public class MerchantDAOImpl implements MerchentDAO {
 			merchantVO.setIs_only_integer("N");
 			merchantVO.setIs_recharge_random_decimal("N");
 			merchantVO.setIs_recharge_random_integer("N");
+			merchantVO.setIs_10_multiple_reduce_1("N");
 			merchantVO.setIs_online_payment_used("Y");	//在线支付使用
 			merchantVO.setIs_recharge_center_used("Y");	//充值中心使用
 			merchantVO.setSignature_key(StringUtils.isNotEmpty(MD5) ? MD5 : "");
+			merchantVO.setRecharge_center_type("A");
+			merchantVO.setQuick_amount_group("1");
 			merchantVO.setRsa_merchant_private_key(StringUtils.isNotEmpty(RSAPrivate) ? RSAPrivate : "");
 			merchantVO.setRsa_server_public_key(StringUtils.isNotEmpty(RSAPublic) ? RSAPublic : "");
 			merchantVO.setPlatform_no(StringUtils.isNotEmpty(plantNo) ? plantNo : "");
@@ -112,7 +115,7 @@ public class MerchantDAOImpl implements MerchentDAO {
 	 * @param json
 	 * @throws Exception
 	 */
-	
+
 	@Override
 	public String insertMerLog(String userIp, int merchId, String name,String username) throws SQLException {
 		Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
