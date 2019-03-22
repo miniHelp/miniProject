@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
-@SessionAttributes("loggingUser")   //正在登入的会员
+@SessionAttributes("loggingUser")   //正在登入的使用者，存入Session的當前登入的使用者物件
 @RequestMapping("/user")
 public class UserServlet {
 
@@ -34,7 +34,7 @@ public class UserServlet {
     }
 
     @RequestMapping(value = "/logOut")
-    public RedirectView logOut(){   //重蹈回view
+    public RedirectView logOut(){   //重導回view
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attr.getRequest().getSession(true);
         session.removeAttribute("loggingUser");
@@ -42,8 +42,7 @@ public class UserServlet {
     }
 
     @RequestMapping(value = "/loginCheckUser",method = {RequestMethod.POST,RequestMethod.GET})
-    public ModelAndView loginCheckUser(@RequestParam("userName") String userName , @RequestParam("passWord") String passWord
-            , Map<String,Object> map) throws Exception {
+    public ModelAndView loginCheckUser(@RequestParam("userName") String userName , @RequestParam("passWord") String passWord) throws Exception {
 
         ModelAndView mav = new ModelAndView();
 		String toWhere = "";
@@ -55,7 +54,6 @@ public class UserServlet {
             mav.addObject("loggingUser",loginVO);   //把正在登入的使用者资讯存进session
             session.setMaxInactiveInterval(A_HOUR_SECOND);  //让session存活一小时
 		}else{
-            map.put("errorMsg",loginVO.getLoginMessage());
 			toWhere = "login";
             mav.addObject("errorMsg",loginVO.getLoginMessage());
         }
