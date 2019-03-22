@@ -86,59 +86,6 @@
             var form = layui.form,
                 layer = parent.layer === undefined ? layui.layer : top.layer
             $ = layui.jquery;
-            //登录按钮
-            // form.on("submit(login)",function(data){
-            //     // $(this).text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
-            //     setTimeout(function(){
-            //         console.log(zLogin);
-            //         var data = {'userName':$("#userName").val(),'passWord':$("#password").val()};
-            //           $.ajax({
-            //                 type:"POST",
-            //                 url:'http://localhost:8080/miniProject/ListServerlet?method=loginTest',
-            //                 dataType:"json",
-            //                 data:{
-            //                     userName: $("#userName").val(),
-            //                     password: md5($("#password").val())
-            //                 },
-            //                 success:function(res){
-            //                     console.log(res)
-            //                     console.log(res.resCode)
-            //                     if(res.resCode=="0000"){
-            //                            if ($("#ck_rmbUser").is(":checked")== true) {
-            //                                 $.cookie("rmbUser", "true", { expires: 3 }); // 存储一个带7天期限的 cookie
-            //                                 $.cookie("userName", $("#userName").val(), { expires:3 }); // 存储一个带7天期限的 cookie
-            //                                 $.cookie("passWord", $("#password").val(), { expires:3 }); // 存储一个带7天期限的 cookie
-            //                             }
-            //                             else {
-            //                                 $.cookie("rmbUser", "false", { expires: -1 });
-            //                                 $.cookie("userName", '', { expires: -1 });
-            //                                 $.cookie("passWord", '', { expires: -1 });
-            //                             }
-            //                             layer.msg(res.resMsg)
-            //                         /*
-            //                             sessionStorage.setItem("identity",res.result.identity)
-            //                             sessionStorage.setItem("token",res.result.token)
-            //                             sessionStorage.setItem("merchantId",res.result.merchantId)
-            //                             sessionStorage.setItem("parent",res.result.parent)
-            //                             sessionStorage.setItem("Name",res.result.merchantName)
-            //                         */
-            //                           window.location.href = "index.jsp";
-            //                     }else{
-            //                          layer.msg(res.resMsg)
-            //                    $(this).attr("disabled",false);
-            //                     }
-            //
-            //                 },
-            //                 error:function(err){
-            //                     console.log(err)
-            //                       $(this).attr("disabled",false);
-            //                      layer.msg("网络错误，请稍后重试")
-            //                 }
-            //             })
-            //
-            //     },1000);
-            //     return false;
-            // })
 
         })
 
