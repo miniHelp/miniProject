@@ -44,6 +44,8 @@ public class MerchantDAOImpl implements MerchentDAO {
 			merchantVO.setRecharge_amount_max(999999);
 			merchantVO.setRecharge_amount_min(1);
 			merchantVO.setFee_percentage(0);
+			merchantVO.setRecharge_times_limit(0);
+			merchantVO.setSp_limit("0");
 			merchantVO.setCreate_date(new java.sql.Date(new Date().getTime()));
 			merchantVO.setUpdate_date(new java.sql.Date(new Date().getTime()));
 			merchantVO.setSubmit_url("http://211.75.237.90");
