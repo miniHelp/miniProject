@@ -10,20 +10,38 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iconfont.css">
 </head>
 <body  id="mydiv" class="loginBody">
+
+<%
+    Cookie [] cookies = request.getCookies();
+    for (Cookie cookie : cookies){
+        if(cookie.getName().equals("userName")){
+            pageContext.setAttribute("userName",cookie.getValue());
+        }
+        if(cookie.getName().equals("passWord")){
+            pageContext.setAttribute("passWord",cookie.getValue());
+        }
+        if(cookie.getName().equals("remember")){
+            pageContext.setAttribute("remember",cookie.getValue());
+        }
+    }
+
+%>
 <form class="layui-form" action="${pageContext.request.contextPath}/user/loginCheckUser" method="post">
     <div class="login_face"><img src="${pageContext.request.contextPath}/images/timg.jpg" class="userAvatar"></div>
     <div class="layui-form-item input-item layui-input-focus">
         <label for="userName">后台账号</label>
-        <input type="text" placeholder="请输入商家账号"  autocomplete="off" name="userName" id="userName" class="layui-input  " lay-verify="required">
+        <input type="text" placeholder="请输入商家账号"  autocomplete="off"
+               name="userName" id="userName" class="layui-input  " lay-verify="required" value="${userName}">
         <c:if test="${!empty errorMsg && errorMsg=='没有此账号'}"><span style="color: red">${errorMsg}</span></c:if>
     </div>
     <div class="layui-form-item input-item layui-input-focus">
         <label for="password">后台密码</label>
-        <input type="password" placeholder="请输入密码" autocomplete="off" name="passWord" id="password" class="layui-input " lay-verify="required">
+        <input type="password" placeholder="请输入密码" autocomplete="off"
+               name="passWord" id="password" class="layui-input " lay-verify="required" value="${passWord}">
         <c:if test="${!empty errorMsg && errorMsg=='密码错误'}"><span style="color: red">${errorMsg}</span></c:if>
     </div>
     <div class="checked_box">
-        <input type="checkbox" lay-skin="primary" id="ck_rmbUser"/> 记住用户名和密码
+        <input type="checkbox" lay-skin="primary" id="ck_rmbUser" name="ck_rmbUser" value="记住帐密" ${!empty remember ? "checked" : ""}/> 记住用户名和密码
     </div>
     <div class="layui-form-item">
         <button class="layui-btn layui-block" lay-filter="login" lay-submit>登录</button>

@@ -5,7 +5,6 @@
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="errors" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE HTML>
 <!-- 值班小帮手 -->
 <html>

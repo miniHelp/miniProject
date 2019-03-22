@@ -17,9 +17,27 @@ import java.util.List;
 @Component
 public class MerchantDAOImpl implements MerchentDAO {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws Exception {
 		MerchantDAOImpl pa = new MerchantDAOImpl();
 		System.out.println(pa.deleteMerchent(18884));
+
+	}
+
+	public void activateMerchant(int merchantId) throws SQLException{
+		Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
+		MerchantVO merchantVO = null;
+		try {
+			session.beginTransaction();
+			merchantVO = (MerchantVO)session.get(MerchantVO.class,merchantId);
+			merchantVO.setMerchant_status("1");	//再启用
+			session.saveOrUpdate(merchantVO);
+			session.getTransaction().commit();
+
+		 } catch (Exception ex) {
+			session.getTransaction().rollback();
+			System.out.println(ex.getMessage());
+			throw ex;
+		}
 
 	}
 
@@ -29,11 +47,11 @@ public class MerchantDAOImpl implements MerchentDAO {
 			String RSAPrivate, String RSAPublic, String type
 			,String  plantNo ,List<Integer>list ,String ip, String username) throws Exception{
 		Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
+		MerchantVO merchantVO = null;
 
 		try {
-			MerchantVO merchantVO = new MerchantVO();
 			session.beginTransaction();
-
+			merchantVO = new MerchantVO();
 			merchantVO.setOrder_page_id(plant);
 			merchantVO.setPayment_platform_id(plant);
 			merchantVO.setMerchant_no(merchentNo);
@@ -50,7 +68,7 @@ public class MerchantDAOImpl implements MerchentDAO {
 			merchantVO.setUpdate_date(new java.sql.Date(new Date().getTime()));
 			merchantVO.setSubmit_url("http://211.75.237.90");
 			merchantVO.setGroup_area("1");
-			merchantVO.setMerchant_status("1");
+			merchantVO.setMerchant_status("2");	//先停用
 			merchantVO.setSignature_type(type);
 			merchantVO.setIs_only_integer("N");
 			merchantVO.setIs_recharge_random_decimal("N");
@@ -63,15 +81,15 @@ public class MerchantDAOImpl implements MerchentDAO {
 			merchantVO.setPlatform_no(StringUtils.isNotEmpty(plantNo) ? plantNo : "");
 			merchantVO.setMerchant_pwd(StringUtils.isNotEmpty(password) ? password : "");
 			session.saveOrUpdate(merchantVO);
-
             Query<Object> query = session.createQuery("select max(merchantId) from MerchantVO", Object.class);
             List<Object> listQuery = query.getResultList();
+			int maxMerchantId = (int)listQuery.get(0);
             session.getTransaction().commit();
-
-            insertMerPayment((int)listQuery.get(0), type, list);
-            System.out.println("------------新增商戶支付方式完成------------");
-            insertMerLog(ip, (int)listQuery.get(0), merchantName,username);
-            System.out.println("------------新增商戶log完成------------");
+            insertMerPayment(maxMerchantId, type, list);
+			System.out.println("------------新增商戶支付方式完成------------");
+			insertMerLog(ip, maxMerchantId, merchantName,username);
+			System.out.println("------------新增商戶log完成------------");
+			activateMerchant(maxMerchantId);
 
         }catch (SQLException ex){
 			session.getTransaction().rollback();
@@ -79,6 +97,7 @@ public class MerchantDAOImpl implements MerchentDAO {
 		} catch (Exception ex) {
             session.getTransaction().rollback();
             System.out.println(ex.getMessage());
+
             throw ex;
         }
 
