@@ -66,12 +66,12 @@ public class UserServlet {
             if(isRemember){  //如果要记住cookie
                 Cookie loginId = new Cookie("userName",userName);
                 Cookie loginPwd = new Cookie("passWord",passWord);
-                Cookie remeberLoginInfo = new Cookie("remember","remember");
+                Cookie rememberLoginInfo = new Cookie("remember","remember");
                 loginId.setMaxAge(A_HOUR_SECOND * 24 * 7);  //7天的cookie时效
                 loginPwd.setMaxAge(A_HOUR_SECOND * 24 * 7);  //7天的cookie时效
                 response.addCookie(loginId);
                 response.addCookie(loginPwd);
-                response.addCookie(remeberLoginInfo);
+                response.addCookie(rememberLoginInfo);
             }else{                      //如果不要记住cookie
                 Cookie [] cookies = request.getCookies();
                 for(Cookie cookie : cookies){
