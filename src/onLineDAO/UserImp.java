@@ -32,7 +32,7 @@ public class UserImp implements UserDAO{
         if(!loginVO.isLoginIdExist()) {  //如果账号不存在
             loginVO.setLoginSuccess(isLoginSuccess);
             loginVO.setLoginMessage("没有此账号");
-        }else{
+        }else{      //如果账号存在，则继续验证密码是否正确
             String p1 = loginVO.getLoginUser().getLogin_pwd();
             String p2 = DigestUtils.md5Hex(login_password.getBytes());
             try {
@@ -52,7 +52,7 @@ public class UserImp implements UserDAO{
 
     }
 
-    private LoginVO isLoingIdExist(String login_id) throws SQLException {
+    private LoginVO isLoingIdExist(String login_id) throws SQLException {   //检查账号是否存在
         Session session = HibernateUtil.getMypaySessionFactory().getCurrentSession();
         UserVO userVO = null;
         boolean isLoingIdExist = false;

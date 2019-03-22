@@ -40,10 +40,17 @@ public class UserServlet {
 
     @RequestMapping(value = "/logOut")
     public RedirectView logOut(){   //重導回view
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = attr.getRequest().getSession(true);
+        String toWhere = "";
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        HttpSession session = request.getSession(true);
         session.removeAttribute("loggingUser");
-        return new RedirectView("login");
+        if(request.getPathInfo().endsWith("newIndex.jsp")){   //如果从首页按登出
+            toWhere = request.getRequestURI();
+            System.out.println("从首页登出后，要去 " + toWhere);
+        }else{
+            toWhere = "login";
+        }
+        return new RedirectView(toWhere);
     }
 
     @RequestMapping(value = "/loginCheckUser",method = {RequestMethod.POST,RequestMethod.GET})

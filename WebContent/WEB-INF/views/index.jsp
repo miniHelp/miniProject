@@ -168,6 +168,7 @@
     <input type="button" id='changeAuthOrder' view='authDiv' value='獲取授權'>
     <input type="button" view='justinMagicDiv' value='賈斯小魔法' onclick='justinMagic(this);'>
     <a href="${pageContext.request.contextPath}/user/logOut"><input type="button" view='logOut' value='登出'></a>
+    <a href="${pageContext.request.contextPath}/newIndex.jsp"><input type="button" view='logOut' value='回首页'></a>
 </div>
 <!--
 獲得權限的 還沒做好

@@ -56,9 +56,13 @@
 	<!-- Header -->
 			<header id="header" class="alt">
 				<div class="logo"><a href='<c:url value ="${request.contextPath}/newIndex.jsp" />'>mimiProject</a></div>
-                <%--<a href="<c:url value ="${request.contextPath}/login.html" />">Login</a>--%>
-                <a id="loginBtn" href="${pageContext.request.contextPath}/user/login">Login</a>
-                <%--<button id="loginBtn">创建新用户</button>--%>
+					<c:if test="${empty loggingUser}">
+						<a id="loginBtn" href="${pageContext.request.contextPath}/user/login">Login</a>
+					</c:if>
+					<c:if test="${!empty loggingUser}">
+						<a id="loginBtn" href="${pageContext.request.contextPath}/user/logOut">${loggingUser.loginUser.user_name},LogOut</a>
+					</c:if>
+				</a>
 			</header>
 
 		<!-- Nav -->
