@@ -279,7 +279,7 @@ var showMerchList = function(obj) {
 
 
 
-var merchantDetele = function(obj){
+var merchantDelete = function(obj){
 
 	$("#deleteMertchantForm").attr("action",$(obj).attr("id"));
 	$("#deleteMertchantForm").submit();

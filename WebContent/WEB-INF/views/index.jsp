@@ -381,7 +381,7 @@
                                        dataId="${data.merchantId}" id="merListPop${data.merchantId}"
                                        onclick='merchantDetal(this);'/>
                     <input type="button" value="幹掉他" dataId="${data.merchantId}" dataPlant="${data.payment_platform_id}" class="deleteMerchant"
-                           id="${pageContext.request.contextPath}/merchantDetele/${data.payment_platform_id}/${data.merchantId}" onclick="merchantDetele(this)"/>
+                           id="${pageContext.request.contextPath}/merchantDelete/${data.payment_platform_id}/${data.merchantId}" onclick="merchantDelete(this)"/>
                 </td>
             </tr>
         </table>

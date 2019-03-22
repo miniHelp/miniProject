@@ -29,7 +29,7 @@ public class UserLoginFilter implements Filter {
         // 【從 session 判斷此員工是否登入過】
         Object memVO = session.getAttribute("loggingUser");
         if (memVO == null) {
-            res.sendRedirect(req.getContextPath() + "/views/login.jsp");
+            res.sendRedirect(req.getContextPath() + "/user/login");
             return;
         }else {
             chain.doFilter(req,res);	//這行不能少

@@ -67,7 +67,7 @@ public class ListServerlet extends HttpServlet {
 
 
 	//方法都一定要宣告成public，form對應的modelAttribute才能找到
-	@RequestMapping(value = "/merchantDetele/{deletePlatformId}/{deleteMerchantId}",method = RequestMethod.DELETE)
+	@RequestMapping(value = "/merchantDelete/{deletePlatformId}/{deleteMerchantId}",method = RequestMethod.DELETE)
 	public String merchantDetele(@PathVariable("deletePlatformId") String deletePlatformId
 			,@PathVariable("deleteMerchantId") String deleteMerchantId,Map<String,Object> map)
 			throws  Exception {

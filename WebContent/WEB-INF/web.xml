@@ -79,6 +79,13 @@
     <filter-mapping>
         <filter-name>userLoginFilter</filter-name>
         <url-pattern>/views/index.jsp</url-pattern>
+        <url-pattern>/query</url-pattern>
+        <url-pattern>/modifyPlatform</url-pattern>
+        <url-pattern>/insertMypay</url-pattern>
+        <url-pattern>/merchantList</url-pattern>
+        <url-pattern>/insertMerchant</url-pattern>
+        <url-pattern>/insertMerchantLazy</url-pattern>
+        <url-pattern>/merchantDelete</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
