@@ -52,6 +52,9 @@ public class MerchantDAOImpl implements MerchentDAO {
 			merchantVO.setGroup_area("1");
 			merchantVO.setMerchant_status("1");
 			merchantVO.setSignature_type(type);
+			merchantVO.setIs_only_integer("N");
+			merchantVO.setIs_recharge_random_decimal("N");
+			merchantVO.setIs_recharge_random_integer("N");
 			merchantVO.setIs_online_payment_used("Y");	//在线支付使用
 			merchantVO.setIs_recharge_center_used("Y");	//充值中心使用
 			merchantVO.setSignature_key(StringUtils.isNotEmpty(MD5) ? MD5 : "");
