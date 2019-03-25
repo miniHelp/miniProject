@@ -31,13 +31,13 @@
     <div class="layui-form-item input-item layui-input-focus">
         <label for="userName">后台账号</label>
         <input type="text" placeholder="请输入商家账号"  autocomplete="off"
-               name="userName" id="userName" class="layui-input  " lay-verify="required" value="${userName}">
+               name="userName" id="userName" class="layui-input" lay-verify="required" value="${userName}">
         <c:if test="${!empty errorMsg && errorMsg=='没有此账号'}"><span style="color: red">${errorMsg}</span></c:if>
     </div>
     <div class="layui-form-item input-item layui-input-focus">
         <label for="password">后台密码</label>
         <input type="password" placeholder="请输入密码" autocomplete="off"
-               name="passWord" id="password" class="layui-input " lay-verify="required" value="${passWord}">
+               name="passWord" id="password" class="layui-input" lay-verify="required" value="${passWord}">
         <c:if test="${!empty errorMsg && errorMsg=='密码错误'}"><span style="color: red">${errorMsg}</span></c:if>
     </div>
     <div class="checked_box">
