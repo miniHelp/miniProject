@@ -56,11 +56,11 @@
 	<!-- Header -->
 			<header id="header" class="alt">
 				<div class="logo"><a href='<c:url value ="${request.contextPath}/newIndex.jsp" />'>mimiProject</a></div>
-					<c:if test="${empty loggingUser}">
+					<c:if test="${loggingUser == null}">
 						<a id="loginBtn" href="${pageContext.request.contextPath}/user/login">Login</a>
 					</c:if>
-					<c:if test="${!empty loggingUser}">
-						<a id="loginBtn" href="${pageContext.request.contextPath}/user/logOut">${loggingUser.loginUser.user_name},LogOut</a>
+					<c:if test="${loggingUser != null}">
+						<a id="loginBtn" href="${pageContext.request.contextPath}/user/logOut/newIndex">${loggingUser.loginUser.user_name},LogOut</a>
 					</c:if>
 				</a>
 			</header>

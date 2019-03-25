@@ -31,6 +31,15 @@ public class UserVO implements Serializable {
     private Integer change_name_fee_duration;
     private Integer unpaid_fee_duration;
 
+    @Override
+    public String toString() {
+        return "UserVO{" +
+                "user_id=" + user_id +
+                ", user_name='" + user_name + '\'' +
+                ", login_id='" + login_id + '\'' +
+                ", login_pwd='" + login_pwd + '\'' +
+                '}';
+    }
 
     public Integer getUnpaid_fee_duration() {
         return unpaid_fee_duration;

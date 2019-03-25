@@ -6,12 +6,11 @@ import onlineModel.UserVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -38,19 +37,22 @@ public class UserServlet {
         return "login";
     }
 
-    @RequestMapping(value = "/logOut")
-    public RedirectView logOut(){   //重導回view
+    @RequestMapping(value = "/logOut/{fromWhere}",method = RequestMethod.GET)
+    public String logOut(@PathVariable("fromWhere") String fromWhere, WebRequest request, SessionStatus status){   //重導回view
         String toWhere = "";
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        HttpSession session = request.getSession(true);
-        session.removeAttribute("loggingUser");
-        if(request.getPathInfo().endsWith("newIndex.jsp")){   //如果从首页按登出
-            toWhere = request.getRequestURI();
+
+        /**********SpringMVC要从Session移除东西要这要移*********/
+        status.setComplete();
+        request.removeAttribute("loggingUser", WebRequest.SCOPE_SESSION);
+        /********************/
+
+        if(fromWhere.equals("newIndex")){   //如果从首页按登出
+            toWhere = "redirect:/newIndex.jsp";
             System.out.println("从首页登出后，要去 " + toWhere);
-        }else{
+        }else if(fromWhere.equals("index")){
             toWhere = "login";
         }
-        return new RedirectView(toWhere);
+        return toWhere;
     }
 
     @RequestMapping(value = "/loginCheckUser",method = {RequestMethod.POST,RequestMethod.GET})
@@ -66,7 +68,6 @@ public class UserServlet {
             mav.addObject("loggingUser",loginVO);   //把正在登入的使用者资讯存进session
             session.setMaxInactiveInterval(A_HOUR_SECOND);  //让session存活一小时
             //登入成功的时候设定Cookie
-
             String [] rememberCookie = request.getParameterValues("ck_rmbUser");    //取checkbox
             boolean isRemember = (rememberCookie != null);
             System.out.println("要记住帐密吗 = " + isRemember);
