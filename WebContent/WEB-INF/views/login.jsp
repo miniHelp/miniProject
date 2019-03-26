@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/iconfont.css">
 </head>
 <body  id="mydiv" class="loginBody">
-
+<div class="layui-form-item" style="margin-top: 10px;margin-left: 10px;">
+    <a href="${pageContext.request.contextPath}/newIndex.jsp"><button class="layui-btn layui-btn-normal">回首页</button></a>
+</div>
 <%
     Cookie [] cookies = request.getCookies();
     for (Cookie cookie : cookies){

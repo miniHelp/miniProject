@@ -1,9 +1,10 @@
 package serverlet;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.gson.Gson;
 import onLineDAO.ListDAOImpl;
 import onLineDAO.MerchantDAOImpl;
-import onLineDAO.PlatPayMent;
+import onLineDAO.PlatPayment;
 import onLineDAO.UserImp;
 import onlineModel.LoginVO;
 import onlineModel.MerchantVO;
@@ -47,7 +48,7 @@ public class ListServerlet extends HttpServlet {
 	private HttpServletRequest request;
 
 	@Autowired
-	private PlatPayMent platPayMent;
+	private PlatPayment platPayMent;
 
 	@Autowired
 	private MerchantDAOImpl pl;
@@ -108,12 +109,11 @@ public class ListServerlet extends HttpServlet {
 
 		// 第一步 先拿到接口有哪些配置需要設定
 
-		Map<String, String> map = new HashMap<String, String>();
-		map = platPayMent.getPlantList(plantNum);
-		System.out.println("獲取到接口的參數訊息 == >" + map);
+		PlatformVO platformVO = platPayMent.getPlantList(plantNum);
+		System.out.println("獲取到接口的參數訊息 == >" + platformVO);
 
 		// 第二步 拿到該接口有支持那些支付方式
-		String sign = platPayMent.getSignType(plantNum);
+		Character sign = platPayMent.getSignType(plantNum);
 		System.out.println("獲取到接口所支持的签名方式 == >" + sign);
 
 		// 第三步 先拿到接口有哪些支付方式
@@ -123,7 +123,7 @@ public class ListServerlet extends HttpServlet {
 
 		// 因為我的mpa 有設定條件不能放入其他的東西 所以將其list裝到 json物件中
 
-		JSONObject json = new JSONObject(map);
+		JSONObject json = new JSONObject(new Gson().toJson(platformVO));
 		json.put("list", list);
 		json.put("sign", sign);
 		System.out.println(json);

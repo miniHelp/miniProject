@@ -38,6 +38,7 @@
 
 		<!-- 物件與資料庫表格映射文件，mapping屬性改class，值為類別全名 -->
 		<mapping resource="onlineModel/platform.hbm.xml" />
+		<mapping resource="onlineModel/paymentPlatformMethod.hbm.xml" />
 
 	</session-factory>
 	

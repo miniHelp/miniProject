@@ -4,12 +4,13 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import onlineModel.PlatformVO;
 import org.json.JSONObject;
 
 public interface PlatformDAO {
 	public List<Integer> getPlantPayment (int plantNum) throws SQLException;
-	public Map<String, String>  getPlantList (int plantNum) throws SQLException;
-	public String getSignType(int plantNo) throws SQLException;
+	public PlatformVO getPlantList (int plantNum) throws SQLException;
+	public Character getSignType(int plantNo) throws SQLException;
 	
 	
 	

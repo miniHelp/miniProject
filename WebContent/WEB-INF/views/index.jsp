@@ -341,7 +341,7 @@
                     <input type="button" value="超懶新增mypay平台" id="insertMypay" dataId="${data.platform_id}"
                            dataName="${data.platform_name}" onclick='insertMypay(this);'/>
                     <input type="button" value="超懶一鍵新增商戶" id="insertMypayMerchent" dataId="${data.platform_id}"
-                           dataName="${data.platform_name}" dataUrl="<c:url value ="${request.contextPath}/insertMerchantLazy" />" onclick='PlantDetal(this);'/>
+                    dataName="${data.platform_name}" onclick="PlantDetal(this)"/>
                     <input type="button" id="merchantList" value="mypay商戶列表" dataId="${data.platform_id}"
                            dataName="${data.platform_name}" onclick='showMerchList(this);'/>
                 </td>
