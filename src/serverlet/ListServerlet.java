@@ -19,6 +19,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -98,7 +99,8 @@ public class ListServerlet extends HttpServlet {
 
 	//一键懒人新增商户，从ajax来的
     @RequestMapping(value = "/insertMerchantLazy",method = {RequestMethod.POST,RequestMethod.GET})
-	public void insertMerchantLazy(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView insertMerchantLazy(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
 		System.out.println("====insertMerchantLazy===");
 		List<Integer> list = new ArrayList();
 		int plantNum = 0;
@@ -121,14 +123,18 @@ public class ListServerlet extends HttpServlet {
 		list = platPayMent.getPlantPayment(plantNum);
 		System.out.println("獲取到接口所支持的支付方式 == >" + list);
 
-		// 因為我的mpa 有設定條件不能放入其他的東西 所以將其list裝到 json物件中
-
-		JSONObject json = new JSONObject(new Gson().toJson(platformVO));
-		json.put("list", list);
-		json.put("sign", sign);
-		System.out.println(json);
-		response.setContentType("application/json");
-		response.getWriter().write(new String(json.toString().getBytes("UTF-8"), "UTF-8"));
+		mav.addObject("platform",platformVO);
+		if (sign == '1') {
+			mav.addObject("signType","MD5");
+		}else if(sign == '2'){
+			mav.addObject("signType","RSA");
+		}else if(sign == '3'){
+			mav.addObject("signType","RSA(PFX)");
+		}
+		mav.addObject("payMethods",list);
+		mav.addObject("method","insertMerchantLazy");
+		mav.setViewName("index");
+		return mav;
 	}
 
 	//新增商户
@@ -301,7 +307,7 @@ public class ListServerlet extends HttpServlet {
 	@RequestMapping(value = "/query",method = {RequestMethod.POST,RequestMethod.GET})
 	public String query(@RequestParam Map<String,String> reqMap , Map<String,Object> resMap) throws Exception {
 
-
+        System.out.println("进来Query");
         String platformId = reqMap.get("platformId");
         String platformName = reqMap.get("platformName");
 		String platformUrl = reqMap.get("platformUrl");
@@ -329,10 +335,10 @@ public class ListServerlet extends HttpServlet {
 		List<PlatformVO> list = pa.PlantNoList(columName, columValue);
 
         resMap.put("platformInfoList",list);
-        resMap.put("method", "query");
-        resMap.put("platformId", platformId);
-        resMap.put("platformUrl", platformUrl);
-        resMap.put("platformName", platformName);
+        resMap.put("method","query");
+//        resMap.put("platformId", platformId);
+//        resMap.put("platformUrl", platformUrl);
+//        resMap.put("platformName", platformName);
 
         System.out.println(resMap);
 

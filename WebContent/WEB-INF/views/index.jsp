@@ -5,6 +5,7 @@
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="errors" uri="http://www.springframework.org/tags/form" %>
+<jsp:useBean class="Util.PaymentChineseName" id="paymentName" scope="page"/>
 <!DOCTYPE HTML>
 <!-- 值班小帮手 -->
 <html>
@@ -341,7 +342,7 @@
                     <input type="button" value="超懶新增mypay平台" id="insertMypay" dataId="${data.platform_id}"
                            dataName="${data.platform_name}" onclick='insertMypay(this);'/>
                     <input type="button" value="超懶一鍵新增商戶" id="insertMypayMerchent" dataId="${data.platform_id}"
-                    dataName="${data.platform_name}" onclick="PlantDetal(this)"/>
+                    dataName="${data.platform_name}" dataUrl="${pageContext.request.contextPath}/insertMerchantLazy" onclick="PlantDetal(this)"/>
                     <input type="button" id="merchantList" value="mypay商戶列表" dataId="${data.platform_id}"
                            dataName="${data.platform_name}" onclick='showMerchList(this);'/>
                 </td>
@@ -453,11 +454,39 @@
                     <form:errors path="merchant_no" cssStyle="color: red;"/>
                 </td>
             </tr>
-            <tr>
+            <c:if test="${signType == 'MD5'}">
+             <tr>
                 <td> MD5 密鑰：</td>
                 <td>
                     <form:textarea path="signature_key" id="signature_key" name='signature_key'
                                    cssStyle="margin: 0px; width: 550px; height: 60px;resize: none"/>
+                </td>
+             </tr>
+            </c:if>
+            <c:if test="${signType == 'RSA'}">
+                <tr>
+                    <td> RSA 商户私钥：</td>
+                    <td>
+                        <form:textarea path="rsa_merchant_private_key" id="rsa_merchant_private_key" name='rsa_merchant_private_key'
+                                       cssStyle="margin: 0px; width: 550px; height: 60px;resize: none"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> RSA 平台公钥：</td>
+                    <td>
+                        <form:textarea path="rsa_server_public_key" id="rsa_server_public_key" name='rsa_server_public_key'
+                                       cssStyle="margin: 0px; width: 550px; height: 60px;resize: none"/>
+                    </td>
+                </tr>
+            </c:if>
+            <tr>
+                <td> 支付方式 :</td>
+                <td id='wayTd'>
+                    <c:if test="${!empty payMethods}">
+                        <c:forEach var="payMethod" items="payMethods">
+                            <input type="checkbox" name='payList' checked='checked' value='${paymentName.getPaymentName(payMethod)}'>${paymentName.getPaymentName(payMethod)}
+                        </c:forEach>
+                    </c:if>
                 </td>
             </tr>
             <tr>
@@ -516,21 +545,27 @@
         $('.hideDiv:eq(0)').show();
     </script>
 </c:if>
-
-<c:if test="${method == 'query' }">
+<c:if test="${method == 'insertMerchantLazy'}">
+    <script>
+        $('#insertMypayMerchentTable').show();
+        $('#resultDiv').show();
+        $('#sendDiv').hide();
+    </script>
+</c:if>
+<c:if test="${method == 'query'}">
     <script>
         $('#searchDiv').show();
         $('#resultDiv').show();
         $('#sendDiv').hide();
     </script>
 </c:if>
-<c:if test="${method == 'insertMypay' }">
+<c:if test="${method == 'insertMypay'}">
     <script>
         $('#searchDiv').show();
         $('#insertReDiv').show();
     </script>
 </c:if>
-<c:if test="${method == 'merchantList' }">
+<c:if test="${method == 'merchantList'}">
     <script>
         $('#merchantReDiv').toggle();
         $('#searchDiv').show();

@@ -4,8 +4,8 @@
 
 <hibernate-mapping>
     <class name="onlineModel.PaymentPlatformMethodVO" table="PY_PAYMENT_PLATFORM_METHOD" >
-        <id name="payment_platform_id" column="PAYMENT_PLATFORM_ID"/>
-        <property name="payment_method_id" column="PAYMENT_METHOD_ID" />
+        <id name="payment_platform_id" column="PAYMENT_PLATFORM_ID" type="java.lang.Integer"/>
+        <property name="payment_method_id" column="PAYMENT_METHOD_ID" type="java.lang.Integer" />
         <property name="create_date" column="CREATE_DATE" />
         <property name="update_date" column="UPDATE_DATE" />
     </class>

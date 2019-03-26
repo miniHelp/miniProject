@@ -137,116 +137,117 @@ var PlantDetal = function(obj) {
 				// ↑↑↑↑↑↑反正就是要指到你寫的aspx拉↑↑↑↑↑↑↑↑
 				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 				data : {
-					"payment_platform_id" : payment_platform_id
-				},
-				success : function(msg) {
-					// 後端回傳的東西包成JSONObject回來,
-					var Result = msg;
-					var platform_no_tips = msg.platform_no_tips;
-					var platform_no_name = msg.platform_no_name;
-					var merchant_pwd_name = msg.merchant_pwd_name;
-					var merchant_pwd_tips = msg.merchant_pwd_tips;
-					var merchant_no_tips = msg.merchant_no_tips;
-					var rsa_merchant_private_key_tips = msg.rsa_merchant_private_key_tips;
-					var rsa_server_public_key_tips = msg.rsa_server_public_key_tips;
-					var sign = msg.sign;
-					var list = msg.list;
-
-
-					if (!merchant_no_tips == "undefined")
-						$('#merchentTips').text("   " + merchant_no_tips);
-
-					// 平台號 跟其顯示名稱 提示
-					if (!(platform_no_name == null || platform_no_name == ""
-							&& typeof (platform_no_name)) == "undefined") {
-						$('#appendTable').append(
-										"<tr  class='appendTable'><td>"
-												+ platform_no_name
-												+ ':</td>'
-												+ "<td><input type='text' id='plantName' name='plantName'	value="
-												+ platform_no_tips
-												+ '></td></tr>');
-					}
-
-					// 密碼設定 跟其提示信息
-					if (!(merchant_pwd_name == null || merchant_pwd_name == "" || merchant_pwd_name == "undefined")) {
-						$('#appendTable').append(
-										"<tr  class='appendTable'><td>"
-												+ merchant_pwd_name
-												+ ':</td>'
-												+ "<td><input type='text' id='pswName' name='pswName'	value="
-												+ merchant_pwd_tips
-												+ '></td></tr>');
-					}
-
-					//商户密码
-					if (!(merchant_pwd_name != null || merchant_pwd_name != "" || merchant_pwd_name == "undefined")) {
-						$('#appendTable').append(
-										"<tr  class='appendTable'><td>"
-												+ platform_no_name
-												+ ':</td>'
-												+ "<td><input type='text' id='plantName' name='plantName'	value="
-												+ platform_no_tips
-												+ '></td></tr>');
-					}
-
-					// 验证簽名方式
-					if (sign == "2") {
-						alert("RAS             in");
-						$('#appendTable').append(
-										"<tr  class='appendTable'><td> RSA 商戶私鑰  :</td>"
-												+ "<td><input type='text' id='RSAPrivate' name='RSAPrivate'	value="
-												+ rsa_merchant_private_key_tips
-												+ '></td></tr>');
-						// 商戶公鑰
-						$('#appendTable').append(
-										"<tr  class='appendTable'><td> 商戶公鑰  :</td>"
-												+ "<td><input type='text' id='RSAPublic' name='RSAPublic'	value="
-												+ rsa_server_public_key_tips
-												+ '></td></tr>');
-					}
-
-					// //如果是MD5 就是1
-					// if (sign == "1") {
-					// 	console.log("MD5             in");
-					// 	$('#appendTable').append(
-					// 					"<tr  class='appendTable'><td> MD5 密鑰  :</td>"
-					// 							+ "<td><textarea cols='50' rows='3' id='Md5Key' name='Md5Key' value=''></textarea></td></tr>");
-					// }
-
-					// 把list裡面的支付方式滾出來
-					if (!(merchant_no_tips == "undefined")) {
-						$('#appendTable').append("<tr  class='appendTable'><td> 支付方式 :</td><td id='wayTd'><span>");
-
-						$.each(list,function(i, v) {
-											var name = way(v);
-											$('#wayTd').append(
-															"<input type='checkbox' id='list"
-																	+ v
-																	+ "' name='payList' checked='checked'	value="
-																	+ v
-																	+ ">"+ name);
-										});
-						$('#appendTable').append("</span></td></tr>");
-
-					}
-					
-					// $('#appendTable').append(
-					// 		"<tr  class='appendTable'><td> 按下去按下去~:</td><td>"
-					// 				+ "<input type='button' id='insertMerId' name='insertMerId'	value='見證奇蹟的時刻 ✧◝(⁰▿⁰)◜✧!!!!' onclick='insertMypayMerchent(this);'>"+
-					// 				"<input type='radio' name='state' value='on' checked> 啟用 (((o(*ﾟ▽ﾟ*)o))) "+
-					// 				"<input type='radio' name='state' value='off' > 停用 (｡ŏ_ŏ)</td></tr>"+
-					// 				"<input type='hidden' id='sign' name='sign'	value='"+ sign +"'>");
-
-					// do something
-                    console.log('END !~!!');
-				},
-				// statusCode範例
-				statusCode : {
-					403 : function(response) {
-						LocationHerf();
-					}
+					"payment_platform_id": payment_platform_id
 				}
+			// 	},
+			// 	success : function(msg) {
+			// 		// 後端回傳的東西包成JSONObject回來,
+			// 		var Result = msg;
+			// 		var platform_no_tips = msg.platform_no_tips;
+			// 		var platform_no_name = msg.platform_no_name;
+			// 		var merchant_pwd_name = msg.merchant_pwd_name;
+			// 		var merchant_pwd_tips = msg.merchant_pwd_tips;
+			// 		var merchant_no_tips = msg.merchant_no_tips;
+			// 		var rsa_merchant_private_key_tips = msg.rsa_merchant_private_key_tips;
+			// 		var rsa_server_public_key_tips = msg.rsa_server_public_key_tips;
+			// 		var sign = msg.sign;
+			// 		var list = msg.list;
+			//
+			//
+			// 		if (!merchant_no_tips == "undefined")
+			// 			$('#merchentTips').text("   " + merchant_no_tips);
+			//
+			// 		// 平台號 跟其顯示名稱 提示
+			// 		if (!(platform_no_name == null || platform_no_name == ""
+			// 				&& typeof (platform_no_name)) == "undefined") {
+			// 			$('#appendTable').append(
+			// 							"<tr  class='appendTable'><td>"
+			// 									+ platform_no_name
+			// 									+ ':</td>'
+			// 									+ "<td><input type='text' id='plantName' name='plantName'	value="
+			// 									+ platform_no_tips
+			// 									+ '></td></tr>');
+			// 		}
+			//
+			// 		// 密碼設定 跟其提示信息
+			// 		if (!(merchant_pwd_name == null || merchant_pwd_name == "" || merchant_pwd_name == "undefined")) {
+			// 			$('#appendTable').append(
+			// 							"<tr  class='appendTable'><td>"
+			// 									+ merchant_pwd_name
+			// 									+ ':</td>'
+			// 									+ "<td><input type='text' id='pswName' name='pswName'	value="
+			// 									+ merchant_pwd_tips
+			// 									+ '></td></tr>');
+			// 		}
+			//
+			// 		//商户密码
+			// 		if (!(merchant_pwd_name != null || merchant_pwd_name != "" || merchant_pwd_name == "undefined")) {
+			// 			$('#appendTable').append(
+			// 							"<tr  class='appendTable'><td>"
+			// 									+ platform_no_name
+			// 									+ ':</td>'
+			// 									+ "<td><input type='text' id='plantName' name='plantName'	value="
+			// 									+ platform_no_tips
+			// 									+ '></td></tr>');
+			// 		}
+			//
+			// 		// 验证簽名方式
+			// 		if (sign == "2") {
+			// 			alert("RAS             in");
+			// 			$('#appendTable').append(
+			// 							"<tr  class='appendTable'><td> RSA 商戶私鑰  :</td>"
+			// 									+ "<td><input type='text' id='RSAPrivate' name='RSAPrivate'	value="
+			// 									+ rsa_merchant_private_key_tips
+			// 									+ '></td></tr>');
+			// 			// 商戶公鑰
+			// 			$('#appendTable').append(
+			// 							"<tr  class='appendTable'><td> 商戶公鑰  :</td>"
+			// 									+ "<td><input type='text' id='RSAPublic' name='RSAPublic'	value="
+			// 									+ rsa_server_public_key_tips
+			// 									+ '></td></tr>');
+			// 		}
+			//
+			// 		//如果是MD5 就是1
+			// 		else if (sign == "1") {
+			// 			console.log("MD5             in");
+			// 			$('#appendTable').append(
+			// 							"<tr  class='appendTable'><td> MD5 密鑰  :</td>"
+			// 									+ "<td><textarea cols='50' rows='3' id='Md5Key' name='Md5Key' value=''></textarea></td></tr>");
+			// 		}
+			//
+			// 		// 把list裡面的支付方式滾出來
+			// 		if (!(merchant_no_tips == "undefined")) {
+			// 			$('#appendTable').append("<tr  class='appendTable'><td> 支付方式 :</td><td id='wayTd'><span>");
+			//
+			// 			$.each(list,function(i, v) {
+			// 								var name = way(v);
+			// 								$('#wayTd').append(
+			// 												"<input type='checkbox' id='list"
+			// 														+ v
+			// 														+ "' name='payList' checked='checked'	value="
+			// 														+ v
+			// 														+ ">"+ name);
+			// 							});
+			// 			$('#appendTable').append("</span></td></tr>");
+			//
+			// 		}
+			//
+			// 		// $('#appendTable').append(
+			// 		// 		"<tr  class='appendTable'><td> 按下去按下去~:</td><td>"
+			// 		// 				+ "<input type='button' id='insertMerId' name='insertMerId'	value='見證奇蹟的時刻 ✧◝(⁰▿⁰)◜✧!!!!' onclick='insertMypayMerchent(this);'>"+
+			// 		// 				"<input type='radio' name='state' value='on' checked> 啟用 (((o(*ﾟ▽ﾟ*)o))) "+
+			// 		// 				"<input type='radio' name='state' value='off' > 停用 (｡ŏ_ŏ)</td></tr>"+
+			// 		// 				"<input type='hidden' id='sign' name='sign'	value='"+ sign +"'>");
+			//
+			// 		// do something
+            //         console.log('END !~!!');
+			// 	},
+			// 	// statusCode範例
+			// 	statusCode : {
+			// 		403 : function(response) {
+			// 			LocationHerf();
+			// 		}
+			// 	}
 			});
 
 }

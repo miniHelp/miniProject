@@ -20,7 +20,7 @@ public class PlatPayment implements PlatformDAO {
 	@Override
 	public List<Integer> getPlantPayment(int plantNum) throws SQLException {
 		Session session = HibernateUtil.getMypayCenterSessionFactory().getCurrentSession();
-		List<Integer> listInt = null;
+		List<Integer> listInt = new ArrayList<>();
 
 		try {
 			// 建立字串
@@ -32,10 +32,9 @@ public class PlatPayment implements PlatformDAO {
 			List<Object> list = query.getResultList();
 			Iterator<Object> itr = list.iterator();
 			while(itr.hasNext()){
-				listInt.add((int)itr.next());
+				int num = (int)itr.next();
+				listInt.add(num);
 			}
-
-			System.out.println("得到的支付方式有 = " + list);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			session.getTransaction().rollback();
