@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Component
-public class PlatPayment implements PlatformDAO {
+public class PlatformImp implements PlatformDAO {
 
 	@Override
 	public List<Integer> getPlantPayment(int plantNum) throws SQLException {
@@ -45,7 +45,7 @@ public class PlatPayment implements PlatformDAO {
 	}
 
 	@Override
-	public PlatformVO getPlantList(int plantNum) throws SQLException {
+	public PlatformVO getPlatformInfo(int plantNum) throws SQLException {
 
 		Session session = HibernateUtil.getMypayCenterSessionFactory().getCurrentSession();
 		PlatformVO platformVO = null;

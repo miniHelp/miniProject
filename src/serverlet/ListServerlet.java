@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
 import onLineDAO.ListDAOImpl;
 import onLineDAO.MerchantDAOImpl;
-import onLineDAO.PlatPayment;
+import onLineDAO.PlatformImp;
 import onLineDAO.UserImp;
 import onlineModel.LoginVO;
 import onlineModel.MerchantVO;
@@ -49,7 +49,7 @@ public class ListServerlet extends HttpServlet {
 	private HttpServletRequest request;
 
 	@Autowired
-	private PlatPayment platPayMent;
+	private PlatformImp pi;
 
 	@Autowired
 	private MerchantDAOImpl pl;
@@ -70,7 +70,7 @@ public class ListServerlet extends HttpServlet {
 
 	//方法都一定要宣告成public，form對應的modelAttribute才能找到
 	@RequestMapping(value = "/merchantDelete/{deletePlatformId}/{deleteMerchantId}",method = RequestMethod.DELETE)
-	public String merchantDetele(@PathVariable("deletePlatformId") String deletePlatformId
+	public String merchantDelete(@PathVariable("deletePlatformId") String deletePlatformId
 			,@PathVariable("deleteMerchantId") String deleteMerchantId,Map<String,Object> map)
 			throws  Exception {
 		System.out.println("进来删除商户的方法");
@@ -98,43 +98,40 @@ public class ListServerlet extends HttpServlet {
 	}
 
 	//一键懒人新增商户，从ajax来的
-    @RequestMapping(value = "/insertMerchantLazy",method = {RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView insertMerchantLazy(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		System.out.println("====insertMerchantLazy===");
-		List<Integer> list = new ArrayList();
-		int plantNum = 0;
-		if (StringUtils.isNotEmpty(request.getParameter("payment_platform_id")))
-			plantNum = Integer.valueOf(request.getParameter("payment_platform_id"));
-		else
-			System.out.println("沒有傳入接口ID plantNum is null");
+    @RequestMapping(value = "/insertMerchantLazy",method = RequestMethod.POST)
+	public String  insertMerchantLazy(@RequestParam("payment_platform_id") String payment_platform_id
+			, Map<String,Object> map) throws Exception {
 
+		System.out.println("进来insertMerchantLazy");
+		System.out.println("====insertMerchantLazy===");
+		int	plantNum = Integer.valueOf(payment_platform_id);
 		// 第一步 先拿到接口有哪些配置需要設定
 
-		PlatformVO platformVO = platPayMent.getPlantList(plantNum);
+		PlatformVO platformVO = pi.getPlatformInfo(plantNum);
 		System.out.println("獲取到接口的參數訊息 == >" + platformVO);
+		List<PlatformVO> platformInfoList = new ArrayList<>();
+		platformInfoList.add(platformVO);
 
 		// 第二步 拿到該接口有支持那些支付方式
-		Character sign = platPayMent.getSignType(plantNum);
+		Character sign = pi.getSignType(plantNum);
 		System.out.println("獲取到接口所支持的签名方式 == >" + sign);
 
 		// 第三步 先拿到接口有哪些支付方式
 
-		list = platPayMent.getPlantPayment(plantNum);
+		List<Integer> list = pi.getPlantPayment(plantNum);
 		System.out.println("獲取到接口所支持的支付方式 == >" + list);
 
-		mav.addObject("platform",platformVO);
 		if (sign == '1') {
-			mav.addObject("signType","MD5");
+			map.put("signType","MD5");
 		}else if(sign == '2'){
-			mav.addObject("signType","RSA");
+			map.put("signType","RSA");
 		}else if(sign == '3'){
-			mav.addObject("signType","RSA(PFX)");
+			map.put("signType","RSA(PFX)");
 		}
-		mav.addObject("payMethods",list);
-		mav.addObject("method","insertMerchantLazy");
-		mav.setViewName("index");
-		return mav;
+		map.put("platformInfoList",platformInfoList);
+		map.put("payMethods",list);
+		map.put("method","insertMerchantLazy");
+		return "index";
 	}
 
 	//新增商户
@@ -248,12 +245,15 @@ public class ListServerlet extends HttpServlet {
 			System.out.println("id is null");
 		}
 
-		pa.merChantList(id);
+		PlatformVO platformVO = pi.getPlatformInfo(id);
 		List<MerchantVO> merList = pa.merChantList(id);
+		List<PlatformVO> platformInfoList = new ArrayList<>();
+		platformInfoList.add(platformVO);
 		map.put("merList", merList);
 		System.out.println("找到的商户列表为:" + merList);
 
 		map.put("method", "merchantList");
+		map.put("platformInfoList", platformInfoList);
 
 		return "index";
 
@@ -319,29 +319,21 @@ public class ListServerlet extends HttpServlet {
 		String columName = "";
 		String columValue = "";
 		if (StringUtils.isNotBlank(platformId)) {
-//            columName = "id";
 			columName = "platform_id";
             columValue = platformId;
 		} else if (StringUtils.isNotBlank(platformName)) {
-//            columName = "name";
 			columName = "platform_name";
             columValue = platformName;
 		} else if (StringUtils.isNotBlank(platformUrl)) {
-//            columName = "url";
 			columName = "platform_url";
             columValue = platformUrl;
 		}
 
 		List<PlatformVO> list = pa.PlantNoList(columName, columValue);
 
+
         resMap.put("platformInfoList",list);
         resMap.put("method","query");
-//        resMap.put("platformId", platformId);
-//        resMap.put("platformUrl", platformUrl);
-//        resMap.put("platformName", platformName);
-
-        System.out.println(resMap);
-
 		return "index";
 	}
 

@@ -190,6 +190,7 @@
 <form id="deleteMertchantForm" method='post'>
     <input type='hidden' name='_method' value="delete">
 </form>
+
 <%---------------------------------------------------------------------------%>
 
 <div id='authDiv' class='formDiv'
@@ -324,30 +325,36 @@
             <th width='10%'>操作</th>
             <th width='10%'>商戶部分</th>
         </tr>
-        <c:if test="${fn:length(platformInfoList) eq 0 }">
+        <c:if test="${empty platformInfoList}">
             <tr>
                 <td colspan="4">查無此資料</td>
             </tr>
         </c:if>
-        <c:forEach items="${platformInfoList}" var="data">
-            <tr>
-                <td>${data.platform_id}</td>
-                <td>${data.platform_name}</td>
-                <td>${data.platform_url}</td>
-                <td>
-                    <input type="button" class="btn" value="修改" id="modifyPop${data.platform_id}" dataId="${data.platform_id}"
-                           dataName="${data.platform_name}" dataUrl="${data.platform_url}"/>
-                </td>
-                <td>
-                    <input type="button" value="超懶新增mypay平台" id="insertMypay" dataId="${data.platform_id}"
-                           dataName="${data.platform_name}" onclick='insertMypay(this);'/>
-                    <input type="button" value="超懶一鍵新增商戶" id="insertMypayMerchent" dataId="${data.platform_id}"
-                    dataName="${data.platform_name}" dataUrl="${pageContext.request.contextPath}/insertMerchantLazy" onclick="PlantDetal(this)"/>
-                    <input type="button" id="merchantList" value="mypay商戶列表" dataId="${data.platform_id}"
-                           dataName="${data.platform_name}" onclick='showMerchList(this);'/>
-                </td>
-            </tr>
-        </c:forEach>
+        <c:if test="${!empty platformInfoList}">
+            <c:forEach items="${platformInfoList}" var="data">
+                <tr>
+                    <td>${data.platform_id}</td>
+                    <td>${data.platform_name}</td>
+                    <td>${data.platform_url}</td>
+                    <td>
+                        <input type="button" class="btn" value="修改" id="modifyPop${data.platform_id}" dataId="${data.platform_id}"
+                               dataName="${data.platform_name}" dataUrl="${data.platform_url}" onclick="$('#modifyPop').show()"/>
+                    </td>
+                    <td>
+                        <input type="button" value="超懶新增mypay平台" id="insertMypay" dataId="${data.platform_id}"
+                               dataName="${data.platform_name}" onclick='insertMypay(this);'/>
+                        <!--  按下一件懒人新增商户 -->
+                        <form id="insertMerchantLazy" action="${pageContext.request.contextPath}/insertMerchantLazy" method='post'>
+                            <input type="hidden" name="payment_platform_id" value="${data.platform_id}">
+                            <input type="button" value="超懶一鍵新增商戶" id="insertMypayMerchent" dataId="${data.platform_id}"
+                                   dataName="${data.platform_name}" onclick="document.forms['insertMerchantLazy'].submit()"/>
+                        </form>
+                        <input type="button" id="merchantList" value="mypay商戶列表" dataId="${data.platform_id}"
+                               dataName="${data.platform_name}" onclick='showMerchList(this);'/>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
     </table>
     <a><input type="button" name="back" value="上一頁" onclick="javascript:history.back(-1);"/></a>
     <a href="${pageContext.request.contextPath}/newIndex.jsp"><input type="button" value="回首頁"/></a>
@@ -520,7 +527,7 @@
             <form:hidden path="platform_id" id="modifyPlatformId"/>
             欲修改網址:<form:input path="platform_url" style="width: 300px;"/>
             <input type="button" value="确定" class="btn1" id="modifyUrl" onclick="document.forms['modifyPlatform'].submit()"/>
-            <input type="button" value="取消" class="btn2"/>
+            <input type="button" value="取消" class="btn2" onclick="$('#modifyPop').hide()"/>
         </form:form>
     </div>
 </div>
@@ -548,6 +555,7 @@
 <c:if test="${method == 'insertMerchantLazy'}">
     <script>
         $('#insertMypayMerchentTable').show();
+        $('#searchDiv').show();
         $('#resultDiv').show();
         $('#sendDiv').hide();
     </script>

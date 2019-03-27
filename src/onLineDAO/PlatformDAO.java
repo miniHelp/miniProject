@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public interface PlatformDAO {
 	public List<Integer> getPlantPayment (int plantNum) throws SQLException;
-	public PlatformVO getPlantList (int plantNum) throws SQLException;
+	public PlatformVO getPlatformInfo (int plantNum) throws SQLException;
 	public Character getSignType(int plantNo) throws SQLException;
 	
 	
